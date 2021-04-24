@@ -1,76 +1,100 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'; 
-import {Button} from 'react-bootstrap';
+import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
 import Icofont from 'react-icofont';
+import { UserContext } from '../providers/AuthProvider';
+import { MIN, MAX, getCart, updateCartSession, updateFirestoreCart } from '../../utils';
 
-class CheckoutItem extends Component {
- constructor(props) {
-    super(props);
-    this.state = {
-      quantity: this.props.qty || 1,
-      show: this.props.show || true,
-      max:this.props.maxValue || 5,
-      min:this.props.minValue || 0
-    };
-  }
 
-  IncrementItem = () => {
-    if(this.state.quantity >= this.state.max) {
+const CheckoutItem = (props) => {
+  const [quantity, setQuantity] = useState(props.qty);
+  const user = useContext(UserContext);
+  const restaurantId = props.restaurantId;
 
-    }else {
-        this.setState({
-            quantity: this.state.quantity + 1 
-        });
-    	this.props.getValue({id:this.props.id,quantity: (this.state.quantity + 1 )});
+
+  const IncrementItem = () => {
+    if (quantity >= MAX) {
+
+    } else {
+      let cart = getCart(props.restaurantId);
+      console.log(cart)
+      let meal = { name: props.itemName, id: props.id, quantity: quantity + 1, price: props.price };
+      // remove meal from cart
+      cart = cart.filter(meal => meal.id !== props.id);
+      // add meal back to cart 
+      cart = cart.concat(meal);
+      //update firestore
+      updateFirestoreCart(cart, user, restaurantId);
+      // update session storage
+      updateCartSession(props.restaurantId, cart);
+      setQuantity(quantity + 1);
+      // update react state
+      props.updateCart(cart);
     }
   }
-  DecreaseItem = () => {
-    if(this.state.quantity <= (this.state.min +1)) {
 
-    }else {
-        this.setState({ quantity: this.state.quantity - 1 });
-    	this.props.getValue({id:this.props.id,quantity: (this.state.quantity - 1 )});
+  const DecreaseItem = () => {
+    if (quantity <= (MIN + 1)) {
+
+    } else {
+      let cart = getCart(props.restaurantId);
+      let meal = { name: props.itemName, id: props.id, quantity: quantity - 1, price: props.price };
+      // remove meal from cart
+      cart = cart.filter(meal => meal.id !== props.id);
+      // add meal back to cart 
+      cart = cart.concat(meal);
+      // update firestore 
+      updateFirestoreCart(cart, user, restaurantId);
+      // update session storage
+      updateCartSession(props.restaurantId, cart);
+      setQuantity(quantity - 1);
+      // update react state
+      props.updateCart(cart);
     }
   }
-  ToggleClick = () => {
-    this.setState({ show: !this.state.show });
+
+  const removeItem = () => {
+    let cart = getCart(props.restaurantId);
+    cart = cart.filter(meal => meal.id !== props.id);
+    // update firestore 
+    updateFirestoreCart(cart, user, restaurantId);
+    // update session storage
+    updateCartSession(props.restaurantId, cart);
+    // update react state
+    props.updateCart(cart);
   }
 
-  render() {
-
-    return (
-    	<div className="gold-members p-2 border-bottom">
-           <p className="text-gray mb-0 float-right ml-2">{this.props.priceUnit}{this.props.price * this.state.quantity}</p>
-           <span className="count-number float-right">
-               <Button variant="outline-secondary" onClick={this.DecreaseItem} className="btn-sm left dec"> <Icofont icon="minus" /> </Button>
-               <input className="count-number-input" type="text" value={this.state.quantity} readOnly/>
-               <Button variant="outline-secondary" onClick={this.IncrementItem} className="btn-sm right inc"> <Icofont icon="icofont-plus" /> </Button>
-           </span>
-           <div className="media">
-              <div className="mr-2"><Icofont icon="ui-press" className="text-danger food-item" /></div>
-              <div className="media-body">
-                 <p className="mt-1 mb-0 text-black">{this.props.itemName}</p>
-              </div>
-           </div>
+  return (
+    <div className="gold-members p-2 border-bottom checkout-item">
+      <p className="text-gray mb-0 float-right ml-2">{props.priceUnit}{props.price * quantity}</p>
+      <span className="count-number float-right">
+        <Button variant="outline-secondary" onClick={DecreaseItem} className="btn-sm left dec"> <Icofont icon="minus" /> </Button>
+        <input className="count-number-input" type="text" value={quantity} readOnly />
+        <Button variant="outline-secondary" onClick={IncrementItem} className="btn-sm right inc"> <Icofont icon="icofont-plus" /> </Button>
+      </span>
+      <div className="media">
+        <button onClick={removeItem} style={{ height: '23px', marginTop: '1px', outline: 'red', background: 'red', borderColor: 'white', fontWeight: 'bold' }} className="mr-2 p-0 pl-2 pr-2 text-white">x</button>
+        <div className="media-body">
+          <p className="mt-1 mb-0 text-black">{props.itemName}</p>
         </div>
-    );
-  }
+      </div>
+    </div>
+  )
 }
 
 CheckoutItem.propTypes = {
   itemName: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   priceUnit: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   qty: PropTypes.number.isRequired,
   show: PropTypes.bool.isRequired,
   minValue: PropTypes.number,
   maxValue: PropTypes.number,
-  getValue: PropTypes.func.isRequired
 };
 CheckoutItem.defaultProps = {
   show: true,
-  priceUnit:'$'
+  priceUnit: '&#8358;'
 }
 
 

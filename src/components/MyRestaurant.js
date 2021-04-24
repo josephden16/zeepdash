@@ -2,16 +2,14 @@ import React, { useState, useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { NavLink, Link } from 'react-router-dom';
 import { Row, Col, Container, Image } from 'react-bootstrap';
-import Offers from './myaccount/Offers';
+import Meals from './myrestaurant/Meals';
 import Orders from './myaccount/Orders';
 import Favourites from './myaccount/Favourites';
-import Payments from './myaccount/Payments';
-import Addresses from './myaccount/Addresses';
 import EditProfileModal from './modals/EditProfileModal';
 import NotSignedIn from './NotSignedIn';
 import { UserContext } from '../components/providers/AuthProvider';
 
-const MyAccount = () => {
+const MyRestaurant = () => {
 
   const user = useContext(UserContext);
 
@@ -19,13 +17,13 @@ const MyAccount = () => {
 
   const hideEditProfile = () => setShowEditProfile(false);
 
-  if (!user || user.role === "business") {
+  if (!user || user.role === "customer") {
     return <NotSignedIn />
   }
 
   return (
     <>
-      <EditProfileModal defaultData={{name: user.name, email: user.email, phone: user.phone}} show={showEditProfile} onHide={hideEditProfile} />
+      <EditProfileModal defaultData={{ name: user.name, email: user.email, phone: user.phone }} show={showEditProfile} onHide={hideEditProfile} />
       <section className="section pt-4 pb-4 osahan-account-page">
         <Container>
           <Row>
@@ -34,7 +32,7 @@ const MyAccount = () => {
                 <div className="border-bottom p-4">
                   <div className="osahan-user text-center">
                     <div className="osahan-user-media">
-                      <Image style={{borderRadius: '50%', width: '70px', height: '70px'}} className="mb-3 shadow-sm mt-1" src={user.photoURL || "/img/user/default-profile.webp"} draggable={false} alt="gurdeep singh osahan" />
+                      <Image style={{ borderRadius: '50%', width: '70px', height: '70px' }} className="mb-3 shadow-sm mt-1" src={user.photoURL || "/img/user/default-profile.webp"} draggable={false} alt="gurdeep singh osahan" />
                       <div className="osahan-user-media-body">
                         <h6 className="mb-2">{user.name}</h6>
                         <p className="mb-1">{user.phone}</p>
@@ -46,24 +44,22 @@ const MyAccount = () => {
                 </div>
                 <ul className="nav flex-column border-0 pt-4 pl-4 pb-4">
                   <li className="nav-item">
-                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/orders"><i className="icofont-food-cart"></i> Orders</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" exact to="/myrestaurant/meals"><i className="icofont-fast-food"></i> Meals</NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/payments"><i className="icofont-credit-card"></i> Payments</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" exact to="/myrestaurant/orders"><i className="icofont-food-cart"></i> Orders</NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/addresses"><i className="icofont-location-pin"></i> Addresses</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" exact to="/myrestaurant/details"><i className="icofont-user-alt-7"></i> Account</NavLink>
                   </li>
                 </ul>
               </div>
             </Col>
             <Col md={9}>
               <Switch>
-                <Route path="/myaccount/orders" exact component={Orders} />
-                <Route path="/myaccount/offers" exact component={Offers} />
-                <Route path="/myaccount/favourites" exact component={Favourites} />
-                <Route path="/myaccount/payments" exact component={Payments} />
-                <Route path="/myaccount/addresses" exact component={Addresses} />
+                <Route path="/myrestaurant/meals" exact component={Meals} />
+                <Route path="/myrestaurant/orders" exact component={Orders} />
+                <Route path="/myrestaurant/details" exact component={Favourites} />
               </Switch>
             </Col>
           </Row>
@@ -74,4 +70,4 @@ const MyAccount = () => {
 }
 
 
-export default MyAccount;
+export default MyRestaurant;
