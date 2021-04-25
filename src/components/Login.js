@@ -28,7 +28,6 @@ const Login = () => {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 			.then(() => {
 				//signed in
-				toast.success("Signed in successfully");
 				history.push("/")
 			})
 			.catch((error) => {

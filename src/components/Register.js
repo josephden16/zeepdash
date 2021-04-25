@@ -70,7 +70,7 @@ const UserRegistration = ({ className }) => {
 								history.push("/");
 							})
 								.catch(() => {
-									toast.error("Failed to create user data");
+									toast.error("Failed to create account");
 								})
 						}
 					})
