@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import App from './App';
@@ -9,10 +9,12 @@ import ScrollToTop from './components/ScrollToTop';
 
 ReactDOM.render(
   <Router>
-    <ScrollToTop />
-    <UserProvider>
-      <Route path="/" component={App} />
-    </UserProvider>
+    <Suspense fallback={<div>loading...</div>}>
+      <ScrollToTop />
+      <UserProvider>
+        <Route path="/" component={App} />
+      </UserProvider>
+    </Suspense>
   </Router>,
   document.getElementById('root'));
 

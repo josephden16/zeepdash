@@ -1,33 +1,33 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
-import Index from './components/Index';
-import Offers from './components/Offers';
-import MyAccount from './components/MyAccount';
-import List from './components/List';
-import NotFound from './components/NotFound';
-import Thanks from './components/Thanks';
-import Login from './components/Login';
-import Register from './components/Register';
-import Invoice from './components/Invoice';
-import Checkout from './components/Checkout';
-import Detail from './components/Detail';
-import ResetPassword from './components/ResetPassword';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'react-select2-wrapper/css/select2.css';
 import './App.css';
-import MyRestaurant from './components/MyRestaurant';
+const MyRestaurant = lazy(() => import('./components/MyRestaurant'));
+const Index = lazy(() => import('./components/Index'));
+const Offers = lazy(() => import('./components/Offers'));
+const MyAccount = lazy(() => import('./components/MyAccount'));
+const List = lazy(() => import('./components/List'));
+const NotFound = lazy(() => import('./components/NotFound'));
+const Thanks = lazy(() => import('./components/Thanks'));
+const Login = lazy(() => import('./components/Login'));
+const Register = lazy(() => import('./components/Register'));
+const Invoice = lazy(() => import('./components/Invoice'));
+const Checkout = lazy(() => import('./components/Checkout'));
+const Detail = lazy(() => import('./components/Detail'));
+const ResetPassword = lazy(() => import('./components/ResetPassword'));
+
 
 
 function App(props) {
   return (
     <>
       <Header />
-
       <Switch>
         <Route path="/" exact component={Index} />
         <Route path="/offers" exact component={Offers} />
