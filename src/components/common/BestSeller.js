@@ -71,7 +71,7 @@ const BestSeller = (props) => {
           : ""
         }
         <Link to="#">
-          <Image draggable={false} style={{height: '170px'}} src={props.image} className={props.imageClass} alt={props.imageAlt} />
+          <Image draggable={false} style={{height: '170px', width: '100%'}} src={props.image} className={props.imageClass} alt={props.imageAlt} />
         </Link>
       </div>
       <div className="p-3 position-relative">

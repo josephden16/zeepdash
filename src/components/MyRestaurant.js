@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Row, Col, Container, Image } from 'react-bootstrap';
 import Meals from './myrestaurant/Meals';
-import Orders from './myaccount/Orders';
-import Favourites from './myaccount/Favourites';
+import Orders from './myrestaurant/Orders';
 import EditProfileModal from './modals/EditProfileModal';
 import NotSignedIn from './NotSignedIn';
 import { UserContext } from '../components/providers/AuthProvider';
@@ -19,7 +18,7 @@ const MyRestaurant = () => {
 
   if (!user || user.role === "customer") {
     return <NotSignedIn />
-  }
+  } 
 
   return (
     <>
@@ -37,7 +36,7 @@ const MyRestaurant = () => {
                         <h6 className="mb-2">{user.name}</h6>
                         <p className="mb-1">{user.phone}</p>
                         <p>{user.email}</p>
-                        <p className="mb-0 text-black font-weight-bold"><Link to='#' onClick={() => setShowEditProfile(true)} className="text-primary mr-3"><i className="icofont-ui-edit"></i> EDIT</Link></p>
+                        {/* <p className="mb-0 text-black font-weight-bold"><Link to='#' onClick={() => setShowEditProfile(true)} className="text-primary mr-3"><i className="icofont-ui-edit"></i> EDIT</Link></p> */}
                       </div>
                     </div>
                   </div>
@@ -49,9 +48,9 @@ const MyRestaurant = () => {
                   <li className="nav-item">
                     <NavLink className="nav-link" activeClassName="active" exact to="/myrestaurant/orders"><i className="icofont-food-cart"></i> Orders</NavLink>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <NavLink className="nav-link" activeClassName="active" exact to="/myrestaurant/details"><i className="icofont-user-alt-7"></i> Account</NavLink>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </Col>
@@ -59,7 +58,6 @@ const MyRestaurant = () => {
               <Switch>
                 <Route path="/myrestaurant/meals" exact component={Meals} />
                 <Route path="/myrestaurant/orders" exact component={Orders} />
-                <Route path="/myrestaurant/details" exact component={Favourites} />
               </Switch>
             </Col>
           </Row>

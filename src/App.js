@@ -25,9 +25,8 @@ import MyRestaurant from './components/MyRestaurant';
 function App(props) {
   return (
     <>
-      {
-        (props.location.pathname !== '/login' && props.location.pathname !== '/register') ? <Header /> : ''
-      }
+      <Header />
+
       <Switch>
         <Route path="/" exact component={Index} />
         <Route path="/offers" exact component={Offers} />

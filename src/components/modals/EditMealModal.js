@@ -12,12 +12,11 @@ const EditMealModal = (props) => {
   const [loading, setLoading] = useState(false);
   let mealImageFileRef = useRef(null);
 
-
   const updateMeal = () => {
     const mealId = props.defaultData.id;
     const mealsRef = firestore.collection("Meals").doc(mealId);
     const storageRef = storage.ref();
-    const restaurantId = props.defaultData.restaurantId;
+    const restaurantSlug = props.defaultData.restaurantSlug;
 
     setLoading(true);
     if (mealImageFileRef.current.files.length > 0) {
@@ -26,7 +25,7 @@ const EditMealModal = (props) => {
       const fileName = uuidv4();
       storageRef
         .child("Meals")
-        .child(restaurantId)
+        .child(restaurantSlug)
         .child(fileName)
         .put(imageFile)
         .then(response => response.ref.getDownloadURL())

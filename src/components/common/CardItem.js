@@ -26,14 +26,14 @@ class CardItem extends React.Component {
 						: ""
 					}
 					<Link to={this.props.linkUrl}>
-						<Image src={this.props.image} style={{height: '170px'}} draggable={false} className={this.props.imageClass} alt={this.props.imageAlt} />
+						<Image src={this.props.image} style={{height: '170px', width: '100%'}} draggable={false} className={this.props.imageClass} alt={this.props.imageAlt} />
 					</Link>
 				</div>
 				<div className="p-3 position-relative">
 					<div className="list-card-body">
 						<h6 className="mb-1"><Link to={this.props.linkUrl} className="text-black">{this.props.title}</Link></h6>
 						{this.props.subTitle ? (
-							<p className="text-gray mb-3">{this.props.subTitle}</p>
+							<p className="text-dark mb-3">{this.props.subTitle}</p>
 						)
 							: ''
 						}

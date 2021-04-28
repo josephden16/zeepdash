@@ -42,25 +42,27 @@ export const getCart = (restaurantId) => {
 }
 
 export const updateCartSession = (restaurantId, cart) => {
-  sessionStorage.setItem(restaurantId, JSON.stringify(cart));
+  let sortedCart = cart.sort((a, b) => a.name.localeCompare(b.name))
+  sessionStorage.setItem(restaurantId, JSON.stringify(sortedCart));
 }
 
 export const updateFirestoreCart = async (cart, user, restaurantId) => {
   if (!user) return;
   const userRef = firestore.collection("Users").doc(user.id);
   const cartRef = userRef.collection("Cart").doc(restaurantId);
+  let sortedCart = cart.sort((a, b) => a.name.localeCompare(b.name))
   try {
     if (cart.length > 0) {
       let total = getTotalAmount(cart);
       await cartRef.set({
         totalAmount: total,
-        cart: cart
+        cart: sortedCart
       });
     } else {
       await cartRef.delete();
     }
   } catch (error) {
-    toast.error("Failed to add cart to firestore");
+    toast.error("Cart update failed");
   }
 }
 
@@ -108,7 +110,7 @@ export const verifyTime = (openingTime, closingTime) => {
 export const validateName = (name) => {
   if (!name) return false;
 
-  var letters = /^[A-Za-z]+$/;
+  var letters = /^[A-Za-z\s]+$/;
   if (name.match(letters)) {
     return true;
   }
@@ -120,7 +122,17 @@ export const validateName = (name) => {
 export const validatePhoneNumber = (phoneNumber) => {
   if (!phoneNumber) return false;
 
-  var phoneno = /^\d{11}$/;
+  var phoneno = /^\d{10,11}$/;
+
+  if (phoneNumber.startsWith("+234")) {
+    let phone = phoneNumber.substr(4);
+    if (phone.match(phoneno)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   if ((phoneNumber.match(phoneno))) {
     return true;
   } else {
@@ -137,3 +149,14 @@ export const validateEmail = (email) => {
   return (false)
 }
 
+export const validatePassword = (password) => {
+  if (typeof password !== "string" || password.length < 6) {
+    return false;
+  }
+
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+
+  return passwordRegex.test(password);
+}
+
+export const DELIVERY_FEE = 300;

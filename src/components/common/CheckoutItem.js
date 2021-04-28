@@ -17,7 +17,6 @@ const CheckoutItem = (props) => {
 
     } else {
       let cart = getCart(props.restaurantId);
-      console.log(cart)
       let meal = { name: props.itemName, id: props.id, quantity: quantity + 1, price: props.price };
       // remove meal from cart
       cart = cart.filter(meal => meal.id !== props.id);

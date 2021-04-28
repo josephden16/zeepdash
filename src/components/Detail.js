@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Row, Col, Container, Tab, Nav, Image, Badge } from 'react-bootstrap';
+import Seo from './Seo';
 import NotFound from './NotFound';
 import Loading from './common/Loading';
 import GalleryCarousel from './common/GalleryCarousel';
@@ -9,7 +10,7 @@ import BestSeller from './common/BestSeller';
 import Icofont from 'react-icofont';
 import { toast } from 'react-toastify';
 import { firestore } from '../firebase';
-import { capitalize, getTotalAmount, MAX, MIN, updateFirestoreCart } from '../utils';
+import { capitalize, getTotalAmount, MAX, MIN, updateCartSession, updateFirestoreCart } from '../utils';
 import { UserContext } from './providers/AuthProvider';
 // import ItemsCarousel from './common/ItemsCarousel';
 // import QuickBite from './common/QuickBite';
@@ -102,8 +103,15 @@ const Detail = () => {
 		return null;
 	}
 
+	
+	const seo = {
+		metaTitle: `${restaurant.name}` || '',
+		metaDescription: `Welcome to the page of ${restaurant.name} on ZeepDash...` || ''
+	}
+
 	return (
 		<>
+			<Seo seo={seo} />
 			<section className="restaurant-detailed-banner">
 				<div className="text-center">
 					<Image fluid className="cover" draggable={false} style={{ width: '100%', objectFit: 'fill' }} src={restaurant.bannerImageURL || '/img/mall-dedicated-banner.png'} />
@@ -265,6 +273,32 @@ const Cart = ({ cart, updateCart, restaurant }) => {
 	const restaurantId = restaurant.id;
 	let total = cart ? getTotalAmount(cart) : 0;
 	const history = useHistory();
+
+	useEffect(() => {
+		const fetchCart = async () => {
+			if (!user) return null;
+
+			let sessionCart = JSON.parse(sessionStorage.getItem(restaurantId));
+			// checks if the cart exists in the session 
+			if (sessionCart) return;
+
+			// pull the cart data from firestore
+			const cartRef = firestore.collection("Users").doc(user.id).collection("Cart").doc(restaurantId);
+
+			const snapshot = await cartRef.get();
+
+			if (snapshot.exists) {
+				const data = snapshot.data();
+				let { cart } = data;
+				console.log(cart);
+				updateCart(cart);
+				updateCartSession(restaurantId, cart);
+			}
+
+		}
+
+		fetchCart();
+	}, [restaurantId, updateCart, user])
 
 	const handleCheckout = () => {
 		if (!user) {

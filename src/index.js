@@ -5,9 +5,11 @@ import App from './App';
 import UserProvider from './components/providers/AuthProvider'
 import * as serviceWorker from './serviceWorker';
 import './index.css';
+import ScrollToTop from './components/ScrollToTop';
 
 ReactDOM.render(
   <Router>
+    <ScrollToTop />
     <UserProvider>
       <Route path="/" component={App} />
     </UserProvider>

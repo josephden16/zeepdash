@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import OwlCarousel from 'react-owl-carousel3';
@@ -8,15 +7,20 @@ import ProductBox from './home/ProductBox';
 import CardItem from './common/CardItem';
 import SectionHeading from './common/SectionHeading';
 import FontAwesome from './common/FontAwesome';
+import Seo from './Seo';
+
+
+const seo = {
+	metaTitle: 'Home | ZeepDash',
+	metaDescription: 'ZeepDash is an awesome website to get meals delivered to you from restaurants near by'
+}
 
 class Index extends React.Component {
 
 	render() {
 		return (
 			<>
-				<Helmet>
-					<title>Home | ZeepDash</title>
-				</Helmet>
+				<Seo seo={seo} />
 				<TopSearch />
 				<section className="section pt-5 pb-5 bg-white homepage-add-section">
 					<Container>
@@ -74,9 +78,9 @@ class Index extends React.Component {
 											imageClass='img-fluid item-img'
 											linkUrl='detail'
 											offerText=''
-											time='20–25 min'
+											time=''
 											price=''
-											showPromoted={true}
+											showPromoted={false}
 											promotedVariant='dark'
 											favIcoIconColor='text-danger'
 											rating=''
@@ -91,9 +95,9 @@ class Index extends React.Component {
 											imageClass='img-fluid item-img'
 											linkUrl='detail'
 											offerText=''
-											time='15–25 min'
+											time=''
 											price=''
-											showPromoted={true}
+											showPromoted={false}
 											promotedVariant='dark'
 											favIcoIconColor='text-danger'
 											rating=''
@@ -108,9 +112,9 @@ class Index extends React.Component {
 											imageClass='img-fluid item-img'
 											linkUrl='detail'
 											offerText=''
-											time='20–25 min'
+											time=''
 											price=''
-											showPromoted={true}
+											showPromoted={false}
 											promotedVariant='danger'
 											favIcoIconColor='text-dark'
 											rating=''
@@ -125,9 +129,9 @@ class Index extends React.Component {
 											imageClass='img-fluid item-img'
 											linkUrl='detail'
 											offerText=''
-											time='20–25 min'
+											time=''
 											price=''
-											showPromoted={true}
+											showPromoted={false}
 											promotedVariant='dark'
 											favIcoIconColor='text-danger'
 											rating=''
@@ -153,7 +157,6 @@ class Index extends React.Component {
 						</Row>
 					</Container>
 				</section>
-
 			</>
 		);
 	}

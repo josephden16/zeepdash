@@ -4,12 +4,19 @@ import { Row, Col, Container, Image, Table } from 'react-bootstrap';
 import Icofont from 'react-icofont';
 import HeadingValue from './common/HeadingValue';
 import PageTitle from './common/PageTitle';
+import Seo from './Seo';
 
+
+const seo = {
+	metaTitle: 'Your Invoice | ZeepDash',
+	metaDescription: ''
+}
 class Invoice extends React.Component {
 
 	render() {
 		return (
 			<>
+				<Seo seo={seo} />
 				<PageTitle
 					title="Invoice"
 					subTitle="Order #25102589748"

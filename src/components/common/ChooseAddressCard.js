@@ -1,34 +1,33 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {Card,Media} from 'react-bootstrap';
+import { Card, Media } from 'react-bootstrap';
 import Icofont from 'react-icofont';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
-class ChooseAddressCard extends React.Component {
 
-	render() {
-    	return (
-        <Card className={"bg-white addresses-item mb-4 " + (this.props.boxClass)}>
-            <div className="gold-members p-4">
-               <Media>
-                  <div className="mr-3"><Icofont icon={this.props.icoIcon} className={this.props.iconclassName} /></div>
-                  <div className="media-body">
-                     <h6 className="mb-1 text-secondary">{this.props.title}</h6>
-                     <p className="text-black">{this.props.address}
-                     </p>
-                     <p className="mb-0 text-black font-weight-bold">
-                     	{this.props.type==="hasAddress"?
-	                        (<><Link className="btn btn-sm btn-success mr-2" to="#" onClick={this.props.onDeliverHereClick}> DELIVER HERE </Link>
-	                        <span>30MIN</span></>)
-	                        :<Link className="btn btn-sm btn-primary mr-2" to="#" onClick={this.props.onAddNewClick}> ADD NEW ADDRESS </Link>
-                     	}
-                     </p>
-                  </div>
-               </Media>
-            </div>
-        </Card>
-    	);
-    }
+const ChooseAddressCard = (props) => {
+  const selectDeliveryLocation = () => {
+    props.setDeliveryLocation(props.addressData);
+    toast.success("Address selected");
+  }
+
+  return (
+    <Card className={"bg-white addresses-item mb-4 " + (props.boxClass)}>
+      <div className="gold-members p-4">
+        <Media>
+          <div className="mr-3"><Icofont icon={props.icoIcon} className={props.iconclassName} /></div>
+          <div className="media-body">
+            <h6 className="mb-1 text-secondary">{props.title}</h6>
+            <p className="text-black">{props.address}
+            </p>
+            <p className="mb-0 text-black font-weight-bold">
+              <button onClick={selectDeliveryLocation} className="btn btn-sm btn-success mr-2">DELIVER HERE</button>
+            </p>
+          </div>
+        </Media>
+      </div>
+    </Card>
+  )
 }
 
 ChooseAddressCard.propTypes = {
@@ -42,7 +41,7 @@ ChooseAddressCard.propTypes = {
 };
 
 ChooseAddressCard.defaultProps = {
-  	type:'hasAddress'
+  type: 'hasAddress'
 }
 
 

@@ -1,19 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 
 class SectionHeading extends React.Component {
-	render() {
-    	return (
-            <div className={`section-header ${this.props.alignClass}`}>
-               <h2>{this.props.heading}</h2>
-               {this.props.subHeading ? (
-               		<p>{this.props.subHeading}</p>
-               		):''
-               }
-               <span className="line"></span>
-            </div>
-		);
-	}
+  render() {
+    return (
+      <div className={`section-header ${this.props.alignClass}`}>
+        <h1>{this.props.heading}</h1>
+        {this.props.subHeading ? (
+          <p className="text-dark">{this.props.subHeading}</p>
+        ) : ''
+        }
+        <span className="line"></span>
+      </div>
+    );
+  }
 }
 
 

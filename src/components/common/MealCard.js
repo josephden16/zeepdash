@@ -13,7 +13,7 @@ class MealCard extends React.Component {
           <Media>
             <Image fluid src={this.props.mealImage} style={{height: '150px'}} className={"mr-3 rounded-sm " + this.props.imageclassName} />
             <Media.Body className="align-self-center">
-              <h6 style={{fontSize: '14px'}} className="mb-1 text-secondary">{this.props.mealName}</h6>
+              <h6 style={{fontSize: '14px'}} className="mb-1 text-dark">{this.props.mealName}</h6>
               <p className="text-black">&#8358;{this.props.price}</p>
               <small className="mb-0 text-black font-weight-bold flex">
                 <Link className="text-primary mr-3" to="#" onClick={this.props.onEditClick}><Icofont icon="ui-edit" /> EDIT</Link>

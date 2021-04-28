@@ -45,6 +45,7 @@ const Meals = () => {
       price: meal.price,
       id: meal.id,
       restaurantId: restaurant.id,
+      restaurantSlug: restaurant.slug
     }
     setEditDefaultData(defaultData);
     setShowEditMealModal(true);
@@ -176,11 +177,18 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
 
       // generate a random file name
       let fileName = uuidv4();
+      fileName = fileName.substring(0, 15);
       fileName = `${fileName}.${extension}`;
 
+      // add 
+      if (imageFile.size > 1000000) {
+        toast.info("Image file cannot be larger than 1MB");
+        setLoading(false);
+        return;
+      }
       storageRef
         .child("Meals")
-        .child(restaurantId)
+        .child(restaurantSlug)
         .child(fileName)
         .put(imageFile)
         .then(response => response.ref.getDownloadURL())
@@ -196,7 +204,7 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
           })
             .then(() => {
               fetchMeals();
-              toast.success("Meal added successfuly  🎉");
+              toast.success("Meal added 🎉");
               setLoading(false);
             })
         })
@@ -218,12 +226,10 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
             <Col md={9} lg={8}>
               <Form onSubmit={(evt) => { evt.preventDefault() }}>
                 <div className="form-label-group">
-                  <Form.Control onChange={(evt) => setMealName(evt.target.value)} type="text" className="input" id="inputName" placeholder="Name" />
-                  <Form.Label htmlFor="inputName">Name</Form.Label>
+                  <input onChange={(evt) => setMealName(evt.target.value)} type="text" className="input" id="inputName" placeholder="Name" />
                 </div>
                 <div className="form-label-group flex flex-row">
-                  <Form.Control onChange={(evt) => setMealPrice(parseInt(evt.target.value))} type="text" className="input" id="inputPrice" placeholder="Price" />
-                  <Form.Label htmlFor="inputPrice">Price</Form.Label>
+                  <input onChange={(evt) => setMealPrice(parseInt(evt.target.value))} type="text" className="input" id="inputPrice" placeholder="Price" />
                 </div>
                 <div className="form-label-group mt-4">
                   <Form.File

@@ -13,7 +13,7 @@ class Footer extends React.Component {
 					<Container>
 						<Row>
 							<Col sm={12}>
-								<h5 className="m-0">Operate food store or restaurants? <Link to="/register?tab=business">Work With Us</Link></h5>
+								<p style={{fontSize: '22px'}} className="m-0 text-dark">Operate food store or restaurants? <Link to="/register?tab=business">Work With Us</Link></p>
 							</Col>
 						</Row>
 					</Container>
@@ -50,11 +50,8 @@ class Footer extends React.Component {
 							<Col md={2} sm={4} xs={6}>
 								<h6 className="mb-3">About ZeepDash</h6>
 								<ul>
-									<li><Link to="#">About Us</Link></li>
-									{/* <li><Link to="#">Culture</Link></li> */}
-									{/* <li><Link to="#">Blog</Link></li> */}
-									{/* <li><Link to="#">Careers</Link></li> */}
-									<li><Link to="#">Contact</Link></li>
+									<li><Link className="text-dark" to="#">About Us</Link></li>
+									<li><Link className="text-dark" to="#">Contact</Link></li>
 								</ul>
 							</Col>
 							{/* <Col md={2} sm={4} xs={6}>
@@ -67,11 +64,11 @@ class Footer extends React.Component {
 									<li><Link to="#">Code of Conduct</Link></li>
 								</ul>
 							</Col> */}
-							<Col md={2} sm={4} xs={4} className="m-none">
+							<Col md={2} sm={4} xs={4}>
 								<h6 className="mb-3">For Restaurants</h6>
 								<ul>
+									<li><Link className="text-dark" to="/register?tab=business">Add a Restaurant</Link></li>
 									{/* <li><Link to="#">Advertise</Link></li> */}
-									<li><Link to="/register?tab=business">Add a Restaurant</Link></li>
 									{/* <li><Link to="#">For Businesses</Link></li> */}
 									{/* <li><Link to="#">Owner Guidelines</Link></li> */}
 								</ul>
@@ -79,7 +76,8 @@ class Footer extends React.Component {
 						</Row>
 					</Container>
 				</section>
-				{/* <section className={this.props.sectionclassName}>
+				{/* 
+				<section className={this.props.sectionclassName}>
 					<div className="container">
 						<Row>
 							<Col xs={12}>
@@ -177,9 +175,9 @@ class Footer extends React.Component {
 						</Row>
 					</div>
 				</section> */}
-				<footer className="pt-4 pb-4 text-center">
+				<footer style={{background: '#EDF1F4'}} className="pt-4 pb-4 text-center">
 					<Container>
-						<p className="mt-0 mb-0">{this.props.copyrightText}</p>
+						<p className="mt-0 mb-0 text-dark">{this.props.copyrightText}</p>
 					</Container>
 				</footer>
 			</>

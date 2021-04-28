@@ -43,7 +43,7 @@ class Header extends React.Component {
 				<Navbar onToggle={this.setIsNavExpanded}
 					expanded={this.state.isNavExpanded} color="light" expand='lg' className="navbar-light osahan-nav shadow-sm">
 					<Container>
-						<Navbar.Brand to="/"><Link to="/"><Image draggable={false} style={{width: '200px'}} src="/img/logo-2.png" alt='' /></Link></Navbar.Brand>
+						<Navbar.Brand to="/"><Link to="/"><Image draggable={false} style={{width: '200px'}} src="/img/logo-2.png" alt='ZeepDash' /></Link></Navbar.Brand>
 						<Navbar.Toggle style={{ outline: 'none' }} />
 						<Navbar.Collapse id="navbarNavDropdown">
 							<Nav activeKey={0} className="ml-auto" onSelect={this.closeMenu}>
@@ -92,14 +92,14 @@ const UserDropDown = () => {
 		// redirect them to the home page
 		history.replace("/");
 		signOut();
-		toast.success("Signed out successfully");
+		toast.success("You are signed out");
 	}
 
 	return (
 		<>
 			{(!user) &&
-				<Nav.Link href="/login">
-					Sign in
+				<Nav.Link as={Link} to="/login">
+					Log in
 				</Nav.Link>
 			}
 			{user && user.role === "customer" &&
@@ -115,9 +115,8 @@ const UserDropDown = () => {
 					}
 				>
 					<NavDropdown.Item eventKey={4.1} as={NavLink} activeclassname="active" to="/myaccount/orders"><Icofont icon='food-cart' /> Orders</NavDropdown.Item>
-					<NavDropdown.Item eventKey={4.4} as={NavLink} activeclassname="active" to="/myaccount/payments"><Icofont icon='credit-card' /> Payments</NavDropdown.Item>
-					<NavDropdown.Item eventKey={4.5} as={NavLink} activeclassname="active" to="/myaccount/addresses"><Icofont icon='location-pin' /> Addresses</NavDropdown.Item>
-					<NavDropdown.Item eventKey={4.6} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
+					<NavDropdown.Item eventKey={4.2} as={NavLink} activeclassname="active" to="/myaccount/addresses"><Icofont icon='location-pin' /> Addresses</NavDropdown.Item>
+					<NavDropdown.Item eventKey={4.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
 				</NavDropdown>
 			}
 			{user && user.role === "business" &&
@@ -134,7 +133,7 @@ const UserDropDown = () => {
 				>
 					<NavDropdown.Item eventKey={4.4} as={NavLink} activeclassname="active" to="/myrestaurant/meals"><Icofont icon='fast-food' /> Meals</NavDropdown.Item>
 					<NavDropdown.Item eventKey={4.1} as={NavLink} activeclassname="active" to="/myrestaurant/orders"><Icofont icon='food-cart' /> Orders</NavDropdown.Item>
-					<NavDropdown.Item eventKey={4.5} as={NavLink} activeclassname="active" to="/myrestaurant/details"><Icofont icon='user-alt-7' /> Account</NavDropdown.Item>
+					{/* <NavDropdown.Item eventKey={4.5} as={NavLink} activeclassname="active" to="/myrestaurant/details"><Icofont icon='user-alt-7' /> Account</NavDropdown.Item> */}
 					<NavDropdown.Item eventKey={4.6} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
 				</NavDropdown>
 			}

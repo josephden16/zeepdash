@@ -14,32 +14,31 @@ const seo = {
 
 
 const Orders = () => {
-	const user = useContext(UserContext);
+	const restaurant = useContext(UserContext);
 	return (
 		<>
 			<Seo seo={seo} />
 			<div className='p-4 bg-white shadow-sm'>
-				<OrdersContainer user={user} />
+				<OrdersContainer restaurant={restaurant} />
 			</div>
 		</>
 	)
 }
 
-const OrdersContainer = ({ user }) => {
+const OrdersContainer = ({ restaurant }) => {
 	const [orders, setOrders] = useState(null);
 	const [failedDataFetch, setFailedDataFetch] = useState(false);
-	const userId = user.id;
+	const restaurantId = restaurant.id;
 
 	useEffect(() => {
 		const fetchOrders = async () => {
 			const ordersRef = firestore.collection("Orders")
-				.where("customerId", "==", userId);
+				.where("restaurantId", "==", restaurantId);
 			try {
 				const snapshot = await ordersRef.get();
 				if (!snapshot.empty) {
 					let data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 					data = data.filter(order => order.orderCompleted === true);
-					console.log(data);
 					setOrders(data);
 				} else {
 					const data = [];
@@ -51,7 +50,7 @@ const OrdersContainer = ({ user }) => {
 		}
 
 		fetchOrders();
-	}, [userId]);
+	}, [restaurantId]);
 
 
 	return (
@@ -68,7 +67,7 @@ const OrdersContainer = ({ user }) => {
 						let formattedTime = new Date(time * 1000).toLocaleString();
 						// delivery time
 						let timeDelivered = order.timeDelivered;
-						let formattedDeliveryTime = timeDelivered !== undefined ?  new Date(timeDelivered * 1000).toLocaleString() : '';
+						let formattedDeliveryTime = timeDelivered !== undefined ? new Date(timeDelivered * 1000).toLocaleString() : '';
 						// orders
 						let formattedOrders = [];
 						let productsOrdered = order.productsOrdered;

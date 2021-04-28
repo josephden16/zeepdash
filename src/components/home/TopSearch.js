@@ -15,7 +15,7 @@ class TopSearch extends React.Component {
 						<Col md={8}>
 							<div className="homepage-search-title">
 								<h1 className="mb-2 font-weight-normal"><span className="font-weight-bold">Find Awesome Deals</span> in Ibadan.</h1>
-								<h5 className="mb-5 text-secondary font-weight-normal">Lists of top restaurants, cafes, pubs, and bars in Ibadan.</h5>
+								<p style={{fontSize: '17px'}} className="mb-5 text-dark font-weight-normal">Lists of top restaurants, cafes, pubs, and bars in Ibadan.</p>
 							</div>
 							{/* <div className="homepage-search-form">
 								<Form className="form-noborder">
