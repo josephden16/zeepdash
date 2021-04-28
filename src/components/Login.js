@@ -111,6 +111,9 @@ const Login = () => {
 											<div className="text-center pt-3">
 												Don’t have an account? <Link className="font-weight-bold" to="/register">Sign Up</Link>
 											</div>
+											<div className="text-center pt-3">
+												Forgot your password? <Link className="font-weight-bold" to="/login/reset-password">click here</Link>
+											</div>
 										</Form>
 									</Col>
 								</Row>

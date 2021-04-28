@@ -13,6 +13,7 @@ import Register from './components/Register';
 import Invoice from './components/Invoice';
 import Checkout from './components/Checkout';
 import Detail from './components/Detail';
+import ResetPassword from './components/ResetPassword';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -35,6 +36,7 @@ function App(props) {
         <Route path="/myrestaurant" component={MyRestaurant} />
         <Route path="/login" exact component={Login} />
         <Route path="/register/" exact component={Register} />
+        <Route path="/login/reset-password" exact component={ResetPassword} />
         <Route path="/invoice" exact component={Invoice} />
         <Route path="/checkout/:restaurantId" exact component={Checkout} />
         <Route path="/thanks" exact component={Thanks} />

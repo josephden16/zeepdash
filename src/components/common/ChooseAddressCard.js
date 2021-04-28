@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 const ChooseAddressCard = (props) => {
   const selectDeliveryLocation = () => {
     props.setDeliveryLocation(props.addressData);
-    toast.success("Address selected");
+    toast.info("Address selected");
   }
 
   return (

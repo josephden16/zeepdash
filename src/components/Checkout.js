@@ -93,7 +93,7 @@ const Checkout = () => {
 		<>
 			<Seo seo={seo} />
 			{(!restaurant && failedDataFetch === true) && <FailedToFetch />}
-			{!restaurant && <Loading text="Fetching checkout data..."  />}
+			{!restaurant && <Loading text="Fetching checkout data..." />}
 			{restaurant &&
 				<section className="offer-dedicated-body mt-4 mb-4 pt-2 pb-2">
 					<EditAddressModal show={showAddressModal} onHide={hideAddressModal} />
@@ -203,6 +203,7 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 		handleFlutterPayment({
 			callback: (response) => {
 				updateFirestoreCart([], user, restaurantId);
+				updateCartSession(restaurant.id, undefined);
 				createOrder(response);
 				history.push("/thanks")
 				closePaymentModal();
