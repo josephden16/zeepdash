@@ -55,6 +55,13 @@ const UserRegistration = ({ className }) => {
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 			.then((userCredential) => {
 				// Signed in 
+				firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+					.then(() => {
+						console.log("Session persistence enabled");
+					})
+					.catch((error) => {
+						console.log(error.message);
+					})
 				setLoading(false);
 				var user = userCredential.user;
 				const userRef = firestore.collection("User").doc(user.uid);
@@ -252,6 +259,13 @@ const BusinessRegsitration = ({ className }) => {
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 			.then((userCredential) => {
 				// Signed in 
+				firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+					.then(() => {
+						console.log("Session persistence enabled");
+					})
+					.catch((error) => {
+						console.log(error.message);
+					})
 				setLoading(false);
 				const { user } = userCredential;
 				const userRef = firestore.collection("Restaurants").doc(user.uid);
