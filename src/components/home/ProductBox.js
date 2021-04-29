@@ -8,7 +8,7 @@ class ProductBox extends React.Component {
     return (
       <div className={this.props.boxClass}>
         <Link to={this.props.linkUrl}>
-          <Image src={this.props.image} className={this.props.imageClass} alt={this.props.imageAlt} />
+          <Image src={this.props.image} width="508" height="320" className={this.props.imageClass} alt={this.props.imageAlt} />
           {this.props.title ?
             <h6>{this.props.title}</h6>
             : ""

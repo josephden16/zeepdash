@@ -27,34 +27,34 @@ class Index extends React.Component {
 						<Row>
 							<Col md={3} xs={6}>
 								<ProductBox
-									image='img/pro1.jpg'
+									image='img/products/fried-rice.webp'
 									imageClass='img-fluid rounded'
-									imageAlt='product'
-									linkUrl='#'
+									imageAlt='Fried Rice'
+									linkUrl=''
 								/>
 							</Col>
 							<Col md={3} xs={6}>
 								<ProductBox
-									image='img/2.jpg'
+									image='img/products/egusi.webp'
 									imageClass='img-fluid rounded'
-									imageAlt='product'
-									linkUrl='#'
+									imageAlt='Fried Rice'
+									linkUrl=''
 								/>
 							</Col>
 							<Col md={3} xs={6}>
 								<ProductBox
-									image='img/pro3.jpg'
+									image='img/products/amala.webp'
 									imageClass='img-fluid rounded'
-									imageAlt='product'
-									linkUrl='#'
+									imageAlt='Fried Rice'
+									linkUrl=''
 								/>
 							</Col>
 							<Col md={3} xs={6}>
 								<ProductBox
-									image='img/pro4.jpg'
+									image='img/products/jollof-rice.webp'
 									imageClass='img-fluid rounded'
-									imageAlt='product'
-									linkUrl='#'
+									imageAlt='Fried Rice'
+									linkUrl=''
 								/>
 							</Col>
 						</Row>

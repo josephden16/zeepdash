@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { Row, Col, Container, Image } from 'react-bootstrap';
 import Meals from './myrestaurant/Meals';
@@ -7,6 +7,7 @@ import Orders from './myrestaurant/Orders';
 import EditProfileModal from './modals/EditProfileModal';
 import NotSignedIn from './NotSignedIn';
 import { UserContext } from '../components/providers/AuthProvider';
+
 
 const MyRestaurant = () => {
 
@@ -36,7 +37,7 @@ const MyRestaurant = () => {
                         <h6 className="mb-2">{user.name}</h6>
                         <p className="mb-1">{user.phone}</p>
                         <p>{user.email}</p>
-                        {/* <p className="mb-0 text-black font-weight-bold"><Link to='#' onClick={() => setShowEditProfile(true)} className="text-primary mr-3"><i className="icofont-ui-edit"></i> EDIT</Link></p> */}
+                        <p className="mb-0 text-black font-weight-bold"><Link to='#' onClick={() => setShowEditProfile(true)} className="text-primary mr-3"><i className="icofont-ui-edit"></i> EDIT</Link></p>
                       </div>
                     </div>
                   </div>

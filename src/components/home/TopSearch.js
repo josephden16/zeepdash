@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import OwlCarousel from 'react-owl-carousel3';
 import ProductBox from './ProductBox';
-import CategoriesCarousel from '../common/CategoriesCarousel';
+import CuisinesCarousel from '../common/CuisinesCarousel';
 
 class TopSearch extends React.Component {
 
@@ -15,7 +15,7 @@ class TopSearch extends React.Component {
 						<Col md={8}>
 							<div className="homepage-search-title">
 								<h1 className="mb-2 font-weight-normal"><span className="font-weight-bold">Find Awesome Deals</span> in Ibadan.</h1>
-								<p style={{fontSize: '17px'}} className="mb-5 text-dark font-weight-normal">Lists of top restaurants, cafes, pubs, and bars in Ibadan.</p>
+								<p style={{ fontSize: '17px' }} className="mb-5 text-dark font-weight-normal">Lists of top restaurants, cafes, pubs, and bars in Ibadan.</p>
 							</div>
 							{/* <div className="homepage-search-form">
 								<Form className="form-noborder">
@@ -42,39 +42,47 @@ class TopSearch extends React.Component {
 											<Link className="locate-me" to="#"><Icofont icon='ui-pointer' /> Locate Me</Link>
 										</Form.Group>
 										<Form.Group className='col-lg-2 col-md-2 col-sm-12'>
-											<Link to="listing" className="btn btn-primary btn-block btn-lg btn-gradient">Search</Link>
+											<Link to="restaurants" className="btn btn-primary btn-block btn-lg btn-gradient">Search</Link>
 										</Form.Group>
 									</div>
 								</Form>
 							</div>
 							<h6 className="mt-4 text-shadow font-weight-normal">E.g. Beverages, Pizzas, Chinese, Bakery, Indian...</h6> */}
-							<CategoriesCarousel />
+							<CuisinesCarousel />
 						</Col>
 						<Col md={4}>
 							<div className="osahan-slider pl-4 pt-3">
 								<OwlCarousel nav loop {...options2} className="homepage-ad owl-theme">
 									<div className="item">
 										<ProductBox
-											image='img/slider.png'
+											image='img/sliders/slider-1.webp'
 											imageClass='img-fluid rounded'
 											imageAlt='carousel'
-											linkUrl='listing'
+											linkUrl='restaurants'
 										/>
 									</div>
 									<div className="item">
 										<ProductBox
-											image='img/slider1.png'
+											image='img/sliders/slider-2.webp'
 											imageClass='img-fluid rounded'
 											imageAlt='carousel'
-											linkUrl='listing'
+											linkUrl='restaurants'
 										/>
 									</div>
 									<div className="item">
 										<ProductBox
-											image='img/slider.png'
+											image='img/sliders/slider-3.webp'
 											imageClass='img-fluid rounded'
 											imageAlt='carousel'
-											linkUrl='listing'
+											linkUrl='restaurants'
+										/>
+									</div>
+									<div className="item">
+										<ProductBox
+											image='img/sliders/slider-4.webp'
+											imageClass='img-fluid rounded'
+											imageAlt='carousel'
+											linkUrl='restaurants'
 										/>
 									</div>
 								</OwlCarousel>

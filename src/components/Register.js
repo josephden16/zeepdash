@@ -48,6 +48,7 @@ const UserRegistration = ({ className }) => {
 
 	const history = useHistory();
 
+	const areaCode = "+234";
 
 	const registerWithEmailAndPassword = (email, password) => {
 		setLoading(true);
@@ -65,7 +66,7 @@ const UserRegistration = ({ className }) => {
 							firestore.collection("Users").doc(user.uid).set({
 								email: user.email,
 								role: 'customer',
-								phone: phoneNum,
+								phone: `${areaCode}${phoneNum.substring(1,)}`,
 								name: name,
 								dateJoined: new Date(),
 								locations: []
