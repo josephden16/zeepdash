@@ -24,6 +24,25 @@ export const storage = firebase.storage();
 
 
 // authentication functions
+
+export function setPersistenceSession(email, password) {
+  // [START auth_set_persistence_session]
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .then(() => {
+      // Existing and future Auth states are now persisted in the current
+      // session only. Closing the window would clear any existing state even
+      // if a user forgets to sign out.
+      // ...
+      // New sign-in will be persisted with session persistence.
+      return firebase.auth().signInWithEmailAndPassword(email, password)
+    })
+    .catch(() => {
+      // Handle Errors here.
+    });
+  // [END auth_set_persistence_session]
+}
+
+
 export const registerWithEmailAndPassword = (email, password) => {
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {

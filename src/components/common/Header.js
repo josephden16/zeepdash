@@ -96,13 +96,18 @@ const UserDropDown = () => {
 		toast.success("You are signed out");
 	}
 
-	return (
-		<>
-			{(!user) &&
+	if (!user) {
+		return (
+			<>
 				<Nav.Link as={Link} to="/login">
 					Log in
 				</Nav.Link>
-			}
+			</>
+		)
+	}
+
+	return (
+		<>
 			{user && user.role === "customer" &&
 				<NavDropdown alignRight
 					title={
@@ -141,6 +146,5 @@ const UserDropDown = () => {
 		</>
 	)
 }
-
 
 export default Header;

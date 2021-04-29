@@ -26,6 +26,14 @@ const Login = () => {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 			.then(() => {
 				//signed in
+				// set persistence to session
+				firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+					.then(() => {
+						console.log("Session persistence enabled");
+					})
+					.catch((error) => {
+						console.log(error.message);
+					})
 				setLoading(false);
 				toast.success("You're signed in");
 				history.push("/");
