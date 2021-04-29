@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Container, Accordion, Button, Form } from 'react-bootstrap';
-import Icofont from 'react-icofont';
+import { Row, Col, Container} from 'react-bootstrap';
 import PageTitle from './common/PageTitle';
 import CardItem from './common/CardItem';
 import Seo from './Seo';
 import Loading from './common/Loading';
 import { firestore } from '../firebase';
-import { capitalize } from '../utils';
+// import { capitalize } from '../utils';
+// import Icofont from 'react-icofont';
 
 
 const seo = {
@@ -99,7 +99,7 @@ const ListContainer = ({ restaurants, cuisines }) => {
 					</Col>
 				</Row>
 				<Row>
-					<Col md={3}>
+					{/* <Col md={3}>
 						<div className="filters shadow-sm rounded bg-white mb-4">
 							<div className="filters-header border-bottom pl-4 pr-4 pt-3 pb-3">
 								<h5 className="m-0">Filter By</h5>
@@ -108,7 +108,7 @@ const ListContainer = ({ restaurants, cuisines }) => {
 								<CuisinesFilter cuisines={cuisines} />
 							</div>
 						</div>
-					</Col>
+					</Col> */}
 					<Col md={9}>
 						{/* <CategoriesCarousel /> */}
 						<Row>
@@ -130,41 +130,41 @@ const ListContainer = ({ restaurants, cuisines }) => {
 }
 
 
-const CuisinesFilter = ({ cuisines }) => {
-	return (
-		<Accordion defaultActiveKey="0">
-			<div className="filters-card border-bottom p-4">
-				<div className="filters-card-header" id="headingTwo">
-					<h6 className="mb-0">
-						<Accordion.Toggle as={Button} size='block' variant="link" className='text-left d-flex align-items-center p-0' eventKey="1">
-							All cuisines <Icofont icon='arrow-down' className='ml-auto' />
-						</Accordion.Toggle>
-					</h6>
-				</div>
-				<Accordion.Collapse eventKey="1">
-					<div className="filters-card-body card-shop-filters">
-						{
-							cuisines && cuisines.map((cuisine, index) => <Cuisine key={cuisine.id} index={index} cuisine={cuisine} />)
-						}
-					</div>
-				</Accordion.Collapse>
-			</div>
-		</Accordion>
-	)
-}
+// const CuisinesFilter = ({ cuisines }) => {
+// 	return (
+// 		<Accordion defaultActiveKey="0">
+// 			<div className="filters-card border-bottom p-4">
+// 				<div className="filters-card-header" id="headingTwo">
+// 					<h6 className="mb-0">
+// 						<Accordion.Toggle as={Button} size='block' variant="link" className='text-left d-flex align-items-center p-0' eventKey="1">
+// 							All cuisines <Icofont icon='arrow-down' className='ml-auto' />
+// 						</Accordion.Toggle>
+// 					</h6>
+// 				</div>
+// 				<Accordion.Collapse eventKey="1">
+// 					<div className="filters-card-body card-shop-filters">
+// 						{
+// 							cuisines && cuisines.map((cuisine, index) => <Cuisine key={cuisine.id} index={index} cuisine={cuisine} />)
+// 						}
+// 					</div>
+// 				</Accordion.Collapse>
+// 			</div>
+// 		</Accordion>
+// 	)
+// }
 
-const Cuisine = ({ cuisine, index }) => {
-	return (
-		<Form.Check
-			custom
-			type='checkbox'
-			id={`custom-cb${index + 1}`}
-			value={cuisine.name}
-			onChange={(evt) => console.log(evt.target.value)}
-			label={capitalize(cuisine.name)}
-		/>
-	)
-}
+// const Cuisine = ({ cuisine, index }) => {
+// 	return (
+// 		<Form.Check
+// 			custom
+// 			type='checkbox'
+// 			id={`custom-cb${index + 1}`}
+// 			value={cuisine.name}
+// 			onChange={(evt) => console.log(evt.target.value)}
+// 			label={capitalize(cuisine.name)}
+// 		/>
+// 	)
+// }
 
 const RestaurantCard = ({ restaurant }) => {
 	return (
@@ -173,7 +173,7 @@ const RestaurantCard = ({ restaurant }) => {
 				title={restaurant.name}
 				subTitle={restaurant.cuisines.join(" • ").toUpperCase()}
 				imageAlt='Product'
-				image={restaurant.imageURL ? restaurant.imageURL : '/img/list/1.png'}
+				image={restaurant.imageURL ? restaurant.imageURL : '/img/default-list.png'}
 				imageClass='img-fluid item-img'
 				linkUrl={`restaurant/${restaurant.slug}`}
 				offerText=''

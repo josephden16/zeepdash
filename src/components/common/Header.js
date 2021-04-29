@@ -115,9 +115,9 @@ const UserDropDown = () => {
 						/>
 					}
 				>
-					<NavDropdown.Item eventKey={4.1} as={NavLink} activeclassname="active" to="/myaccount/orders"><Icofont icon='food-cart' /> Orders</NavDropdown.Item>
-					<NavDropdown.Item eventKey={4.2} as={NavLink} activeclassname="active" to="/myaccount/addresses"><Icofont icon='location-pin' /> Addresses</NavDropdown.Item>
-					<NavDropdown.Item eventKey={4.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
+					<NavDropdown.Item eventKey={1.1} as={NavLink} activeclassname="active" to="/myaccount/orders"><Icofont icon='food-cart' /> Orders</NavDropdown.Item>
+					<NavDropdown.Item eventKey={1.2} as={NavLink} activeclassname="active" to="/myaccount/addresses"><Icofont icon='location-pin' /> Addresses</NavDropdown.Item>
+					<NavDropdown.Item eventKey={1.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
 				</NavDropdown>
 			}
 			{user && user.role === "business" &&
@@ -132,10 +132,10 @@ const UserDropDown = () => {
 						/>
 					}
 				>
-					<NavDropdown.Item eventKey={4.4} as={NavLink} activeclassname="active" to="/myrestaurant/meals"><Icofont icon='fast-food' /> Meals</NavDropdown.Item>
-					<NavDropdown.Item eventKey={4.1} as={NavLink} activeclassname="active" to="/myrestaurant/orders"><Icofont icon='food-cart' /> Orders</NavDropdown.Item>
+					<NavDropdown.Item eventKey={2.1} as={NavLink} activeclassname="active" to="/myrestaurant/meals"><Icofont icon='fast-food' /> Meals</NavDropdown.Item>
+					<NavDropdown.Item eventKey={2.2} as={NavLink} activeclassname="active" to="/myrestaurant/orders"><Icofont icon='food-cart' /> Orders</NavDropdown.Item>
+					<NavDropdown.Item eventKey={2.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
 					{/* <NavDropdown.Item eventKey={4.5} as={NavLink} activeclassname="active" to="/myrestaurant/details"><Icofont icon='user-alt-7' /> Account</NavDropdown.Item> */}
-					<NavDropdown.Item eventKey={4.6} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
 				</NavDropdown>
 			}
 		</>

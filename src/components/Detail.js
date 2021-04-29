@@ -121,7 +121,7 @@ const Detail = () => {
 						<Row className="d-flex align-items-end">
 							<Col md={8}>
 								<div className="restaurant-detailed-header-left">
-									<Image draggable={false} fluid className="mr-3 float-left" alt="osahan" src={restaurant.photoURL || '/img/2.jpg'} />
+									<Image draggable={false} fluid className="mr-3 float-left" alt="osahan" src={restaurant.photoURL || '/img/default-list.png'} />
 									<h2 className="text-white">{restaurant.name}</h2>
 									<p className="text-white mb-1"><Icofont icon="location-pin" />{" "}{restaurant.address.toUpperCase()} <Badge variant="success">OPEN</Badge>
 									</p>

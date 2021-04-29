@@ -269,7 +269,7 @@ const BusinessRegsitration = ({ className }) => {
 								dateJoined: new Date(),
 								openingTime: openingTime,
 								closingTime: closingTime,
-								cuisines: ['african', 'international'],
+								cuisines: ['african'],
 								photoURL: '',
 								bannerImageURL: '',
 								slug: generateSlug(name)

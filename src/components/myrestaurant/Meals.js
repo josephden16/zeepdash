@@ -30,7 +30,6 @@ const Meals = () => {
   const [deleteMealData, setDeleteMealData] = useState(defaultDeleteData)
   const restaurant = useContext(UserContext);
 
-
   const hideEditMealModal = () => {
     setEditDefaultData(defaultData);
     setShowEditMealModal(false);
@@ -54,8 +53,9 @@ const Meals = () => {
   const displayDeleteMealModal = (meal) => {
     const deleteMealData = {
       id: meal.id,
-      mealImageFile: meal.fileName,
-      restaurantId: meal.restaurantId
+      fileName: meal.fileName,
+      restaurantId: meal.restaurantId,
+      slug: restaurant.slug
     }
     setDeleteMealData(deleteMealData);
     setShowDeleteModal(true);
@@ -74,6 +74,8 @@ const Meals = () => {
       });
 
       setMeals(data);
+    } else {
+      setMeals(null);
     }
   }
 
@@ -142,6 +144,8 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
       });
 
       setMeals(data);
+    } else {
+      setMeals(null);
     }
   }
 

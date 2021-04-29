@@ -294,7 +294,7 @@ h6 {
 }
 .bg-image {
   /* background-image: url("/img/bg-food.png"); */
-  background-image: url("./assets/img/restaurant-bg.webp");
+  background-image: url("./assets/img/food-bg.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

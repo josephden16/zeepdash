@@ -14,15 +14,15 @@ const DeleteMealModal = (props) => {
     }
 
     const mealId = props.deleteMealData.id;
-    const restaurantId = props.deleteMealData.restaurantId;
-    const imageFile = props.deleteMealData.mealImageFile;
+    const restaurantSlug = props.deleteMealData.slug;
+    const imageFile = props.deleteMealData.fileName;
     const mealRef = firestore.collection("Meals").doc(mealId);
     const storageRef = storage.ref();
     setLoading(true);
     try {
       // delete meal document in firestore
       mealRef.delete();
-      await storageRef.child("Meals").child(restaurantId).child(imageFile).delete();
+      await storageRef.child("Meals").child(restaurantSlug).child(imageFile).delete();
       setLoading(false)
       toast.success("Meal deleted");
       // props.onHide();

@@ -37,7 +37,7 @@ const EditMealModal = (props) => {
           }, { merge: true })
             .then(() => {
               props.refresh();
-              toast.success("Meal updated successfuly  🎉");
+              toast.success("Meal updated successfuly 🎉");
               setLoading(false);
             })
         })
@@ -52,7 +52,7 @@ const EditMealModal = (props) => {
       }, { merge: true })
         .then(() => {
           props.refresh();
-          toast.success("Meal updated successfuly  🎉");
+          toast.success("Meal updated successfuly 🎉");
           setLoading(false);
         })
     }
@@ -103,7 +103,7 @@ const EditMealModal = (props) => {
       <Modal.Footer>
         <Button type='button' onClick={props.onHide} variant="outline-primary" className="d-flex w-50 text-center justify-content-center">CANCEL</Button>
         <Button disabled={loading ? true : false} type='button' onClick={updateMeal} variant="primary" className='d-flex w-50 text-center justify-content-center'>
-          {!loading && <span>UPDTAE</span>}
+          {!loading && <span>UPDATE</span>}
           {loading && <Image style={{ width: '28px' }} fluid src="/img/loading-2.svg" alt="loading" />}
         </Button>
       </Modal.Footer>

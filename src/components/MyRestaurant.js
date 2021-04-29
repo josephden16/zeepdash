@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { Row, Col, Container, Image } from 'react-bootstrap';
 import Meals from './myrestaurant/Meals';
 import Orders from './myrestaurant/Orders';
-import EditProfileModal from './modals/EditProfileModal';
+import EditRestaurantProfileModal from './modals/EditRestaurantProfileModal';
 import NotSignedIn from './NotSignedIn';
 import { UserContext } from '../components/providers/AuthProvider';
 
@@ -19,11 +19,11 @@ const MyRestaurant = () => {
 
   if (!user || user.role === "customer") {
     return <NotSignedIn />
-  } 
+  }
 
   return (
     <>
-      <EditProfileModal defaultData={{ name: user.name, email: user.email, phone: user.phone }} show={showEditProfile} onHide={hideEditProfile} />
+      <EditRestaurantProfileModal defaultData={{ phone: user.phone }} restaurantId={user.id} slug={user.slug} show={showEditProfile} onHide={hideEditProfile} />
       <section className="section pt-4 pb-4 osahan-account-page">
         <Container>
           <Row>
@@ -32,7 +32,7 @@ const MyRestaurant = () => {
                 <div className="border-bottom p-4">
                   <div className="osahan-user text-center">
                     <div className="osahan-user-media">
-                      <Image style={{ borderRadius: '50%', width: '70px', height: '70px' }} className="mb-3 shadow-sm mt-1" src={user.photoURL || "/img/user/default-profile.webp"} draggable={false} alt="gurdeep singh osahan" />
+                      <Image style={{ borderRadius: '50%', width: '70px', height: '70px' }} className="mb-3 shadow-sm mt-1" src={user.photoURL || "/img/user/default-profile.webp"} draggable={false} alt={user.name} />
                       <div className="osahan-user-media-body">
                         <h6 className="mb-2">{user.name}</h6>
                         <p className="mb-1">{user.phone}</p>
