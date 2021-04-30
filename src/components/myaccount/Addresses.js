@@ -47,10 +47,20 @@ const Addresses = () => {
 
 		try {
 			const snapshot = await userRef.get();
-			let data = snapshot.data();
-			let { locations } = data;
-			setAddresses(locations);
-			setFailedDataFetch(false);
+			if (snapshot.exists) {
+				let data = snapshot.data();
+				let { locations } = data;
+				if (locations.length > 0) {
+					setAddresses(locations);
+					setFailedDataFetch(false);
+				} else {
+					setAddresses(null);
+				}
+			} else {
+				setAddresses(null);
+				setFailedDataFetch(false);
+			}
+
 		} catch (error) {
 			setFailedDataFetch(true);
 		}
@@ -84,10 +94,20 @@ const Addresses = () => {
 
 			try {
 				const snapshot = await userRef.get();
-				let data = snapshot.data();
-				let { locations } = data;
-				setAddresses(locations);
-				setFailedDataFetch(false);
+				if (snapshot.exists) {
+					let data = snapshot.data();
+					let { locations } = data;
+					if (locations.length > 0) {
+						setAddresses(locations);
+						setFailedDataFetch(false);
+					} else {
+						setAddresses([]);
+						setFailedDataFetch(false);
+					}
+				} else {
+					setAddresses([]);
+					setFailedDataFetch(false);
+				}
 			} catch (error) {
 				setFailedDataFetch(true);
 			}
@@ -156,7 +176,7 @@ const AddAddress = ({ refresh, addresses, user }) => {
 	const [category, setCategory] = useState("");
 
 	const addAddress = async () => {
-		if (addresses.length === 3) {
+		if (addresses && addresses.length === 3) {
 			toast.info("You can't add more than 3 addresses");
 			return;
 		}

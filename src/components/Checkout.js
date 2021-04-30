@@ -27,6 +27,7 @@ const Checkout = () => {
 	const user = useContext(UserContext);
 	const hideAddressModal = () => setShowAddressModal(false);
 
+
 	const fetchAddresses = async () => {
 		if (!user) return null;
 
@@ -36,10 +37,20 @@ const Checkout = () => {
 
 		try {
 			const snapshot = await userRef.get();
-			let data = snapshot.data();
-			let { locations } = data;
-			setAddresses(locations);
-			setFailedDataFetch(false);
+			if (snapshot.exists) {
+				let data = snapshot.data();
+				let { locations } = data;
+				if (locations.length > 0) {
+					setAddresses(locations);
+					setFailedDataFetch(false);
+				} else {
+					setAddresses([]);
+				}
+			} else {
+				setAddresses([]);
+				setFailedDataFetch(false);
+			}
+
 		} catch (error) {
 			setFailedDataFetch(true);
 		}
@@ -56,14 +67,25 @@ const Checkout = () => {
 
 			try {
 				const snapshot = await userRef.get();
-				let data = snapshot.data();
-				let { locations } = data;
-				setAddresses(locations);
-				setFailedDataFetch(false);
+				if (snapshot.exists) {
+					let data = snapshot.data();
+					let { locations } = data;
+					if (locations.length > 0) {
+						setAddresses(locations);
+						setFailedDataFetch(false);
+					} else {
+						setAddresses([]);
+					}
+				} else {
+					setAddresses([]);
+					setFailedDataFetch(false);
+				}
+
 			} catch (error) {
 				setFailedDataFetch(true);
 			}
 		}
+
 
 		const fetchRestaurantData = async () => {
 			const restaurantRef = firestore.collection("Restaurants").doc(restaurantId);
@@ -110,11 +132,7 @@ const Checkout = () => {
 }
 
 const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
-	const [loading, setLoading] = useState(false);
-	const [address, setAddress] = useState("");
-	const [deliveryInstruction, setDeliveryInstruction] = useState("");
-	const [deliveryArea, setDeliveryArea] = useState("");
-	const [category, setCategory] = useState(""); const totalAmount = parseInt(getTotalAmount(cart) + DELIVERY_FEE);
+	const totalAmount = parseInt(getTotalAmount(cart) + DELIVERY_FEE);
 	const { restaurantId } = useParams();
 	const history = useHistory();
 
@@ -173,9 +191,9 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 			console.log(error.message, error.code);
 		}
 	}
-	// FLWPUBK-692795778fbd1d8a213007824d31c5db-X
+	
 	const config = {
-		public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY || '',
+		public_key: 'FLWPUBK-692795778fbd1d8a213007824d31c5db-X',
 		tx_ref: Date.now(),
 		amount: totalAmount,
 		currency: 'NGN',
@@ -211,58 +229,6 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 		})
 	}
 
-	// address
-	const addAddress = async () => {
-		if (addresses.length === 3) {
-			toast.info("You can't add more than 3 addresses");
-			return;
-		}
-		if (address === "" && category === "" && deliveryArea && deliveryInstruction) {
-			toast.warning("Please fill all form fields");
-			return;
-		}
-
-		if (!address) {
-			toast.warning("Please enter a valid address");
-			return;
-		}
-
-		if (!deliveryArea) {
-			toast.warning("Please enter the area you stay");
-			return;
-		}
-
-		if (!deliveryInstruction) {
-			toast.warning("Please enter a delivery instruction");
-			return;
-		}
-
-		if (category === "") {
-			toast.warning("Please select a category");
-			return;
-		}
-
-		let id = uuid4();
-		let data = {
-			id: id,
-			name: address,
-			category: category,
-			area: deliveryArea,
-			deliveryInstruction: deliveryInstruction
-		}
-		let newLocations = addresses.concat(data);
-		setLoading(true);
-		try {
-			const userRef = firestore.collection("Users").doc(user.id);
-			await userRef.set({ locations: newLocations }, { merge: true });
-			setLoading(false);
-			toast.success("Address added");
-			refresh();
-		} catch (error) {
-			toast.error("Failed to add address");
-			setLoading(false);
-		}
-	}
 
 	if (!cart) {
 		return null;
@@ -271,75 +237,8 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 	return (
 		<Col md={8}>
 			<div className="offer-dedicated-body-left">
-				<div className="bg-white rounded shadow-sm p-4 mb-4">
-					<h3 className="font-weight-bold mt-3 mb-2">Add a delivery location</h3>
-					<div className="auth-animation">
-						<Row>
-							<Col md={9} lg={8}>
-								<Form className="mt-2 mb-2" onSubmit={(evt) => { evt.preventDefault() }}>
-									<div className="form-label-group">
-										<input type="text" onChange={(evt) => setAddress(evt.target.value)} className="input" id="inputAddress" placeholder="Address" />
-									</div>
-									<div className="form-label-group">
-										<input type="text" onChange={(evt) => setDeliveryArea(evt.target.value)} className="input" id="inputDeliveryArea" placeholder="Area" />
-									</div>
-									<div className="form-label-group">
-										<input type="text" onChange={(evt) => setDeliveryInstruction(evt.target.value)} className="input" id="inputDeliveryInstruction" placeholder="Delivery Instruction" />
-									</div>
-									<div className="form-label-group flex flex-row">
-										<Form.Control onChange={(evt) => setCategory(evt.target.value)} as="select">
-											<option value="">Select a category...</option>
-											<option value="home">Home</option>
-											<option value="work">Work</option>
-											<option value="other">Other</option>
-										</Form.Control>
-									</div>
-									<button disabled={loading ? true : false} onClick={addAddress} className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">
-										{!loading && <span>Add Location</span>}
-										{loading && <Image style={{ width: '30px' }} fluid src="/img/loading-2.svg" alt="loading" />}
-									</button>
-								</Form>
-							</Col>
-						</Row>
-					</div>
-				</div>
-				<div className="bg-white rounded shadow-sm p-4 mb-4">
-					<h4 className="mb-3">Choose a delivery location</h4>
-					<Row>
-						{addresses && addresses.map(address => {
-							let iconName = "";
-							switch (address.category) {
-								case "home":
-									iconName = "home";
-									break;
-								case "work":
-									iconName = "briefcase";
-									break;
-								default:
-									iconName = "location-pin";
-									break;
-							}
-							return (
-								<Col md={6} key={address.id} >
-									<ChooseAddressCard
-										title={capitalize(address.category)}
-										icoIcon={iconName}
-										iconclassName='icofont-3x'
-										address={address.name}
-										addressData={address}
-										setDeliveryLocation={setDeliveryLocation}
-									/>
-								</Col>
-							)
-						})}
-						{
-							(addresses && addresses.length < 1) &&
-							<Col md={12} className="h6">
-								You don't have any address, fill the form above to create one.
-							</Col>
-						}
-					</Row>
-				</div>
+				<AddDeliveryLocation addresses={addresses} refresh={refresh} />
+				<ChooseDeliveryLocation addresses={addresses} setDeliveryLocation={setDeliveryLocation} />
 				<div className="bg-white rounded shadow-sm p-4 osahan-payment">
 					<h3 className="text-center" style={{ fontWeight: 'bold' }}>Complete your order</h3>
 					<h4 className="text-center">Pay with <Image fluid style={{ width: '140px' }} src="/img/flutterwave.svg" alt="Flutterwave" /></h4>
@@ -443,6 +342,144 @@ const OrderItem = ({ meal, updateCart, restaurantId }) => {
 	)
 }
 
+const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
+	if (!addresses || addresses.length < 1) return (
+		<>
+			<Col md={12} className="h6 bg-white p-4 shadow-sm rounded text-center mb-4">
+				You don't have an address on ZeepDash, please fill the form above to create one.
+			</Col>
+		</>
+	)
+
+	return (
+		<div className="bg-white rounded shadow-sm p-4 mb-4">
+			<h4 className="mb-3">Choose a delivery location</h4>
+			<Row>
+				{addresses && addresses.map(address => {
+					let iconName = "";
+					switch (address.category) {
+						case "home":
+							iconName = "home";
+							break;
+						case "work":
+							iconName = "briefcase";
+							break;
+						default:
+							iconName = "location-pin";
+							break;
+					}
+					return (
+						<Col md={6} key={address.id} >
+							<ChooseAddressCard
+								title={capitalize(address.category)}
+								icoIcon={iconName}
+								iconclassName='icofont-3x'
+								address={address.name}
+								addressData={address}
+								setDeliveryLocation={setDeliveryLocation}
+							/>
+						</Col>
+					)
+				})}
+			</Row>
+		</div>
+	)
+}
+
+const AddDeliveryLocation = ({ addresses, refresh }) => {
+	const [loading, setLoading] = useState(false);
+	const [address, setAddress] = useState("");
+	const [deliveryInstruction, setDeliveryInstruction] = useState("");
+	const [deliveryArea, setDeliveryArea] = useState("");
+	const [category, setCategory] = useState("");
+	const user = useContext(UserContext);
+
+	const addAddress = async () => {
+		if (addresses && addresses.length === 3) {
+			toast.info("You can't add more than 3 addresses");
+			return;
+		}
+		if (address === "" && category === "" && deliveryArea && deliveryInstruction) {
+			toast.warning("Please fill all form fields");
+			return;
+		}
+
+		if (!address) {
+			toast.warning("Please enter a valid address");
+			return;
+		}
+
+		if (!deliveryArea) {
+			toast.warning("Please enter the area you stay");
+			return;
+		}
+
+		if (!deliveryInstruction) {
+			toast.warning("Please enter a delivery instruction");
+			return;
+		}
+
+		if (category === "") {
+			toast.warning("Please select a category");
+			return;
+		}
+
+		let id = uuid4();
+		let data = {
+			id: id,
+			name: address,
+			category: category,
+			area: deliveryArea,
+			deliveryInstruction: deliveryInstruction
+		}
+		let newLocations = addresses.concat(data);
+		setLoading(true);
+		try {
+			const userRef = firestore.collection("Users").doc(user.id);
+			await userRef.set({ locations: newLocations }, { merge: true });
+			setLoading(false);
+			toast.success("Address added");
+			refresh();
+		} catch (error) {
+			toast.error("Failed to add address");
+			setLoading(false);
+		}
+	}
+	return (
+		<div className="bg-white rounded shadow-sm p-4 mb-4">
+			<h3 className="font-weight-bold mt-3 mb-2">Add a delivery location</h3>
+			<div className="auth-animation">
+				<Row>
+					<Col md={9} lg={8}>
+						<Form className="mt-2 mb-2" onSubmit={(evt) => { evt.preventDefault() }}>
+							<div className="form-label-group">
+								<input type="text" onChange={(evt) => setAddress(evt.target.value)} className="input" id="inputAddress" placeholder="Address" />
+							</div>
+							<div className="form-label-group">
+								<input type="text" onChange={(evt) => setDeliveryArea(evt.target.value)} className="input" id="inputDeliveryArea" placeholder="Area" />
+							</div>
+							<div className="form-label-group">
+								<input type="text" onChange={(evt) => setDeliveryInstruction(evt.target.value)} className="input" id="inputDeliveryInstruction" placeholder="Delivery Instruction" />
+							</div>
+							<div className="form-label-group flex flex-row">
+								<Form.Control onChange={(evt) => setCategory(evt.target.value)} as="select">
+									<option value="">Select a category...</option>
+									<option value="home">Home</option>
+									<option value="work">Work</option>
+									<option value="other">Other</option>
+								</Form.Control>
+							</div>
+							<button disabled={loading ? true : false} onClick={addAddress} className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">
+								{!loading && <span>Add Location</span>}
+								{loading && <Image style={{ width: '30px' }} fluid src="/img/loading-2.svg" alt="loading" />}
+							</button>
+						</Form>
+					</Col>
+				</Row>
+			</div>
+		</div>
+	)
+}
 
 const FailedToFetch = () => {
 	return (
