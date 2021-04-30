@@ -106,9 +106,9 @@ const UserDropDown = () => {
 		)
 	}
 
-	return (
-		<>
-			{user && user.role === "customer" &&
+	if (user.role === "customer") {
+		return (
+			<>
 				<NavDropdown alignRight
 					title={
 						<DropDownTitle
@@ -124,8 +124,13 @@ const UserDropDown = () => {
 					<NavDropdown.Item eventKey={1.2} as={NavLink} activeclassname="active" to="/myaccount/addresses"><Icofont icon='location-pin' /> Addresses</NavDropdown.Item>
 					<NavDropdown.Item eventKey={1.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
 				</NavDropdown>
-			}
-			{user && user.role === "business" &&
+			</>
+		)
+	}
+
+	if (user.role === "business") {
+		return (
+			<>
 				<NavDropdown alignRight
 					title={
 						<DropDownTitle
@@ -142,7 +147,15 @@ const UserDropDown = () => {
 					<NavDropdown.Item eventKey={2.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
 					{/* <NavDropdown.Item eventKey={4.5} as={NavLink} activeclassname="active" to="/myrestaurant/details"><Icofont icon='user-alt-7' /> Account</NavDropdown.Item> */}
 				</NavDropdown>
-			}
+			</>
+		)
+	}
+
+	return (
+		<>
+			<Nav.Link as={Link} to="/login">
+				Log in
+			</Nav.Link>
 		</>
 	)
 }

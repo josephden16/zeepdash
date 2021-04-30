@@ -158,6 +158,11 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 			return;
 		}
 
+		if (!cart || cart.length < 1) {
+			toast.error("You must have meals in your cart to checkout");
+			return;
+		}
+
 		let paymentStatus = (paymentResult["status"] === "successful") ? true : false;
 
 		const ordersRef = firestore.collection("Orders");
@@ -215,6 +220,11 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 	const handlePayment = () => {
 		if (!deliveryLocation) {
 			toast.error("Please select a delivery location");
+			return;
+		}
+
+		if (!cart || cart.length < 1) {
+			toast.error("You must have meals in your cart to checkout");
 			return;
 		}
 
