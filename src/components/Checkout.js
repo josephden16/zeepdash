@@ -173,9 +173,9 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 			console.log(error.message, error.code);
 		}
 	}
-
+	// FLWPUBK-692795778fbd1d8a213007824d31c5db-X
 	const config = {
-		public_key: 'FLWPUBK-692795778fbd1d8a213007824d31c5db-X',
+		public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY || '',
 		tx_ref: Date.now(),
 		amount: totalAmount,
 		currency: 'NGN',
