@@ -4,7 +4,7 @@ import { Row, Col, Container, Form, Image } from 'react-bootstrap';
 import { UserContext } from '../components/providers/AuthProvider';
 import firebase from '../firebase';
 import { toast } from 'react-toastify';
-import { validateEmail } from '../utils';
+import { useQuery, validateEmail } from '../utils';
 import Seo from './Seo';
 
 
@@ -16,6 +16,8 @@ const Login = () => {
 	const passwordRef = useRef(null);
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
+
+	let query = useQuery();
 
 	if ((user && user.role !== "business")) {
 		history.replace("/myaccount/orders");
@@ -35,8 +37,14 @@ const Login = () => {
 						// console.log(error.message);
 					})
 				setLoading(false);
-				toast.success("You're signed in");
-				history.push("/");
+				let next = query.get("next");
+				if (next) {
+					window.location.replace(next);
+					toast.success("You're signed in");
+				} else {
+					toast.success("You're signed in");
+					history.push("/");
+				}
 			})
 			.catch((error) => {
 				setLoading(false);

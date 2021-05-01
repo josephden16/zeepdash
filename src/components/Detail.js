@@ -304,7 +304,8 @@ const Cart = ({ cart, updateCart, restaurant }) => {
 
 	const handleCheckout = () => {
 		if (!user) {
-			history.replace(`/login?next=${restaurant.slug}`);
+			toast.error("You must be signed in to checkout");
+			history.replace(`/login?next=${window.location.href}`);
 		} else {
 			// send cart data to firestore
 			try {
