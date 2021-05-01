@@ -229,11 +229,16 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 
 		handleFlutterPayment({
 			callback: (response) => {
-				createOrder(response);
-				updateFirestoreCart([], user, restaurantId);
-				updateCartSession(restaurant.id, []);
-				history.push("/thanks");
-				closePaymentModal();
+				if (response["status"] === "success" || response["status"] === "successful") {
+					createOrder(response);
+					updateFirestoreCart([], user, restaurantId);
+					updateCartSession(restaurant.id, []);
+					history.push("/thanks");
+					closePaymentModal();
+				} else {
+					toast.error("Payment failed");
+					closePaymentModal();
+				}
 			}
 		})
 	}
