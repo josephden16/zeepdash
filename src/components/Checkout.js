@@ -95,7 +95,7 @@ const Checkout = () => {
 				// put the restaurant data in react state
 				setRestaurant(data);
 			} catch (error) {
-				console.log(error)
+				// console.log(error)
 			}
 		}
 		fetchRestaurantData();
@@ -163,7 +163,7 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 			return;
 		}
 
-		let paymentStatus = (paymentResult["status"] === "successful") ? true : false;
+		let paymentStatus = (paymentResult["status"] === "successful" || paymentResult["status"] === "success") ? true : false;
 
 		const ordersRef = firestore.collection("Orders");
 		const orderNumber = await getNextOrderNumber();
@@ -190,10 +190,8 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 				orderCompleted: false,
 				timeOrdered: new Date(),
 			});
-			toast.success("Your order has been placed, please wait for your delivery");
 		} catch (error) {
 			toast.error("Failed to create order");
-			console.log(error.message, error.code);
 		}
 	}
 	const productionPublicKey = 'FLWPUBK-692795778fbd1d8a213007824d31c5db-X';
@@ -234,7 +232,7 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 				createOrder(response);
 				updateFirestoreCart([], user, restaurantId);
 				updateCartSession(restaurant.id, []);
-				history.push("/thanks")
+				history.push("/thanks");
 				closePaymentModal();
 			}
 		})
@@ -286,7 +284,7 @@ const Cart = ({ cart, updateCart }) => {
 					updateCart(cart);
 				}
 			} catch (error) {
-				console.log(error);
+				// console.log(error);
 			}
 		}
 

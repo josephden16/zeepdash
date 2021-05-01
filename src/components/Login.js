@@ -29,10 +29,10 @@ const Login = () => {
 				// set persistence to session
 				firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
 					.then(() => {
-						console.log("Session persistence enabled");
+						// console.log("Session persistence enabled");
 					})
 					.catch((error) => {
-						console.log(error.message);
+						// console.log(error.message);
 					})
 				setLoading(false);
 				toast.success("You're signed in");
@@ -41,8 +41,8 @@ const Login = () => {
 			.catch((error) => {
 				setLoading(false);
 				var errorCode = error.code;
-				var errorMessage = error.message;
-				console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
+				// var errorMessage = error.message;
+				// console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
 				if (errorCode === "auth/wrong-password") {
 					toast.error("The password you entered is incorrect");
 				} else if (errorCode === "auth/user-not-found") {

@@ -57,10 +57,10 @@ const UserRegistration = ({ className }) => {
 				// Signed in 
 				firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
 					.then(() => {
-						console.log("Session persistence enabled");
+						// console.log("Session persistence enabled");
 					})
 					.catch((error) => {
-						console.log(error.message);
+						// console.log(error.message);
 					})
 				setLoading(false);
 				var user = userCredential.user;
@@ -89,9 +89,9 @@ const UserRegistration = ({ className }) => {
 			})
 			.catch((error) => {
 				setLoading(false);
-				var errorCode = error.code;
-				var errorMessage = error.message;
-				console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
+				// var errorCode = error.code;
+				// var errorMessage = error.message;
+				// console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
 				toast.error("An unknown error occured, please try again later");
 			});
 	}
@@ -261,10 +261,10 @@ const BusinessRegsitration = ({ className }) => {
 				// Signed in 
 				firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
 					.then(() => {
-						console.log("Session persistence enabled");
+						// console.log("Session persistence enabled");
 					})
 					.catch((error) => {
-						console.log(error.message);
+						// console.log(error.message);
 					})
 				setLoading(false);
 				const { user } = userCredential;
@@ -311,10 +311,10 @@ const BusinessRegsitration = ({ className }) => {
 			})
 			.catch((error) => {
 				setLoading(false);
-				var errorCode = error.code;
-				var errorMessage = error.message;
+				// var errorCode = error.code;
+				// var errorMessage = error.message;
 				toast.error("Failed to register your business account");
-				console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
+				// console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
 			});
 	}
 

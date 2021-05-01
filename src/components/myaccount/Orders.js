@@ -39,7 +39,7 @@ const OrdersContainer = ({ user }) => {
 				if (!snapshot.empty) {
 					let data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 					data = data.filter(order => order.orderCompleted === true);
-					console.log(data);
+					// console.log(data);
 					setOrders(data);
 				} else {
 					const data = [];

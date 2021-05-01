@@ -27,7 +27,7 @@ const DeleteMealModal = (props) => {
       toast.success("Meal deleted");
       // props.onHide();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       setLoading(false)
       toast.error("Failed to delete meal");
     }

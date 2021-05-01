@@ -74,7 +74,7 @@ const Addresses = () => {
 			area: address.area,
 			deliveryInstruction: address.deliveryInstruction
 		}
-		console.log(data);
+		// console.log(data);
 		setEditAddressData(data);
 		setShowAddressModal(true);
 	}

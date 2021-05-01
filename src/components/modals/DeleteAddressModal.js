@@ -19,7 +19,7 @@ const DeleteAddressModal = (props) => {
 			props.refresh();
 			props.onHide();
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			setLoading(false);
 			toast.error("Failed to delete address");
 			props.onHide();

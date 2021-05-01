@@ -20,7 +20,7 @@ const EditAddressModal = (props) => {
 		}
 
 		if (!address) {
-			console.log(address);
+			// console.log(address);
 			toast.warning("Please enter a valid address");
 			return;
 		}

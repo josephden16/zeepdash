@@ -293,7 +293,6 @@ const Cart = ({ cart, updateCart, restaurant }) => {
 			if (snapshot.exists) {
 				const data = snapshot.data();
 				let { cart } = data;
-				console.log(cart);
 				updateCart(cart);
 				updateCartSession(restaurantId, cart);
 			}

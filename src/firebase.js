@@ -48,13 +48,12 @@ export const registerWithEmailAndPassword = (email, password) => {
     .then((userCredential) => {
       // Signed in 
       var user = userCredential.user;
-      console.log(user);
       return user;
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
+      // var errorCode = error.code;
+      // var errorMessage = error.message;
+      // console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
     });
 }
 
@@ -63,7 +62,7 @@ export const signInWithEmailAndPassword = (email, password) => {
     .then((userCredential) => {
       //signed in
       var user = userCredential.user;
-      console.log(user);
+      // console.log(user);
       return user;
     })
 
@@ -81,12 +80,12 @@ const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => {
   auth.signInWithPopup(googleAuthProvider)
     .then(userCredentials => {
-      const { user } = userCredentials;
-      console.log("sign in successufl");
-      console.log(user);
+      // const { user } = userCredentials;
+      // console.log("sign in successufl");
+      // console.log(user);
     })
     .catch(error => {
-      console.log(error);
+      // console.log(error);
     })
 }
 
