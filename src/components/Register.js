@@ -64,13 +64,14 @@ const UserRegistration = ({ className }) => {
 					})
 				setLoading(false);
 				var user = userCredential.user;
-				const userRef = firestore.collection("User").doc(user.uid);
+				const usersCollectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+				const userRef = firestore.collection(usersCollectionName).doc(user.uid);
 				userRef.get()
 					.then(snapshot => {
 						if (snapshot.exists) {
 							toast.warning("User exists with this email address");
 						} else {
-							firestore.collection("Users").doc(user.uid).set({
+							firestore.collection(usersCollectionName).doc(user.uid).set({
 								email: user.email,
 								role: 'customer',
 								phone: `${areaCode}${phoneNum.substring(1,)}`,
@@ -268,13 +269,15 @@ const BusinessRegsitration = ({ className }) => {
 					})
 				setLoading(false);
 				const { user } = userCredential;
-				const userRef = firestore.collection("Restaurants").doc(user.uid);
+				const restaurantCollectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
+				const usersCollectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+				const userRef = firestore.collection(restaurantCollectionName).doc(user.uid);
 				userRef.get()
 					.then(snapshot => {
 						if (snapshot.exists) {
 							toast.warning("A business with these details exist");
 						} else {
-							firestore.collection("Restaurants").doc(user.uid).set({
+							firestore.collection(restaurantCollectionName).doc(user.uid).set({
 								email: user.email,
 								role: 'business',
 								phone: `${areaCode}${phoneNum}`,
@@ -289,7 +292,7 @@ const BusinessRegsitration = ({ className }) => {
 								slug: generateSlug(name)
 							})
 								.then(() => {
-									firestore.collection("Users").doc(user.uid).set({
+									firestore.collection(usersCollectionName).doc(user.uid).set({
 										email: user.email,
 										role: 'business',
 										phone: phoneNum,

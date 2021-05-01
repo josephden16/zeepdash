@@ -33,7 +33,8 @@ const Checkout = () => {
 
 		const userId = user.id;
 
-		const userRef = firestore.collection("Users").doc(userId);
+		const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+		const userRef = firestore.collection(collectionName).doc(userId);
 
 		try {
 			const snapshot = await userRef.get();
@@ -63,8 +64,9 @@ const Checkout = () => {
 
 			const userId = user.id;
 
-			const userRef = firestore.collection("Users").doc(userId);
-
+			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+			const userRef = firestore.collection(collectionName).doc(userId);
+	
 			try {
 				const snapshot = await userRef.get();
 				if (snapshot.exists) {
@@ -88,7 +90,8 @@ const Checkout = () => {
 
 
 		const fetchRestaurantData = async () => {
-			const restaurantRef = firestore.collection("Restaurants").doc(restaurantId);
+			const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
+			const restaurantRef = firestore.collection(collectionName).doc(restaurantId);
 			try {
 				const snapshot = await restaurantRef.get();
 				const data = snapshot.data();
@@ -164,8 +167,8 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 		}
 
 		let paymentStatus = (paymentResult["status"] === "successful" || paymentResult["status"] === "success") ? true : false;
-
-		const ordersRef = firestore.collection("Orders");
+		const collectionName = process.env.NODE_ENV === 'production' ? 'Orders' : 'Orders_dev';
+		const ordersRef = firestore.collection(collectionName);
 		const orderNumber = await getNextOrderNumber();
 		try {
 			await ordersRef.add({
@@ -274,7 +277,8 @@ const Cart = ({ cart, updateCart }) => {
 	let total = cart ? getTotalAmount(cart) : 0;
 	useEffect(() => {
 		const fetchCart = async () => {
-			const userRef = firestore.collection("Users").doc(user.id);
+			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+			const userRef = firestore.collection(collectionName).doc(user.id);
 			const cartRef = userRef.collection("Cart").doc(restaurantId);
 
 			try {
@@ -449,7 +453,8 @@ const AddDeliveryLocation = ({ addresses, refresh }) => {
 		let newLocations = addresses.concat(data);
 		setLoading(true);
 		try {
-			const userRef = firestore.collection("Users").doc(user.id);
+			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+			const userRef = firestore.collection(collectionName).doc(user.id);
 			await userRef.set({ locations: newLocations }, { merge: true });
 			setLoading(false);
 			toast.success("Address added");

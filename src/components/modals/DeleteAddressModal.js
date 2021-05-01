@@ -9,7 +9,8 @@ const DeleteAddressModal = (props) => {
 	const [loading, setLoading] = useState(false);
 
 	const deleteAddress = async () => {
-		const userRef = firestore.collection("Users").doc(props.user.id);
+		const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+		const userRef = firestore.collection(collectionName).doc(props.user.id);
 		setLoading(true);
 		try {
 			const newLocations = props.addresses.filter((location) => location.id !== props.defaultData.id);

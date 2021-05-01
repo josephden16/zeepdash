@@ -28,7 +28,8 @@ const Detail = () => {
 
 	const { slug } = useParams();
 	useEffect(() => {
-		const restaurantRef = firestore.collection("Restaurants")
+		const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
+		const restaurantRef = firestore.collection(collectionName)
 			.where("slug", "==", slug);
 
 		const offersRef = firestore.collection("Meals")
@@ -286,7 +287,8 @@ const Cart = ({ cart, updateCart, restaurant }) => {
 			if (sessionCart) return;
 
 			// pull the cart data from firestore
-			const cartRef = firestore.collection("Users").doc(user.id).collection("Cart").doc(restaurantId);
+			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+			const cartRef = firestore.collection(collectionName).doc(user.id).collection("Cart").doc(restaurantId);
 
 			const snapshot = await cartRef.get();
 

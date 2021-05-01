@@ -32,7 +32,8 @@ const OrdersContainer = ({ restaurant }) => {
 
 	useEffect(() => {
 		const fetchOrders = async () => {
-			const ordersRef = firestore.collection("Orders")
+			const collectionName = process.env.NODE_ENV === 'production' ? 'Orders' : 'Orders_dev';
+			const ordersRef = firestore.collection(collectionName)
 				.where("restaurantId", "==", restaurantId);
 			try {
 				const snapshot = await ordersRef.get();

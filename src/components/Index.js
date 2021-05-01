@@ -21,7 +21,8 @@ const Index = () => {
 
 	useEffect(() => {
 		const fetchRestaurants = async () => {
-			const restaurantsRef = firestore.collection("Restaurants").limit(8);
+			const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
+			const restaurantsRef = firestore.collection(collectionName).limit(8);
 			const snapshot = await restaurantsRef.get();
 			const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 			setRestaurants(data);

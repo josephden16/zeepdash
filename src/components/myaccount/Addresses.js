@@ -43,7 +43,8 @@ const Addresses = () => {
 
 
 	const fetchAddresses = async () => {
-		const userRef = firestore.collection("Users").doc(userId);
+		const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+		const userRef = firestore.collection(collectionName).doc(userId);
 
 		try {
 			const snapshot = await userRef.get();
@@ -90,7 +91,8 @@ const Addresses = () => {
 
 	useEffect(() => {
 		const fetchAddresses = async () => {
-			const userRef = firestore.collection("Users").doc(userId);
+			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+			const userRef = firestore.collection(collectionName).doc(userId);
 
 			try {
 				const snapshot = await userRef.get();
@@ -216,7 +218,8 @@ const AddAddress = ({ refresh, addresses, user }) => {
 		let newLocations = addresses.concat(data);
 		setLoading(true);
 		try {
-			const userRef = firestore.collection("Users").doc(user.id);
+			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+			const userRef = firestore.collection(collectionName).doc(user.id);
 			await userRef.set({ locations: newLocations }, { merge: true });
 			setLoading(false);
 			toast.success("Address added");

@@ -51,7 +51,8 @@ export const updateCartSession = (restaurantId, cart) => {
 
 export const updateFirestoreCart = async (cart, user, restaurantId) => {
   if (!user) return;
-  const userRef = firestore.collection("Users").doc(user.id);
+  const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev'; 
+  const userRef = firestore.collection(collectionName).doc(user.id);
   const cartRef = userRef.collection("Cart").doc(restaurantId);
   let sortedCart = cart.sort((a, b) => a.name.localeCompare(b.name))
   try {

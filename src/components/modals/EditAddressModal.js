@@ -51,7 +51,8 @@ const EditAddressModal = (props) => {
 		newLocations = newLocations.concat(data);
 		setLoading(true);
 		try {
-			const userRef = firestore.collection("Users").doc(props.user.id);
+			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+			const userRef = firestore.collection(collectionName).doc(props.user.id);
 			await userRef.set({ locations: newLocations }, { merge: true });
 			setLoading(false);
 			toast.success("Address edited");

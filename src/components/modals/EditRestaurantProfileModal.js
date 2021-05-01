@@ -14,7 +14,8 @@ const EditProfileModal = (props) => {
   const [loading, setLoading] = useState(false);
 
   const handleProfileUpdate = () => {
-    const restaurantRef = firestore.collection("Restaurants").doc(props.restaurantId);
+    const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
+    const restaurantRef = firestore.collection(collectionName).doc(props.restaurantId);
 
     if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
       toast.warning("Please enter a valid phone number");

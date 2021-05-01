@@ -22,7 +22,8 @@ const List = () => {
 
 	useEffect(() => {
 		const fetchRestaurants = async () => {
-			const restaurantsRef = firestore.collection("Restaurants").limit(10);
+			const collectionName = process.env.NODE_ENV === 'production' ? "Restaurants" : "Restaurants_dev";
+			const restaurantsRef = firestore.collection(collectionName).limit(20);
 			try {
 				const snapshot = await restaurantsRef.get();
 				if (!snapshot.empty) {

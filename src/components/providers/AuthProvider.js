@@ -11,8 +11,10 @@ const UserProvider = (props) => {
   useEffect(() => {
     let unsubscribeFromAuth = auth.onAuthStateChanged(async authenticateUser => {
       if (authenticateUser) {
-        const userRef = firestore.collection("Users").doc(authenticateUser.uid);
-        const restaurantRef = firestore.collection("Restaurants").doc(authenticateUser.uid);
+        const userCollectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+        const restaurantCollectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
+        const userRef = firestore.collection(userCollectionName).doc(authenticateUser.uid);
+        const restaurantRef = firestore.collection(restaurantCollectionName).doc(authenticateUser.uid);
         const restaurantSnapshot = await restaurantRef.get();
         
         // if the user owns a business account then add their data
