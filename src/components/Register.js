@@ -6,7 +6,7 @@ import TimeKeeper from 'react-timekeeper';
 import firebase, { firestore } from '../firebase';
 import { generateSlug, useQuery, validateEmail, validateName, validatePassword, validatePhoneNumber, verifyTime } from '../utils';
 import { toast } from 'react-toastify';
-import Icofont from 'react-icofont';
+import { FiClock } from 'react-icons/fi';
 
 
 const Register = () => {
@@ -375,7 +375,7 @@ const BusinessRegsitration = ({ className }) => {
 									<button className="time-select-button" onClick={() => {
 										setShowOpeningTime(!showOpeningTime);
 										setShowClosingTime(false);
-									}}><span className='mr-2'><Icofont icon="clock-time" /></span>Opening Time: {openingTime}</button>
+									}}><span className='mr-2'>	<FiClock /></span>Opening Time: {openingTime}</button>
 									<div className="time-picker">
 										{showOpeningTime &&
 											<TimeKeeper
@@ -397,7 +397,7 @@ const BusinessRegsitration = ({ className }) => {
 									<button className="time-select-button" onClick={() => {
 										setShowClosingTime(!showClosingTime);
 										setShowOpeningTime(false);
-									}}><span className='mr-2'><Icofont icon="clock-time" /></span>Closing Time: {closingTime}</button>
+									}}><span className='mr-2'>	<FiClock className="ml-2" /></span>Closing Time: {closingTime}</button>
 									<div className="time-picker">
 										{showClosingTime &&
 											<TimeKeeper

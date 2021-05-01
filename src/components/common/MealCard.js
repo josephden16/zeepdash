@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Media, Image } from 'react-bootstrap';
-import Icofont from 'react-icofont';
+import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import PropTypes from 'prop-types';
 
 class MealCard extends React.Component {
@@ -11,13 +11,13 @@ class MealCard extends React.Component {
       <Card className={"bg-white pr-2 addresses-item mb-4 w-100 " + (this.props.boxClass)}>
         <div className="gold-members p-0">
           <Media>
-            <Image fluid src={this.props.mealImage} style={{height: '150px'}} className={"mr-3 rounded-sm " + this.props.imageclassName} />
+            <Image fluid src={this.props.mealImage} style={{ height: '150px' }} className={"mr-3 rounded-sm " + this.props.imageclassName} />
             <Media.Body className="align-self-center">
-              <h6 style={{fontSize: '14px'}} className="mb-1 text-dark">{this.props.mealName}</h6>
+              <h6 style={{ fontSize: '14px' }} className="mb-1 text-dark">{this.props.mealName}</h6>
               <p className="text-black">&#8358;{this.props.price}</p>
               <small className="mb-0 text-black font-weight-bold flex">
-                <Link className="text-primary mr-3" to="#" onClick={this.props.onEditClick}><Icofont icon="ui-edit" /> EDIT</Link>
-                <Link className="text-danger" to="#" onClick={this.props.onDeleteClick}><Icofont icon="ui-delete" /> DELETE</Link>
+                <Link className="text-primary mr-3" to="#" onClick={this.props.onEditClick}><FiEdit /> EDIT</Link>
+                <Link className="text-danger" to="#" onClick={this.props.onDeleteClick}><FiTrash2 /> DELETE</Link>
               </small>
             </Media.Body>
           </Media>

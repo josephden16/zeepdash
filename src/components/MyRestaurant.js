@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import { IoFastFoodSharp } from 'react-icons/io5';
+import { RiFileList3Fill } from 'react-icons/ri';
 import { Row, Col, Container, Image } from 'react-bootstrap';
 import Meals from './myrestaurant/Meals';
 import Orders from './myrestaurant/Orders';
@@ -44,10 +46,14 @@ const MyRestaurant = () => {
                 </div>
                 <ul className="nav flex-column border-0 pt-4 pl-4 pb-4">
                   <li className="nav-item">
-                    <NavLink className="nav-link" activeClassName="active" exact to="/myrestaurant/meals"><i className="icofont-fast-food"></i> Meals</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" exact to="/myrestaurant/meals">
+                      <IoFastFoodSharp style={{ fontSize: '23px' }} className="mr-1" /> <span>Meals</span>
+                    </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" activeClassName="active" exact to="/myrestaurant/orders"><i className="icofont-food-cart"></i> Orders</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" exact to="/myrestaurant/orders">
+                      <RiFileList3Fill style={{ fontSize: '23px' }} className="mr-1" /><span>Orders</span>
+                    </NavLink>
                   </li>
                   {/* <li className="nav-item">
                     <NavLink className="nav-link" activeClassName="active" exact to="/myrestaurant/details"><i className="icofont-user-alt-7"></i> Account</NavLink>

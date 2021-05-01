@@ -1,17 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types'; 
-import Icofont from 'react-icofont';
+import PropTypes from 'prop-types';
 
 class CartDropdownItem extends React.Component {
-	render() {
-		return (
-			<p className="mb-2"> 
-             	<Icofont icon={this.props.icoIcon} className={"mr-1 " + this.props.iconClass}/> 
-             	{this.props.title}   
-             	<span className="float-right text-secondary">{this.props.price}</span>
-            </p>
-		);
-	}
+  render() {
+    return (
+      <p className="mb-2">
+        {/* <Icofont icon={this.props.icoIcon} className={"mr-1 " + this.props.iconClass} /> */}
+        {this.props.title}
+        <span className="float-right text-secondary">{this.props.price}</span>
+      </p>
+    );
+  }
 }
 
 CartDropdownItem.propTypes = {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Container, Image, Table } from 'react-bootstrap';
-import Icofont from 'react-icofont';
 import HeadingValue from './common/HeadingValue';
+import { AiFillPrinter } from 'react-icons/ai';
 import PageTitle from './common/PageTitle';
 import Seo from './Seo';
 
@@ -32,7 +32,7 @@ class Invoice extends React.Component {
 										</Col>
 										<Col md={4} xs={2} className="pl-0 text-right">
 											<p className="mb-4 mt-2">
-												<Link className="text-primary font-weight-bold" to="#"><Icofont icon="clock-print" /> PRINT</Link>
+												<Link className="text-primary font-weight-bold" to="#"><AiFillPrinter /> PRINT</Link>
 											</p>
 											<Image alt="logo" src="/img/favicon.png" />
 										</Col>

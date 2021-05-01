@@ -8,7 +8,7 @@ import CheckoutItem from './common/CheckoutItem';
 import EditAddressModal from './modals/EditAddressModal';
 import { MIN, MAX, getTotalAmount, updateFirestoreCart, updateCartSession, DELIVERY_FEE, capitalize } from '../utils';
 import { firestore } from '../firebase';
-import Icofont from 'react-icofont';
+import { CgArrowLongRight } from 'react-icons/cg';
 import { UserContext } from './providers/AuthProvider';
 import NotSignedIn from './NotSignedIn';
 import Seo from './Seo';
@@ -191,7 +191,7 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 			console.log(error.message, error.code);
 		}
 	}
-	
+
 	const config = {
 		public_key: 'FLWPUBK-692795778fbd1d8a213007824d31c5db-X',
 		tx_ref: Date.now(),
@@ -245,7 +245,7 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 					<div>
 						<button onClick={handlePayment} className="btn btn-success btn-block btn-lg">
 							PAY ₦{totalAmount}
-							<Icofont icon="long-arrow-right" />
+							<CgArrowLongRight />
 						</button>
 					</div>
 				</div>
@@ -365,14 +365,14 @@ const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
 							iconName = "briefcase";
 							break;
 						default:
-							iconName = "location-pin";
+							iconName = "location";
 							break;
 					}
 					return (
 						<Col md={6} key={address.id} >
 							<ChooseAddressCard
 								title={capitalize(address.category)}
-								icoIcon={iconName}
+								icon={iconName}
 								iconclassName='icofont-3x'
 								address={address.name}
 								addressData={address}

@@ -7,7 +7,10 @@ import Loading from './common/Loading';
 import GalleryCarousel from './common/GalleryCarousel';
 import CheckoutItem from './common/CheckoutItem';
 import BestSeller from './common/BestSeller';
-import Icofont from 'react-icofont';
+import { FiNavigation, FiCheckCircle } from 'react-icons/fi';
+import { HiClock, HiMail, HiPhone } from 'react-icons/hi';
+import { IoFastFood } from 'react-icons/io5';
+import { CgArrowLongRight } from 'react-icons/cg';
 import { toast } from 'react-toastify';
 import { firestore } from '../firebase';
 import { capitalize, getTotalAmount, MAX, MIN, updateCartSession, updateFirestoreCart } from '../utils';
@@ -103,7 +106,7 @@ const Detail = () => {
 		return null;
 	}
 
-	
+
 	const seo = {
 		metaTitle: `${restaurant.name}` || '',
 		metaDescription: `Welcome to the page of ${restaurant.name} on ZeepDash...` || ''
@@ -123,9 +126,9 @@ const Detail = () => {
 								<div className="restaurant-detailed-header-left">
 									<Image draggable={false} fluid className="mr-3 float-left" alt="osahan" src={restaurant.photoURL || '/img/default-list.png'} />
 									<h2 className="text-white">{restaurant.name}</h2>
-									<p className="text-white mb-1"><Icofont icon="location-pin" />{" "}{restaurant.address.toUpperCase()} <Badge variant="success">OPEN</Badge>
+									<p className="text-white mb-1"><FiNavigation /> {" "}{restaurant.address.toUpperCase()} <Badge variant="success">OPEN</Badge>
 									</p>
-									<p className="text-white mb-0"><Icofont icon="food-cart" />{" "}{restaurant.cuisines.join(" , ").toUpperCase()}</p>
+									<p className="text-white mb-0"><IoFastFood />{" "}{restaurant.cuisines.join(" , ").toUpperCase()}</p>
 								</div>
 							</Col>
 							<Col md={4}>
@@ -249,9 +252,9 @@ const RestaurantInfoTab = ({ restaurant }) => {
 				</div>
 				<h5 className="mb-4">Restaurant Info</h5>
 				<p className="mb-3">{restaurant.address}</p>
-				<p className="mb-2 text-black"><Icofont icon="phone-circle text-primary mr-2" />{restaurant.phone}</p>
-				<p className="mb-2 text-black"><Icofont icon="email text-primary mr-2" />{restaurant.email}</p>
-				<p className="mb-2 text-black"><Icofont icon="clock-time text-primary mr-2" /> Today  11am – 5pm, 6pm – 11pm<Badge variant="success" className='ml-1'> OPEN NOW </Badge></p>
+				<p className="mb-2 text-black"><HiPhone className="text-red mr-2" />{restaurant.phone}</p>
+				<p className="mb-2 text-black"><HiMail className="email text-red text-primary mr-2" />{restaurant.email}</p>
+				<p className="mb-2 text-black"><HiClock className="clock-time text-red text-primary mr-2" /> Today  11am – 5pm, 6pm – 11pm<Badge variant="success" className='ml-1'> OPEN NOW </Badge></p>
 				{/* <hr className="clearfix" />
 				<p className="text-black mb-0">You can also check the 3D view by using our menue map clicking here &nbsp;&nbsp;&nbsp; <Link className="text-info font-weight-bold" to="#">Venue Map</Link></p>
 				<hr className="clearfix" /> */}
@@ -342,7 +345,7 @@ const Cart = ({ cart, updateCart, restaurant }) => {
 					{
 						(cart && cart.length > 0) &&
 						<button onClick={handleCheckout} className="btn btn-success btn-block btn-lg">
-							Checkout <Icofont icon="long-arrow-right" />
+							Checkout <CgArrowLongRight />
 						</button>
 					}
 					<div className="pt-2"></div>
@@ -370,7 +373,7 @@ const OrderItem = ({ meal, updateCart, restaurantId }) => {
 }
 
 const CuisineOffered = ({ cuisine }) => (
-	<span className="border-btn bg-white text-success mr-2" ><Icofont icon="check-circled" />{" "}{capitalize(cuisine)}</span>
+	<span className="border-btn bg-white text-success mr-2" ><FiCheckCircle />{" "}{capitalize(cuisine)}</span>
 )
 
 

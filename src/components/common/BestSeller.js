@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Image, Badge, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import Icofont from 'react-icofont';
+import { AiFillStar } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import { UserContext } from '../providers/AuthProvider';
 import { updateFirestoreCart } from '../../utils';
@@ -57,7 +57,7 @@ const BestSeller = (props) => {
         {props.rating ? (
           <div className="star position-absolute">
             <Badge variant="success">
-              <Icofont icon='star' /> {props.rating}
+              <AiFillStar /> {props.rating}
             </Badge>
           </div>
         )
@@ -71,7 +71,7 @@ const BestSeller = (props) => {
           : ""
         }
         <Link to="#">
-          <Image draggable={false} style={{height: '170px', width: '100%'}} src={props.image} className={props.imageClass} alt={props.imageAlt} />
+          <Image draggable={false} style={{ height: '170px', width: '100%' }} src={props.image} className={props.imageClass} alt={props.imageAlt} />
         </Link>
       </div>
       <div className="p-3 position-relative">
@@ -85,7 +85,7 @@ const BestSeller = (props) => {
           {(props.price) ? (
             <p className="text-gray time mb-0 flex justify-content-between">
               <span className="btn-sm pl-0 text-black pr-0" to="#">
-                {props.priceUnit}{props.price} 
+                {props.priceUnit}{props.price}
               </span>
               {(props.isNew) ? (<Badge variant="success" className='ml-1'>NEW</Badge>) : ""}
               <span className="float-right">

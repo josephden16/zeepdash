@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
-import Icofont from 'react-icofont';
+import { FaHeadphonesAlt, FaClock, FaShoppingBasket } from 'react-icons/fa';
+import { RiMapPinFill, RiFileList2Fill } from 'react-icons/ri';
+import { BiTask } from 'react-icons/bi';
+import { FiCheckCircle } from 'react-icons/fi';
+import { AiOutlineFieldTime } from 'react-icons/ai';
 import CartDropdownItem from './cart/CartDropdownItem';
 
 class TrackOrder extends React.Component {
@@ -17,12 +21,12 @@ class TrackOrder extends React.Component {
 						</Col>
 						<Col md={6}>
 							<div className="bg-white p-4 shadow-lg mb-2">
-								<div className="mb-2"><small>Order #25102589748<Link className="float-right font-weight-bold" to="#"><Icofont icon="headphone-alt" /> HELP</Link></small></div>
+								<div className="mb-2"><small>Order #25102589748<Link className="float-right font-weight-bold" to="#"><FaHeadphonesAlt /> HELP</Link></small></div>
 								<h6 className="mb-1 mt-1">
 									<Link to="/detail" className="text-black">Spice Hut Restaurant
 	                        </Link>
 								</h6>
-								<p className="text-gray mb-0"><Icofont icon="clock-time" /> 04:19 PM | 8 Items | $314</p>
+								<p className="text-gray mb-0"><FaClock /> 04:19 PM | 8 Items | $314</p>
 							</div>
 							<div className="bg-white p-4 shadow-lg">
 								<div className="osahan-track-order-detail po">
@@ -30,19 +34,19 @@ class TrackOrder extends React.Component {
 									<Row>
 										<Col md={5}>
 											<small>FROM</small>
-											<h6 className="mb-1 mt-1"><Link to="/detail" className="text-black"><Icofont icon="food-cart" /> Spice Hut Restaurant
+											<h6 className="mb-1 mt-1"><Link to="/detail" className="text-black"><FaShoppingBasket /> Spice Hut Restaurant
 	                                 </Link>
 											</h6>
 											<p className="text-gray mb-5">2036, NEW YORK</p>
 											<small>DELIVER TO</small>
-											<h6 className="mb-1 mt-1"><span className="text-black"><Icofont icon="map-pins" /> Other
+											<h6 className="mb-1 mt-1"><span className="text-black"><RiMapPinFill /> Other
 	                                 </span>
 											</h6>
 											<p className="text-gray mb-0">291, Jawaddi Kalan, Ludhiana, Punjab 141002, India
 	                              </p>
 										</Col>
 										<Col md={7}>
-											<div className="mb-2"><small><Icofont icon="list" /> 4 ITEMS</small></div>
+											<div className="mb-2"><small><RiFileList2Fill /> 4 ITEMS</small></div>
 
 											<CartDropdownItem
 												icoIcon='ui-press'
@@ -80,17 +84,17 @@ class TrackOrder extends React.Component {
 							<div className="bg-white p-4 shadow-lg mt-2">
 								<Row className="text-center">
 									<Col>
-										<Icofont icon="tasks" className="icofont-3x text-info" />
+										<BiTask className="icofont-3x text-info" />
 										<p className="mt-1 font-weight-bold text-dark mb-0">Order Received</p>
 										<small className="text-info mb-0">NOW</small>
 									</Col>
 									<Col>
-										<Icofont icon="check-circled" className="icofont-3x text-success" />
+										<FiCheckCircle className="icofont-3x text-success" />
 										<p className="mt-1 font-weight-bold text-dark mb-0">Order Confirmed</p>
 										<small className="text-success mb-0">NEXT</small>
 									</Col>
 									<Col>
-										<Icofont icon="delivery-time" className="icofont-3x text-primary" />
+										<AiOutlineFieldTime className="icofont-3x text-primary" />
 										<p className="mt-1 font-weight-bold text-dark mb-0">Order Picked Up</p>
 										<small className="text-primary mb-0">LATER (ET : 30min)</small>
 									</Col>

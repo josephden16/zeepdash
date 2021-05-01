@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Media } from 'react-bootstrap';
-import Icofont from 'react-icofont';
+import { FiCheckCircle, FiNavigation, FiClock } from 'react-icons/fi';
+import { RiFileList2Line } from "react-icons/ri";
 
 class OrderCard extends React.Component {
 
@@ -16,7 +17,7 @@ class OrderCard extends React.Component {
 							{this.props.deliveredDate ?
 								(
 									<span className="float-right text-info">Delivered on {this.props.deliveredDate}
-										<Icofont icon="check-circled" className="text-success ml-1" />
+										<FiCheckCircle className="text-success ml-1" />
 									</span>
 								)
 								: ""
@@ -25,11 +26,11 @@ class OrderCard extends React.Component {
 								<Link to={this.props.detailLink} className="text-black">{this.props.orderTitle} </Link>
 							</p>
 							<p className="text-gray mb-1">
-								<Icofont icon="location-arrow" /> {this.props.address}
+								<FiNavigation /> {this.props.address}
 							</p>
 							<p className="text-gray mb-3">
-								<Icofont icon="list" /> ORDER #{this.props.orderNumber}
-								<Icofont icon="clock-time" className="ml-2" /> {this.props.orderDate}
+								<RiFileList2Line /> ORDER #{this.props.orderNumber}
+								<FiClock className="ml-2" /> {this.props.orderDate}
 							</p>
 							<p className="text-dark">
 								{this.props.orderProducts}
