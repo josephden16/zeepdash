@@ -3,7 +3,9 @@ import { toast } from 'react-toastify';
 import { NavLink, Link, useHistory } from 'react-router-dom';
 import { Navbar, Nav, Container, NavDropdown, Image } from 'react-bootstrap';
 import DropDownTitle from '../common/DropDownTitle';
-import Icofont from 'react-icofont';
+import { RiFileList3Fill } from 'react-icons/ri';
+import { IoLocationSharp, IoFastFood } from 'react-icons/io5';
+import { CgLogOut } from 'react-icons/cg';
 import { UserContext } from '../providers/AuthProvider';
 import { signOut } from '../../firebase';
 
@@ -120,9 +122,9 @@ const UserDropDown = () => {
 						/>
 					}
 				>
-					<NavDropdown.Item eventKey={1.1} as={NavLink} activeclassname="active" to="/myaccount/orders"><Icofont icon='food-cart' /> Orders</NavDropdown.Item>
-					<NavDropdown.Item eventKey={1.2} as={NavLink} activeclassname="active" to="/myaccount/addresses"><Icofont icon='location-pin' /> Addresses</NavDropdown.Item>
-					<NavDropdown.Item eventKey={1.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
+					<NavDropdown.Item eventKey={1.1} as={NavLink} activeclassname="active" to="/myaccount/orders"><RiFileList3Fill /> Orders</NavDropdown.Item>
+					<NavDropdown.Item eventKey={1.2} as={NavLink} activeclassname="active" to="/myaccount/addresses"><IoLocationSharp /> Addresses</NavDropdown.Item>
+					<NavDropdown.Item eventKey={1.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><CgLogOut className="pr-1" />Sign out</button></NavDropdown.Item>
 				</NavDropdown>
 			</>
 		)
@@ -142,9 +144,9 @@ const UserDropDown = () => {
 						/>
 					}
 				>
-					<NavDropdown.Item eventKey={2.1} as={NavLink} activeclassname="active" to="/myrestaurant/meals"><Icofont icon='fast-food' /> Meals</NavDropdown.Item>
-					<NavDropdown.Item eventKey={2.2} as={NavLink} activeclassname="active" to="/myrestaurant/orders"><Icofont icon='food-cart' /> Orders</NavDropdown.Item>
-					<NavDropdown.Item eventKey={2.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><Icofont className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
+					<NavDropdown.Item eventKey={2.1} as={NavLink} activeclassname="active" to="/myrestaurant/meals"><IoFastFood /> Meals</NavDropdown.Item>
+					<NavDropdown.Item eventKey={2.2} as={NavLink} activeclassname="active" to="/myrestaurant/orders"><RiFileList3Fill /> Orders</NavDropdown.Item>
+					<NavDropdown.Item eventKey={2.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: 'black' }}><CgLogOut className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
 					{/* <NavDropdown.Item eventKey={4.5} as={NavLink} activeclassname="active" to="/myrestaurant/details"><Icofont icon='user-alt-7' /> Account</NavDropdown.Item> */}
 				</NavDropdown>
 			</>

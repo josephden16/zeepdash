@@ -1,34 +1,34 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {Image,Card,Media} from 'react-bootstrap';
-import Icofont from 'react-icofont';
-import PropTypes from 'prop-types'; 
+import { Link } from 'react-router-dom';
+import { FiTrash2 } from 'react-icons/fi';
+import { Image, Card, Media } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class PaymentCard extends React.Component {
 
-	render() {
-    	return (
-    		<Card className="bg-white payments-item mb-4 shadow-sm">
-            	<div className="gold-members p-4">
-                  <Media>
-            		<Image src={this.props.logoImage} alt={this.props.imageAlt} className={this.props.imageclassName} /> 
-                     <Media.Body>
-                        <h6 className="mb-1">{this.props.title}</h6>
-	                      {this.props.subTitle?
-			                	<p>
-			                		{this.props.subTitle}
-			                	</p>
-			                	:""
-			              }
-                        <p className="mb-0 text-black font-weight-bold">
-	                      	<Link className="text-danger" to="#" onClick={this.props.onClick}><Icofont icon="ui-delete" /> DELETE</Link>
-	                    </p>
-                    </Media.Body>
-           		  </Media>
-           		</div>
-            </Card>
-    	);
-    }
+  render() {
+    return (
+      <Card className="bg-white payments-item mb-4 shadow-sm">
+        <div className="gold-members p-4">
+          <Media>
+            <Image src={this.props.logoImage} alt={this.props.imageAlt} className={this.props.imageclassName} />
+            <Media.Body>
+              <h6 className="mb-1">{this.props.title}</h6>
+              {this.props.subTitle ?
+                <p>
+                  {this.props.subTitle}
+                </p>
+                : ""
+              }
+              <p className="mb-0 text-black font-weight-bold">
+                <Link className="text-danger" to="#" onClick={this.props.onClick}><FiTrash2 /> DELETE</Link>
+              </p>
+            </Media.Body>
+          </Media>
+        </div>
+      </Card>
+    );
+  }
 }
 
 PaymentCard.propTypes = {

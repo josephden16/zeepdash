@@ -10033,11 +10033,6 @@ react-helmet@^6.1.0:
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
-react-icofont@1.0.19:
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/react-icofont/-/react-icofont-1.0.19.tgz#bc43d148f9a14d170b6004cc6338db7366566e56"
-  integrity sha512-vuTiPDJ5nKJsiWcMk6GO6VyYMKR9E+T0V8a1J6ncU+iPxy9ht+nXiP6JbmPy155oazbGR/VmqzBDwKpRJP4oIQ==
-
 react-icons@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.2.0.tgz#6dda80c8a8f338ff96a1851424d63083282630d0"

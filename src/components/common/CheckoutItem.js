@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
-import Icofont from 'react-icofont';
+import { HiOutlineMinusSm, HiOutlinePlusSm } from 'react-icons/hi';
 import { UserContext } from '../providers/AuthProvider';
 import { MIN, MAX, getCart, updateCartSession, updateFirestoreCart } from '../../utils';
 
@@ -67,9 +67,9 @@ const CheckoutItem = (props) => {
     <div className="gold-members p-2 border-bottom checkout-item">
       <p className="text-gray mb-0 float-right ml-2">{props.priceUnit}{props.price * quantity}</p>
       <span className="count-number float-right">
-        <Button variant="outline-secondary" onClick={DecreaseItem} className="btn-sm left dec"> <Icofont icon="minus" /> </Button>
+        <Button variant="outline-secondary" onClick={DecreaseItem} className="btn-sm left dec"><HiOutlineMinusSm /></Button>
         <input className="count-number-input" type="text" value={quantity} readOnly />
-        <Button variant="outline-secondary" onClick={IncrementItem} className="btn-sm right inc"> <Icofont icon="icofont-plus" /> </Button>
+        <Button variant="outline-secondary" onClick={IncrementItem} className="btn-sm right inc"><HiOutlinePlusSm /> </Button>
       </span>
       <div className="media">
         <button onClick={removeItem} style={{ height: '23px', marginTop: '1px', outline: 'red', background: 'red', borderColor: 'white', fontWeight: 'bold' }} className="mr-2 p-0 pl-2 pr-2 text-white">x</button>

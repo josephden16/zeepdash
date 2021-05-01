@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { IoLocationSharp } from 'react-icons/io5';
+import { RiFileList3Fill } from 'react-icons/ri';
 import { NavLink } from 'react-router-dom';
 import { Row, Col, Container, Image } from 'react-bootstrap';
 import Offers from './myaccount/Offers';
@@ -53,10 +55,10 @@ const MyAccount = () => {
                 </div>
                 <ul className="nav flex-column border-0 pt-4 pl-4 pb-4">
                   <li className="nav-item">
-                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/orders"><i className="icofont-food-cart"></i> Orders</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/orders"><RiFileList3Fill style={{fontSize: '23px'}} className="mr-1" /> <span>Orders</span></NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/addresses"><i className="icofont-location-pin"></i> Addresses</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/addresses"><IoLocationSharp style={{fontSize: '23px'}} className="mr-1" /><span>Addresses</span></NavLink>
                   </li>
                 </ul>
               </div>

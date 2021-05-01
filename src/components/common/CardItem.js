@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Image, Badge } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import Icofont from 'react-icofont';
+import { AiFillClockCircle, AiFillStar } from 'react-icons/ai';
 
 class CardItem extends React.Component {
 	render() {
@@ -12,7 +12,7 @@ class CardItem extends React.Component {
 					{this.props.rating ? (
 						<div className="star position-absolute">
 							<Badge variant="success">
-								<Icofont icon='star' /> {this.props.rating}
+								<AiFillStar /> {this.props.rating}
 							</Badge>
 						</div>
 					)
@@ -26,7 +26,7 @@ class CardItem extends React.Component {
 						: ""
 					}
 					<Link to={this.props.linkUrl}>
-						<Image src={this.props.image} style={{height: '170px', width: '100%'}} draggable={false} className={this.props.imageClass} alt={this.props.imageAlt} />
+						<Image src={this.props.image} style={{ height: '170px', width: '100%' }} draggable={false} className={this.props.imageClass} alt={this.props.imageAlt} />
 					</Link>
 				</div>
 				<div className="p-3 position-relative">
@@ -41,7 +41,7 @@ class CardItem extends React.Component {
 							<p className="text-gray mb-3 time">
 								{this.props.time ? (
 									<span className="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2">
-										<Icofont icon='wall-clock' /> {this.props.time}
+										<AiFillClockCircle /> {this.props.time}
 									</span>
 								)
 									: ""

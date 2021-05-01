@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Container} from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import PageTitle from './common/PageTitle';
 import CardItem from './common/CardItem';
 import Seo from './Seo';
 import Loading from './common/Loading';
 import { firestore } from '../firebase';
 // import { capitalize } from '../utils';
-// import Icofont from 'react-icofont';
 
 
 const seo = {
@@ -137,7 +136,7 @@ const ListContainer = ({ restaurants, cuisines }) => {
 // 				<div className="filters-card-header" id="headingTwo">
 // 					<h6 className="mb-0">
 // 						<Accordion.Toggle as={Button} size='block' variant="link" className='text-left d-flex align-items-center p-0' eventKey="1">
-// 							All cuisines <Icofont icon='arrow-down' className='ml-auto' />
+// 							All cuisines <FiArrowDown className='ml-auto' />
 // 						</Accordion.Toggle>
 // 					</h6>
 // 				</div>
