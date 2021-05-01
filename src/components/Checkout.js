@@ -191,9 +191,10 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 			console.log(error.message, error.code);
 		}
 	}
-
+	const productionPublicKey = 'FLWPUBK-692795778fbd1d8a213007824d31c5db-X';
+	const developmentPublicKey = 'FLWPUBK_TEST-eb8e43a97c6868b180417e27034530b7-X';
 	const config = {
-		public_key: 'FLWPUBK-692795778fbd1d8a213007824d31c5db-X',
+		public_key: process.env.NODE_ENV === 'production' ? productionPublicKey : developmentPublicKey,
 		tx_ref: Date.now(),
 		amount: totalAmount,
 		currency: 'NGN',
@@ -220,9 +221,9 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 
 		handleFlutterPayment({
 			callback: (response) => {
-				updateFirestoreCart([], user, restaurantId);
-				updateCartSession(restaurant.id, undefined);
 				createOrder(response);
+				updateFirestoreCart([], user, restaurantId);
+				updateCartSession(restaurant.id, []);
 				history.push("/thanks")
 				closePaymentModal();
 			}
