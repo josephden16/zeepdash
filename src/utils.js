@@ -42,6 +42,9 @@ export const getCart = (restaurantId) => {
 }
 
 export const updateCartSession = (restaurantId, cart) => {
+  if (!cart) {
+    sessionStorage.setItem(restaurantId, undefined);
+  }
   let sortedCart = cart.sort((a, b) => a.name.localeCompare(b.name))
   sessionStorage.setItem(restaurantId, JSON.stringify(sortedCart));
 }
