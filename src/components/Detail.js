@@ -32,7 +32,8 @@ const Detail = () => {
 		const restaurantRef = firestore.collection(collectionName)
 			.where("slug", "==", slug);
 
-		const offersRef = firestore.collection("Meals")
+		const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
+		const offersRef = firestore.collection(mealsCollectionName)
 			.where("restaurantSlug", "==", slug);
 
 		const fetchRestaurantData = async () => {
@@ -99,7 +100,7 @@ const Detail = () => {
 		return <NotFound />
 	}
 
-	if (loading) return <Loading text='Fetching restaurant data...' />
+	if (loading && notFound === false) return <Loading text='Fetching restaurant data...' />
 
 	if (notFound) return <NotFound />
 
@@ -118,7 +119,7 @@ const Detail = () => {
 			<Seo seo={seo} />
 			<section className="restaurant-detailed-banner">
 				<div className="text-center">
-					<Image fluid className="cover" draggable={false} style={{ width: '100%', objectFit: 'fill' }} src={restaurant.bannerImageURL || '/img/mall-dedicated-banner.png'} />
+					<Image fluid className="cover" draggable={false} style={{ width: '100%', objectFit: 'fill' }} src={restaurant.backgroundImageURL || '/img/mall-dedicated-banner.png'} />
 				</div>
 				<div className="restaurant-detailed-header">
 					<Container>

@@ -8,8 +8,10 @@ import { validatePhoneNumber } from '../../utils';
 
 
 const EditProfileModal = (props) => {
-  const imageFile = useRef(null);
-  const [fileName, setFileName] = useState("");
+  const profileImageFile = useRef(null);
+  const backgroundImageFile = useRef(null);
+  const [profilefileName, setProfileFileName] = useState("");
+  const [backgroundFileName, setBackgroundFileName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -22,45 +24,73 @@ const EditProfileModal = (props) => {
       return;
     }
 
-    if (imageFile.current.files.length > 0) {
-      const storageRef = storage.ref();
-      const file = imageFile.current.files[0];
-      const fileName = uuid4();
-      const slug = props.slug;
-      setLoading(true);
-      storageRef
-        .child("Restaurants")
-        .child(slug)
-        .child("Profile")
-        .child(fileName)
-        .put(file)
-        .then(response => response.ref.getDownloadURL())
-        .then(imageURL => {
-          restaurantRef.set({
-            phone: phoneNumber || props.defaultData.phone,
-            photoURL: imageURL
-          }, { merge: true })
-            .then(() => {
-              setLoading(false);
-              window.location.reload();
-            })
-            .catch(() => {
-              setLoading(false);
-              toast.error("Update failed");
-            })
-        });
-    } else {
+    if (phoneNumber && validatePhoneNumber(phoneNumber)) {
       setLoading(true);
       restaurantRef.set({
         phone: phoneNumber,
       }, { merge: true })
         .then(() => {
           setLoading(false);
-          window.location.reload();
+          toast.success("Update successful, please refresh this page to see changes");
         })
         .catch(() => {
           setLoading(false);
           toast.error("Update failed");
+        })
+    }
+
+    if (profileImageFile.current.files.length > 0) {
+      const storageRef = storage.ref();
+      const file = profileImageFile.current.files[0];
+      const profileFileName = uuid4();
+      const slug = props.slug;
+      setLoading(true);
+      storageRef
+        .child("Restaurants")
+        .child(slug)
+        .child("Profile")
+        .child(profileFileName)
+        .put(file)
+        .then(response => response.ref.getDownloadURL())
+        .then(imageURL => {
+          restaurantRef.set({
+            photoURL: imageURL
+          }, { merge: true })
+            .then(() => {
+              setLoading(false);
+              toast.success("Update successful, please refresh this page to see changes");
+            })
+            .catch(() => {
+              setLoading(false);
+              toast.error("Update failed");
+              props.onHide();
+            })
+        });
+    }
+
+    if (backgroundImageFile.current.files.length > 0) {
+      const storageRef = storage.ref();
+      const file = backgroundImageFile.current.files[0];
+      const bgFileName = uuid4();
+      const slug = props.slug;
+      setLoading(true);
+      storageRef
+        .child("Restaurants")
+        .child(slug)
+        .child("Profile")
+        .child(bgFileName)
+        .put(file)
+        .then(response => response.ref.getDownloadURL())
+        .then(imageURL => {
+          restaurantRef.set({
+            backgroundImageURL: imageURL
+          }, { merge: true });
+        }).then(() => {
+          setLoading(false);
+          toast.success("Update successful, please refresh this page to see changes");
+        }).catch(() => {
+          toast.error("Update failed");
+          setLoading(false);
         })
     }
   }
@@ -85,14 +115,25 @@ const EditProfileModal = (props) => {
               <Form.Control type="text" onChange={(evt) => setPhoneNumber(evt.target.value)} defaultValue={props.defaultData.phone} placeholder="Enter Phone number" />
             </Form.Group>
             <Form.Group className="col-md-12">
-              <Form.Label>Restaurant Image</Form.Label>
+              <Form.Label>Restaurant Profile Image</Form.Label>
               <Form.File
                 id="custom-file"
-                label={fileName || 'Attach Your Restaurant Image'}
+                label={profilefileName || 'Attach Your Restaurant Image'}
                 custom
-                ref={imageFile}
+                ref={profileImageFile}
                 accept="image/*"
-                onChange={() => setFileName(imageFile.current.files[0].name)}
+                onChange={() => setProfileFileName(profileImageFile.current.files[0].name)}
+              />
+            </Form.Group>
+            <Form.Group className="col-md-12">
+              <Form.Label>Restaurant Background Image</Form.Label>
+              <Form.File
+                id="custom-file"
+                label={backgroundFileName || 'Attach Your Background Image'}
+                custom
+                ref={backgroundImageFile}
+                accept="image/*"
+                onChange={() => setBackgroundFileName(backgroundImageFile.current.files[0].name)}
               />
             </Form.Group>
           </div>

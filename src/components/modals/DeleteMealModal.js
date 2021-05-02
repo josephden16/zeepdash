@@ -16,7 +16,8 @@ const DeleteMealModal = (props) => {
     const mealId = props.deleteMealData.id;
     const restaurantSlug = props.deleteMealData.slug;
     const imageFile = props.deleteMealData.fileName;
-    const mealRef = firestore.collection("Meals").doc(mealId);
+    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
+    const mealRef = firestore.collection(mealsCollectionName).doc(mealId);
     const storageRef = storage.ref();
     setLoading(true);
     try {

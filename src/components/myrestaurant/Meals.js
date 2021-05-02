@@ -62,7 +62,8 @@ const Meals = () => {
   }
 
   const fetchMeals = async () => {
-    const mealsRef = firestore.collection("Meals")
+    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
+    const mealsRef = firestore.collection(mealsCollectionName)
       .where("restaurantId", "==", restaurant.id);
     const mealsSnapshot = await mealsRef.get();
     if (!mealsSnapshot.empty) {
@@ -81,7 +82,8 @@ const Meals = () => {
 
   useEffect(() => {
     const fetchMeals = async () => {
-      const mealsRef = firestore.collection("Meals")
+      const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
+      const mealsRef = firestore.collection(mealsCollectionName)
         .where("restaurantId", "==", restaurant.id);
       const mealsSnapshot = await mealsRef.get();
       if (!mealsSnapshot.empty) {
@@ -132,7 +134,8 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
 
 
   const fetchMeals = async () => {
-    const mealsRef = firestore.collection("Meals")
+    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
+    const mealsRef = firestore.collection(mealsCollectionName)
       .where("restaurantId", "==", restaurant.id);
     const mealsSnapshot = await mealsRef.get();
     if (!mealsSnapshot.empty) {
@@ -168,8 +171,8 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
       return;
     }
 
-
-    const mealsRef = firestore.collection("Meals");
+    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
+    const mealsRef = firestore.collection(mealsCollectionName);
     const storageRef = storage.ref();
     const restaurantId = restaurant.id;
     const restaurantSlug = restaurant.slug;
@@ -224,7 +227,7 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
   return (
     <Row className="mb-5">
       <Col>
-        <h3 className="font-weight-bold mt-3 mb-2">Add a meal</h3>
+        <h3 className="font-weight-bold mt-3 mb-5">Add a meal</h3>
         <div className="auth-animation">
           <Row>
             <Col md={9} lg={8}>

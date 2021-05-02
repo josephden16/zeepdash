@@ -206,14 +206,6 @@ const BusinessRegsitration = ({ className }) => {
 		evt.preventDefault();
 	}
 
-	const formatPhoneNumber = (phoneNumber) => {
-		if (phoneNumber.startsWith("+234")) {
-			let phoneNum = phoneNumber.replace("+234", "");
-			return phoneNum;
-		}
-		return phoneNumber;
-	}
-
 	const validateFormData = () => {
 		if (!(name && email && phoneNum && address && password)) {
 			toast.warning("Please fill all form fields");
@@ -271,7 +263,7 @@ const BusinessRegsitration = ({ className }) => {
 				const { user } = userCredential;
 				const restaurantCollectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
 				const usersCollectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-				const userRef = firestore.collection(restaurantCollectionName).doc(user.uid);
+				const userRef = firestore.collection(usersCollectionName).doc(user.uid);
 				userRef.get()
 					.then(snapshot => {
 						if (snapshot.exists) {
@@ -280,7 +272,7 @@ const BusinessRegsitration = ({ className }) => {
 							firestore.collection(restaurantCollectionName).doc(user.uid).set({
 								email: user.email,
 								role: 'business',
-								phone: `${areaCode}${phoneNum}`,
+								phone: `${areaCode}${phoneNum.substring(1,)}`,
 								name: name,
 								address: address,
 								dateJoined: new Date(),
@@ -288,22 +280,22 @@ const BusinessRegsitration = ({ className }) => {
 								closingTime: closingTime,
 								cuisines: ['african'],
 								photoURL: '',
-								bannerImageURL: '',
+								backgroundImageURL: '',
 								slug: generateSlug(name)
 							})
 								.then(() => {
 									firestore.collection(usersCollectionName).doc(user.uid).set({
 										email: user.email,
 										role: 'business',
-										phone: phoneNum,
+										phone: `${areaCode}${phoneNum.substring(1,)}`,
 										name: name,
 										address: address,
 										dateJoined: new Date(),
 									})
 										.then(() => {
-											toast.success("Business account created successfully");
 											history.push("/");
 											window.location.reload();
+											toast.success("Business account created successfully");
 										})
 								})
 								.catch(() => {
@@ -360,7 +352,7 @@ const BusinessRegsitration = ({ className }) => {
 							<input className="input" onChange={(evt) => setEmail(evt.target.value)} type="email" id="inputEmail" placeholder="Email" />
 						</div>
 						<div className="form-label-group">
-							<input className="input" onChange={(evt) => setPhoneNum(formatPhoneNumber(evt.target.value))} type="text" id="inputPhone" placeholder="Phone" />
+							<input className="input" onChange={(evt) => setPhoneNum(evt.target.value)} type="text" id="inputPhone" placeholder="Phone" />
 						</div>
 						<div className="form-label-group">
 							<input className="input" onChange={(evt) => setAdress(evt.target.value)} type="text" id="inputAddress" placeholder="Address" />

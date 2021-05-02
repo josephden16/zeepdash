@@ -74,7 +74,7 @@ const List = () => {
 				subTitle="Best deals at your favourite restaurants"
 			/>
 			{(!restaurants && dataFetchingFailed === true) && <FailedToFetch />}
-			{!restaurants && <Loading text="Fetching restaurants..." />}
+			{(!restaurants && dataFetchingFailed === false)&& <Loading text="Fetching restaurants..." />}
 			{restaurants && <ListContainer cuisines={cuisines} restaurants={restaurants} />}
 		</>
 	)

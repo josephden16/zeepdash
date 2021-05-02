@@ -14,7 +14,8 @@ const EditMealModal = (props) => {
 
   const updateMeal = () => {
     const mealId = props.defaultData.id;
-    const mealsRef = firestore.collection("Meals").doc(mealId);
+    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
+    const mealsRef = firestore.collection(mealsCollectionName).doc(mealId);
     const storageRef = storage.ref();
     const restaurantSlug = props.defaultData.restaurantSlug;
 

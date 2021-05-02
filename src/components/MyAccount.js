@@ -55,10 +55,10 @@ const MyAccount = () => {
                 </div>
                 <ul className="nav flex-column border-0 pt-4 pl-4 pb-4">
                   <li className="nav-item">
-                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/orders"><RiFileList3Fill style={{fontSize: '23px'}} className="mr-1" /> <span>Orders</span></NavLink>
+                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/orders"><RiFileList3Fill style={{fontSize: '23px'}} className="mr-2" /> <span>Orders</span></NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/addresses"><IoLocationSharp style={{fontSize: '23px'}} className="mr-1" /><span>Addresses</span></NavLink>
+                    <NavLink className="nav-link" activeClassName="active" exact to="/myaccount/addresses"><IoLocationSharp style={{fontSize: '23px'}} className="mr-2" /><span>Addresses</span></NavLink>
                   </li>
                 </ul>
               </div>
