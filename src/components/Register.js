@@ -393,7 +393,7 @@ const BusinessRegsitration = ({ className }) => {
 										setShowClosingTime(!showClosingTime);
 										setShowOpeningTime(false);
 									}}><span className='mr-2'>	<FiClock className="ml-2" /></span>Closing Time: {closingTime}</button>
-									<div className="time-picker">
+									<div className="time-picker closing-time">
 										{showClosingTime &&
 											<TimeKeeper
 												onChange={(newTime) => setClosingTime(newTime.formatted24)}

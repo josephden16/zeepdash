@@ -135,6 +135,11 @@ img {
   z-index: 99;
 }
 
+.closing-time {
+  position: absolute;
+  right: 0;
+}
+
 .time-picker .react-timekeeper__clock-wrapper {
   font-family: "Open Sans", Verdana;
 }
