@@ -13,7 +13,7 @@ class Footer extends React.Component {
 					<Container>
 						<Row>
 							<Col sm={12}>
-								<p style={{fontSize: '22px'}} className="m-0 text-dark">Operate food store or restaurants? <Link to="/register?tab=business">Work With Us</Link></p>
+								<p style={{ fontSize: '22px' }} className="m-0 text-dark">Operate food store or restaurants? <Link to="/register?tab=business">Work With Us</Link></p>
 							</Col>
 						</Row>
 					</Container>
@@ -65,9 +65,29 @@ class Footer extends React.Component {
 								</ul>
 							</Col> */}
 							<Col md={2} sm={4} xs={4}>
-								<h6 className="mb-3">For Restaurants</h6>
+								<p className="mb-3 h6 text-black">For Restaurants</p>
 								<ul>
 									<li><Link className="text-dark" to="/register?tab=business">Add a Restaurant</Link></li>
+									{/* <li><Link to="#">Advertise</Link></li> */}
+									{/* <li><Link to="#">For Businesses</Link></li> */}
+									{/* <li><Link to="#">Owner Guidelines</Link></li> */}
+								</ul>
+							</Col>
+							<Col md={2} sm={4} xs={4}>
+								<p className="mb-3 h6 text-black">Social</p>
+								<ul>
+									<li className="mb-2">
+										<a href="https://twitter.com/ZeepDash" style={{ fontSize: '14px' }} className="flex" target="_blank" rel="noreferrer">
+											<img width="20" alt="twitter" src="/img/twitter.svg" />
+											<span className="ml-2">@ZeepDash</span>
+										</a>
+									</li>
+									<li className="mb-2">
+										<a href="https://www.instagram.com/zeepdash/" style={{ fontSize: '14px' }} target="_blank" className="flex" rel="noreferrer">
+											<img width="20" alt="twitter" src="/img/instagram.svg" />
+											<span className="ml-2">@zeepdash</span>
+										</a>
+									</li>
 									{/* <li><Link to="#">Advertise</Link></li> */}
 									{/* <li><Link to="#">For Businesses</Link></li> */}
 									{/* <li><Link to="#">Owner Guidelines</Link></li> */}
@@ -175,7 +195,7 @@ class Footer extends React.Component {
 						</Row>
 					</div>
 				</section> */}
-				<footer style={{background: '#EDF1F4'}} className="pt-4 pb-4 text-center">
+				<footer style={{ background: '#EDF1F4' }} className="pt-4 pb-4 text-center">
 					<Container>
 						<p className="mt-0 mb-0 text-dark">{this.props.copyrightText}</p>
 					</Container>
