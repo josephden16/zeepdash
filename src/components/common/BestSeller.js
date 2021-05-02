@@ -76,9 +76,9 @@ const BestSeller = (props) => {
       </div>
       <div className="p-3 position-relative">
         <div className="list-card-body">
-          <h6 className="mb-1"><Link to="#" className="text-black">{props.title}</Link></h6>
+          <p className="mb-1 text-black"><Link to="#" style={{fontSize: '14px'}} className="text-black">{props.title}</Link></p>
           {props.subTitle ? (
-            <p className="text-gray mb-3">{props.subTitle}</p>
+            <p className="text-dark mb-3 mt-2" style={{fontSize: '11px'}}>{props.subTitle}</p>
           )
             : ''
           }

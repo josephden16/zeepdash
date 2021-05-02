@@ -31,7 +31,7 @@ class CardItem extends React.Component {
 				</div>
 				<div className="p-3 position-relative">
 					<div className="list-card-body">
-						<h6 className="mb-1"><Link to={this.props.linkUrl} className="text-black">{this.props.title}</Link></h6>
+						<p className="mb-1 text-black"><Link to={this.props.linkUrl} style={{fontSize: '14px'}} className="text-black">{this.props.title}</Link></p>
 						{this.props.subTitle ? (
 							<p style={{fontSize: '11px'}} className="text-dark mb-3 mt-2">{this.props.subTitle}</p>
 						)
