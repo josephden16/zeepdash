@@ -48,7 +48,7 @@ class Footer extends React.Component {
 							<Col md={1} sm={6} className="mobile-none">
 							</Col>
 							<Col md={2} sm={4} xs={6}>
-								<h6 className="mb-3">About ZeepDash</h6>
+								<p className="mb-3 h6 text-black">About ZeepDash</p>
 								<ul>
 									<li><Link className="text-dark" to="#">About Us</Link></li>
 									<li><Link className="text-dark" to="#">Contact</Link></li>
