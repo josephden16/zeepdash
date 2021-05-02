@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Row, Col, Container, Tab, Nav, Image, Badge } from 'react-bootstrap';
+import { Row, Col, Container, Tab, Nav, Image, Badge, Button } from 'react-bootstrap';
 import Seo from './Seo';
 import NotFound from './NotFound';
 import Loading from './common/Loading';
@@ -11,9 +11,10 @@ import { FiNavigation, FiCheckCircle } from 'react-icons/fi';
 import { HiClock, HiMail, HiPhone } from 'react-icons/hi';
 import { IoFastFood } from 'react-icons/io5';
 import { CgArrowLongRight } from 'react-icons/cg';
+import { BsClockFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { firestore } from '../firebase';
-import { capitalize, getTotalAmount, MAX, MIN, updateCartSession, updateFirestoreCart } from '../utils';
+import { capitalize, getTotalAmount, isRestaurantOpen, MAX, MIN, updateCartSession, updateFirestoreCart } from '../utils';
 import { UserContext } from './providers/AuthProvider';
 // import ItemsCarousel from './common/ItemsCarousel';
 // import QuickBite from './common/QuickBite';
@@ -32,7 +33,7 @@ const Detail = () => {
 		const restaurantRef = firestore.collection(collectionName)
 			.where("slug", "==", slug);
 
-		const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
+		const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
 		const offersRef = firestore.collection(mealsCollectionName)
 			.where("restaurantSlug", "==", slug);
 
@@ -128,15 +129,15 @@ const Detail = () => {
 								<div className="restaurant-detailed-header-left">
 									<Image draggable={false} fluid className="mr-3 float-left" alt="osahan" src={restaurant.photoURL || '/img/default-list.png'} />
 									<h2 className="text-white">{restaurant.name}</h2>
-									<p className="text-white mb-1"><FiNavigation /> {" "}{restaurant.address.toUpperCase()} <Badge variant="success">OPEN</Badge>
+									<p className="text-white mb-1"><FiNavigation /> {" "}{restaurant.address.toUpperCase()} <RestaurantOpenStatus openingTime={restaurant.openingTime} closingTime={restaurant.closingTime} />
 									</p>
 									<p className="text-white mb-0"><IoFastFood />{" "}{restaurant.cuisines.join(" , ").toUpperCase()}</p>
 								</div>
 							</Col>
 							<Col md={4}>
-								<div className="restaurant-detailed-header-right text-right">
+								<div className="restaurant-detailed-header-right text-right mt-2">
 									{/* TODO: ADD DELIVERY TIME FEATURE LATER*/}
-									{/* <Button variant='success' type="button"><Icofont icon="clock-time" /> 25–35 min</Button> */}
+									<Button variant='secondary' style={{ fontSize: '14px' }} type="button"><BsClockFill style={{ marginRight: '3px' }} /> <span>{restaurant.openingTime} - {restaurant.closingTime}</span></Button>
 									{/* <h6 className="text-white mb-0 restaurant-detailed-ratings">
 										<span className="generator-bg rounded text-white">
 											<Icofont icon="star" /> 3.1
@@ -213,6 +214,19 @@ const BestSellerContainer = ({ restaurantOffers, restaurant, updateCart }) => {
 				<Meal key={offer.id} updateCart={updateCart} offer={offer} restaurant={restaurant} />
 			))}
 		</Row>
+	)
+}
+
+
+const RestaurantOpenStatus = ({ openingTime, closingTime }) => {
+	const restaurantOpen = isRestaurantOpen(openingTime, closingTime);
+	if (restaurantOpen) {
+		return (
+			<Badge variant="success">OPEN</Badge>
+		)
+	}
+	return (
+		<Badge variant="danger">CLOSED</Badge>
 	)
 }
 
