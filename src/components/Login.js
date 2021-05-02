@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Row, Col, Container, Form, Image } from 'react-bootstrap';
 import { UserContext } from '../components/providers/AuthProvider';
-import firebase from '../firebase';
+import { auth, setPersistenceSession } from '../firebase';
 import { toast } from 'react-toastify';
 import { useQuery, validateEmail } from '../utils';
 import Seo from './Seo';
@@ -25,17 +25,11 @@ const Login = () => {
 
 	const signInWithEmailAndPassword = (email, password) => {
 		setLoading(true);
-		firebase.auth().signInWithEmailAndPassword(email, password)
+		auth.signInWithEmailAndPassword(email, password)
 			.then(() => {
 				//signed in
-				// set persistence to session
-				firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-					.then(() => {
-						// console.log("Session persistence enabled");
-					})
-					.catch((error) => {
-						// console.log(error.message);
-					})
+				// set auth persistence to session
+				setPersistenceSession();
 				setLoading(false);
 				let next = query.get("next");
 				if (next) {
@@ -56,6 +50,7 @@ const Login = () => {
 				} else if (errorCode === "auth/user-not-found") {
 					toast.error("An account does not exist for this email address");
 				} else {
+					console.log(error.message);
 					toast.error("Failed to sign in");
 				}
 			})
@@ -76,6 +71,11 @@ const Login = () => {
 		if (!password) {
 			toast.error("Please enter a valid password");
 			return;
+		}
+
+		// sign out if signed in
+		if (user) {
+			auth.signOut();
 		}
 
 		signInWithEmailAndPassword(email, password);

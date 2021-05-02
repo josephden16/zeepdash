@@ -24,17 +24,15 @@ export const storage = firebase.storage();
 
 
 // authentication functions
-
-export function setPersistenceSession(email, password) {
+export function setPersistenceSession() {
   // [START auth_set_persistence_session]
-  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
     .then(() => {
       // Existing and future Auth states are now persisted in the current
       // session only. Closing the window would clear any existing state even
       // if a user forgets to sign out.
       // ...
       // New sign-in will be persisted with session persistence.
-      return firebase.auth().signInWithEmailAndPassword(email, password)
     })
     .catch(() => {
       // Handle Errors here.
@@ -42,58 +40,9 @@ export function setPersistenceSession(email, password) {
   // [END auth_set_persistence_session]
 }
 
-
-export const registerWithEmailAndPassword = (email, password) => {
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in 
-      var user = userCredential.user;
-      return user;
-    })
-    .catch((error) => {
-      // var errorCode = error.code;
-      // var errorMessage = error.message;
-      // console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
-    });
-}
-
-export const signInWithEmailAndPassword = (email, password) => {
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      //signed in
-      var user = userCredential.user;
-      // console.log(user);
-      return user;
-    })
-
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
-      return error.message;
-    })
-}
-
-// google oauth
-const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-
-export const signInWithGoogle = () => {
-  auth.signInWithPopup(googleAuthProvider)
-    .then(userCredentials => {
-      // const { user } = userCredentials;
-      // console.log("sign in successufl");
-      // console.log(user);
-    })
-    .catch(error => {
-      // console.log(error);
-    })
-}
-
 export const signOut = () => {
   auth.signOut();
 }
 
-//todo: remove this before production deploy
 // window.firebase = firebase;
-
 export default firebase;
