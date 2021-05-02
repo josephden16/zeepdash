@@ -79,7 +79,7 @@ class Header extends React.Component {
 const RestaurantLink = () => {
 	return (
 		<>
-			<Nav.Link as={NavLink} to="/restaurants" activeClassName="active" className="border-0">Restaurants</Nav.Link>
+			<Nav.Link as={NavLink} to="/restaurants" activeClassName="active">Restaurants</Nav.Link>
 		</>
 	)
 }
@@ -156,7 +156,7 @@ const UserDropDown = () => {
 
 	return (
 		<>
-			<Nav.Link as={Link} to="/login">
+			<Nav.Link as={Link} activeClassName="active" to="/login">
 				Log in
 			</Nav.Link>
 		</>

@@ -68,7 +68,7 @@ const Details = () => {
               <Row>
                 <Col md={9} lg={8}>
                   <Form onSubmit={(evt) => { evt.preventDefault() }}>
-                    <SelectCuisines cuisines={cuisines} updateCuisines={setCuisines} defaultCuisines={defaultCuisines} />
+                    <SelectCuisines restaurant={restaurant} cuisines={cuisines} updateCuisines={setCuisines} defaultCuisines={defaultCuisines} />
                     <button onClick={handleUpdate} disabled={loading ? true : false} className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">
                       {!loading && <span>UPDATE</span>}
                       {loading && <Image style={{ width: '30px' }} fluid src="/img/loading-2.svg" alt="loading" />}
@@ -85,9 +85,9 @@ const Details = () => {
 }
 
 
-const SelectCuisines = ({ defaultCuisines, cuisines, updateCuisines }) => {
+const SelectCuisines = ({ defaultCuisines, restaurant, cuisines, updateCuisines }) => {
 
-  if (!defaultCuisines) return null;
+  if (!(defaultCuisines && restaurant)) return null;
 
   const setCuisines = (cuisine) => {
     if (!cuisines.includes(cuisine)) {
@@ -107,6 +107,7 @@ const SelectCuisines = ({ defaultCuisines, cuisines, updateCuisines }) => {
         <Form.Check
           key={cuisine.id}
           custom
+          checked={restaurant.cuisines.includes(cuisine.name) ? true : false}
           type='checkbox'
           id={`custom-cb${index + 1}`}
           value={cuisine.name}
