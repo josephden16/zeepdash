@@ -116,7 +116,7 @@ const RestaurantsCarousel = ({ restaurants }) => {
 						title={restaurant.name}
 						subTitle={restaurant.cuisines.join(" • ").toUpperCase()}
 						imageAlt={restaurant.name}
-						image={restaurant.photoURL || 'img/default-list.png'}
+						image={restaurant.photoURL || 'img/default-list.webp'}
 						imageClass='img-fluid item-img'
 						linkUrl={`/restaurant/${restaurant.slug}`}
 						offerText=''

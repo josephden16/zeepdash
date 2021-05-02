@@ -119,7 +119,7 @@ const Detail = () => {
 			<Seo seo={seo} />
 			<section className="restaurant-detailed-banner">
 				<div className="text-center">
-					<Image fluid className="cover" draggable={false} style={{ width: '100%', objectFit: 'fill' }} src={restaurant.backgroundImageURL || '/img/mall-dedicated-banner.png'} />
+					<Image fluid className="cover" draggable={false} alt={restaurant.name} style={{ width: '100%', objectFit: 'fill' }} src={restaurant.backgroundImageURL || '/img/restaurant-bg.webp'} />
 				</div>
 				<div className="restaurant-detailed-header">
 					<Container>
@@ -236,6 +236,8 @@ const Meal = ({ offer, restaurant, updateCart }) => {
 				rating=''
 				updateCart={updateCart}
 				restaurantId={restaurant.id}
+				openingTime={restaurant.openingTime}
+				closingTime={restaurant.closingTime}
 			/>
 		</Col>
 	)

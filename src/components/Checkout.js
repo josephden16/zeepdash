@@ -6,7 +6,7 @@ import { Row, Col, Container, Image, Form } from 'react-bootstrap';
 import { v4 as uuid4 } from 'uuid';
 import CheckoutItem from './common/CheckoutItem';
 import EditAddressModal from './modals/EditAddressModal';
-import { MIN, MAX, getTotalAmount, updateFirestoreCart, updateCartSession, DELIVERY_FEE, capitalize } from '../utils';
+import { MIN, MAX, getTotalAmount, updateFirestoreCart, updateCartSession, DELIVERY_FEE, capitalize, isRestaurantOpen } from '../utils';
 import { firestore } from '../firebase';
 import { CgArrowLongRight } from 'react-icons/cg';
 import { UserContext } from './providers/AuthProvider';
@@ -66,7 +66,7 @@ const Checkout = () => {
 
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
 			const userRef = firestore.collection(collectionName).doc(userId);
-	
+
 			try {
 				const snapshot = await userRef.get();
 				if (snapshot.exists) {
@@ -138,7 +138,8 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 	const totalAmount = parseInt(getTotalAmount(cart) + DELIVERY_FEE);
 	const { restaurantId } = useParams();
 	const history = useHistory();
-
+	const openingTime = restaurant.openingTime;
+	const closingTime = restaurant.closingTime;
 	// delivery location as specified by the user
 	const [deliveryLocation, setDeliveryLocation] = useState(null);
 
@@ -163,6 +164,13 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 
 		if (!cart || cart.length < 1) {
 			toast.error("You must have meals in your cart to checkout");
+			return;
+		}
+
+		// ensure users can't place orders when restaurant's are closed
+		const restaurantOpen = isRestaurantOpen(openingTime, closingTime);
+		if (!restaurantOpen) {
+			toast.info("You can't checkout while a restaurant restaurant is closed");
 			return;
 		}
 

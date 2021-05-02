@@ -173,7 +173,7 @@ const RestaurantCard = ({ restaurant }) => {
 				title={restaurant.name}
 				subTitle={restaurant.cuisines.join(" • ").toUpperCase()}
 				imageAlt='Product'
-				image={restaurant.imageURL ? restaurant.imageURL : '/img/default-list.png'}
+				image={restaurant.imageURL ? restaurant.imageURL : '/img/default-list.webp'}
 				imageClass='img-fluid item-img'
 				linkUrl={`restaurant/${restaurant.slug}`}
 				offerText=''

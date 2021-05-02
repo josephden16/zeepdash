@@ -5,13 +5,16 @@ import PropTypes from 'prop-types';
 import { AiFillStar } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import { UserContext } from '../providers/AuthProvider';
-import { updateFirestoreCart } from '../../utils';
+import { updateFirestoreCart, isRestaurantOpen } from '../../utils';
 
 
 const BestSeller = (props) => {
   const restaurantId = props.restaurantId;
   const mealId = props.id;
   const user = useContext(UserContext);
+  const closingTime = props.closingTime;
+  const openingTime = props.openingTime;
+
 
   const addToCart = () => {
     if (user) {
@@ -20,6 +23,14 @@ const BestSeller = (props) => {
         return;
       }
     }
+
+    // ensure users can't place orders when restaurant's are closed
+    const restaurantOpen = isRestaurantOpen(openingTime, closingTime);
+    if (!restaurantOpen) {
+      toast.info("You can't add meals to cart while a restaurant is closed");
+      return;
+    }
+
     let currentCart = JSON.parse(sessionStorage.getItem(restaurantId));
     if (currentCart) {
       // check if item already exists in cart
@@ -76,9 +87,9 @@ const BestSeller = (props) => {
       </div>
       <div className="p-3 position-relative">
         <div className="list-card-body">
-          <p className="mb-1 text-black"><Link to="#" style={{fontSize: '14px'}} className="text-black">{props.title}</Link></p>
+          <p className="mb-1 text-black"><Link to="#" style={{ fontSize: '14px' }} className="text-black">{props.title}</Link></p>
           {props.subTitle ? (
-            <p className="text-dark mb-3 mt-2" style={{fontSize: '11px'}}>{props.subTitle}</p>
+            <p className="text-dark mb-3 mt-2" style={{ fontSize: '11px' }}>{props.subTitle}</p>
           )
             : ''
           }

@@ -83,6 +83,22 @@ export const getTotalAmount = (cart) => {
   return total;
 }
 
+export const isRestaurantOpen = (openingTime, closingTime) => {
+  let [openingTimeHour, openingTimeMinute] = openingTime.split(":");
+  let [closingTimeHour, closingTimeMinute] = closingTime.split(":");
+
+  let now = new Date();
+  let timeOpened = new Date().setHours(parseInt(openingTimeHour), parseInt(openingTimeMinute));
+  let timeClosed = new Date().setHours(parseInt(closingTimeHour), parseInt(closingTimeMinute));
+
+
+  if ((now > timeOpened && now < timeClosed)) {
+    return true;
+  }
+  return false;
+}
+
+
 
 export const useQuery = () => {
   return new URLSearchParams(useLocation().search);
