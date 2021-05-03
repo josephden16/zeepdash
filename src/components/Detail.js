@@ -8,7 +8,7 @@ import GalleryCarousel from './common/GalleryCarousel';
 import CheckoutItem from './common/CheckoutItem';
 import BestSeller from './common/BestSeller';
 import { FiNavigation, FiCheckCircle } from 'react-icons/fi';
-import { HiClock, HiMail, HiPhone } from 'react-icons/hi';
+import { HiClock, HiMail, HiPhone, HiLocationMarker } from 'react-icons/hi';
 import { IoFastFood } from 'react-icons/io5';
 import { CgArrowLongRight } from 'react-icons/cg';
 import { BsClockFill } from 'react-icons/bs';
@@ -221,11 +221,11 @@ const RestaurantOpenStatus = ({ openingTime, closingTime }) => {
 	const restaurantOpen = isRestaurantOpen(openingTime, closingTime);
 	if (restaurantOpen) {
 		return (
-			<Badge variant="success">OPEN</Badge>
+			<Badge variant="success" className="p-1">OPEN</Badge>
 		)
 	}
 	return (
-		<Badge variant="danger">CLOSED</Badge>
+		<Badge variant="danger" className="p-1">CLOSED</Badge>
 	)
 }
 
@@ -268,10 +268,10 @@ const RestaurantInfoTab = ({ restaurant }) => {
 					</div>
 				</div>
 				<h5 className="mb-4">Restaurant Info</h5>
-				<p className="mb-3">{restaurant.address}</p>
+				<p className="mb-2 text-black"><HiLocationMarker className="text-red mr-2" />{restaurant.address}</p>
 				<p className="mb-2 text-black"><HiPhone className="text-red mr-2" />{restaurant.phone}</p>
 				<p className="mb-2 text-black"><HiMail className="email text-red text-primary mr-2" />{restaurant.email}</p>
-				<p className="mb-2 text-black"><HiClock className="clock-time text-red text-primary mr-2" /> Today {restaurant.openingTime} - {restaurant.closingTime}  <Badge variant="success" className='ml-1'> OPEN NOW </Badge></p>
+				<p className="mb-2 text-black"><HiClock className="clock-time text-red text-primary mr-2" /> <span className="mr-1">Today {restaurant.openingTime} - {restaurant.closingTime}</span>   <RestaurantOpenStatus openingTime={restaurant.openingTime} closingTime={restaurant.closingTime} /></p>
 				{/* <hr className="clearfix" />
 				<p className="text-black mb-0">You can also check the 3D view by using our menue map clicking here &nbsp;&nbsp;&nbsp; <Link className="text-info font-weight-bold" to="#">Venue Map</Link></p>
 				<hr className="clearfix" /> */}
