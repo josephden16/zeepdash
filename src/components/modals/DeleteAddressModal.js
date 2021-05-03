@@ -14,7 +14,7 @@ const DeleteAddressModal = (props) => {
 		setLoading(true);
 		try {
 			const newLocations = props.addresses.filter((location) => location.id !== props.defaultData.id);
-			userRef.set({ locations: newLocations }, { merge: true });
+			await userRef.set({ locations: newLocations }, { merge: true });
 			toast.success("Address deleted");
 			setLoading(false);
 			props.refresh();
