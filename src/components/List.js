@@ -155,7 +155,12 @@ const CuisinesFilter = ({ defaultCuisines }) => {
 	const query = useQuery();
 	const urlCuisines = query.get("cuisine");
 	const history = useHistory();
-	const [selectedCuisines, setSelectedCuisines] = useState(urlCuisines.split(","));
+	// set the initial value to cuisines gotten from the url
+	let defautlValue = [];
+	if (urlCuisines) {
+		defautlValue = urlCuisines.split(",");
+	}
+	const [selectedCuisines, setSelectedCuisines] = useState(defautlValue);
 
 	const setCuisines = (cuisine) => {
 		if (!selectedCuisines.includes(cuisine)) {

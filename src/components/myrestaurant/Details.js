@@ -17,6 +17,7 @@ const Details = () => {
   const [loading, setLoading] = useState(false);
   const [defaultCuisines, setDefaultCuisines] = useState(null);
   const restaurant = useContext(UserContext);
+  // set the intial value to cuisines that are offered by the restaurant
   const [cuisines, setCuisines] = useState(restaurant.cuisines);
 
   useEffect(() => {
