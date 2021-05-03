@@ -22,7 +22,7 @@ class Footer extends React.Component {
 					<Container>
 						<Row>
 							<Col md={4} sm={12}>
-								<h6 className="mb-3">Subscribe to our Newsletter</h6>
+								<p className="mb-3 h6 text-black">Subscribe to our Newsletter</p>
 								<Form className="newsletter-form mb-1">
 									<InputGroup className="mb-3">
 										<FormControl
