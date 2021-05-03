@@ -394,7 +394,7 @@ const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
 							<ChooseAddressCard
 								title={capitalize(address.category)}
 								icon={iconName}
-								iconclassName='icofont-3x'
+								iconclassName='h1'
 								address={address.name}
 								addressData={address}
 								setDeliveryLocation={setDeliveryLocation}
