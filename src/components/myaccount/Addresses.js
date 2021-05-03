@@ -55,7 +55,7 @@ const Addresses = () => {
 					setAddresses(locations);
 					setFailedDataFetch(false);
 				} else {
-					setAddresses(null);
+					setAddresses([]);
 				}
 			} else {
 				setAddresses(null);
@@ -130,7 +130,7 @@ const Addresses = () => {
 			<EditAddressModal refresh={fetchAddresses} user={user} addresses={addresses} defaultData={editAddressData} show={showAddressModal} onHide={hideAddressModal} />
 			<DeleteAddressModal refresh={fetchAddresses} user={user} addresses={addresses} defaultData={deleteAddressData} show={showDeleteModal} onHide={hideDeleteModal} />
 			{(!addresses && failedDataFetch === true) && <FailedToFetch />}
-			{!addresses && <Loading text="Fetching addresses..." />}
+			{(!addresses) && <Loading text="Fetching addresses..." />}
 			{addresses &&
 				<div className='p-4 bg-white shadow-sm'>
 					<AddAddress refresh={fetchAddresses} user={user} addresses={addresses} />
@@ -147,19 +147,33 @@ const AddressesContainer = ({ displayEditAddressModal, displayDeleteAddressModal
 			<Col md={12}>
 				<h4 className="font-weight-bold mt-0 mb-3">Manage Addresses</h4>
 			</Col>
-			{addresses && addresses.map(address => (
-				<Col md={6} key={address.id}>
-					<AddressCard
-						boxClass="shadow-sm"
-						title='Home'
-						icoIcon='ui-home'
-						iconclassName='icofont-3x'
-						address={address.name}
-						onEditClick={() => displayEditAddressModal(address)}
-						onDeleteClick={() => displayDeleteAddressModal(address)}
-					/>
-				</Col>
-			))}
+			{addresses && addresses.map(address => {
+				let iconName = "";
+				switch (address.category) {
+					case "home":
+						iconName = "home";
+						break;
+					case "work":
+						iconName = "briefcase";
+						break;
+					default:
+						iconName = "location";
+						break;
+				}
+				return (
+					<Col md={6} key={address.id}>
+						<AddressCard
+							boxClass="shadow-sm"
+							title='Home'
+							icon={iconName}
+							iconclassName='h1'
+							address={address.name}
+							onEditClick={() => displayEditAddressModal(address)}
+							onDeleteClick={() => displayDeleteAddressModal(address)}
+						/>
+					</Col>
+				)
+			})}
 			{
 				addresses.length < 1 &&
 				<Col md={12} className="h5">

@@ -4,6 +4,9 @@ import { Card, Media } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import { RiHome4Fill } from 'react-icons/ri';
+import { BsBriefcaseFill } from 'react-icons/bs';
+import {IoLocationSharp} from 'react-icons/io5';
+
 
 class AddressCard extends React.Component {
 
@@ -14,7 +17,7 @@ class AddressCard extends React.Component {
           <Media>
             <div className="mr-3">
               {/* <Icofont icon={this.props.icoIcon} className={this.props.iconclassName} /> */}
-              <RiHome4Fill className={this.props.iconclassName} />
+              <Icon icon={this.props.icon} className={this.props.iconclassName} />
             </div>
             <div className="media-body">
               <h6 className="mb-1 text-secondary">{this.props.title}</h6>
@@ -30,6 +33,29 @@ class AddressCard extends React.Component {
     );
   }
 }
+
+const Icon = ({ className, icon }) => {
+  if (icon === 'home') {
+    return (
+      <RiHome4Fill className={className} />
+    )
+  }
+
+  if (icon === 'briefcase') {
+    return (
+      <BsBriefcaseFill className={className} />
+    )
+  }
+
+  if (icon === 'location') {
+    return (
+      <IoLocationSharp className={className} />
+    )
+  }
+
+  return <IoLocationSharp className={className} />
+}
+
 
 AddressCard.propTypes = {
   title: PropTypes.string.isRequired,
