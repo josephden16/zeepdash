@@ -181,13 +181,10 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
     if (mealImageFile.current.files.length > 0) {
       const imageFile = mealImageFile.current.files[0];
       let [, extension] = imageFile.name.split(".");
-
       // generate a random file name
       let fileName = uuidv4();
       fileName = fileName.substring(0, 15);
-      fileName = `${fileName}.${extension}`;
-
-      // add 
+      // checks if the size of the file is larger than 1 megabyte
       if (imageFile.size > 1000000) {
         toast.info("Image file cannot be larger than 1MB");
         setLoading(false);
@@ -196,7 +193,7 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
       storageRef
         .child("Meals")
         .child(restaurantSlug)
-        .child(fileName)
+        .child(`${fileName}.${extension}`)
         .put(imageFile)
         .then(response => response.ref.getDownloadURL())
         .then(imageURL => {
