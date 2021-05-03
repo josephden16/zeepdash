@@ -42,11 +42,12 @@ export const getCart = (restaurantId) => {
 }
 
 export const updateCartSession = (restaurantId, cart) => {
-  if (!cart) {
+  if (!cart || cart.length === 0) {
     sessionStorage.setItem(restaurantId, undefined);
+  } else {
+    let sortedCart = cart.sort((a, b) => a.name.localeCompare(b.name))
+    sessionStorage.setItem(restaurantId, JSON.stringify(sortedCart));
   }
-  let sortedCart = cart.sort((a, b) => a.name.localeCompare(b.name))
-  sessionStorage.setItem(restaurantId, JSON.stringify(sortedCart));
 }
 
 export const updateFirestoreCart = async (cart, user, restaurantId) => {

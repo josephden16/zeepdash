@@ -33,7 +33,7 @@ const Login = () => {
 				setLoading(false);
 				let next = query.get("next");
 				if (next) {
-					window.location.replace(next);
+					history.push(next.substring(1));
 					toast.success("You're signed in");
 				} else {
 					toast.success("You're signed in");

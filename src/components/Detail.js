@@ -217,7 +217,6 @@ const BestSellerContainer = ({ restaurantOffers, restaurant, updateCart }) => {
 	)
 }
 
-
 const RestaurantOpenStatus = ({ openingTime, closingTime }) => {
 	const restaurantOpen = isRestaurantOpen(openingTime, closingTime);
 	if (restaurantOpen) {
@@ -272,7 +271,7 @@ const RestaurantInfoTab = ({ restaurant }) => {
 				<p className="mb-3">{restaurant.address}</p>
 				<p className="mb-2 text-black"><HiPhone className="text-red mr-2" />{restaurant.phone}</p>
 				<p className="mb-2 text-black"><HiMail className="email text-red text-primary mr-2" />{restaurant.email}</p>
-				<p className="mb-2 text-black"><HiClock className="clock-time text-red text-primary mr-2" /> Today  11am – 5pm, 6pm – 11pm<Badge variant="success" className='ml-1'> OPEN NOW </Badge></p>
+				<p className="mb-2 text-black"><HiClock className="clock-time text-red text-primary mr-2" /> Today {restaurant.openingTime} - {restaurant.closingTime}  <Badge variant="success" className='ml-1'> OPEN NOW </Badge></p>
 				{/* <hr className="clearfix" />
 				<p className="text-black mb-0">You can also check the 3D view by using our menue map clicking here &nbsp;&nbsp;&nbsp; <Link className="text-info font-weight-bold" to="#">Venue Map</Link></p>
 				<hr className="clearfix" /> */}
@@ -324,7 +323,7 @@ const Cart = ({ cart, updateCart, restaurant }) => {
 	const handleCheckout = () => {
 		if (!user) {
 			toast.error("You must be signed in to checkout");
-			history.replace(`/login?next=${window.location.href}`);
+			history.replace(`/login?next=${window.location.pathname}`);
 		} else {
 			// send cart data to firestore
 			try {

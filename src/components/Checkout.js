@@ -145,7 +145,8 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 
 
 	const getNextOrderNumber = async () => {
-		const ordersRef = firestore.collection("counters").doc("QvjfmXtjAV7AdoYurLNX");
+		const documentId = process.env.NODE_ENV === 'production' ? 'QvjfmXtjAV7AdoYurLNX' : 'jYWBXOsQpplQtPGZbN2L';
+		const ordersRef = firestore.collection("counters").doc(documentId);
 		const snapshot = await ordersRef.get();
 		const number = snapshot.data().orderLastCount;
 		await ordersRef.set({
@@ -157,16 +158,6 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 	}
 
 	const createOrder = async (paymentResult) => {
-		if (!user) {
-			toast.error("You must be signed in to checkout");
-			return;
-		}
-
-		if (!cart || cart.length < 1) {
-			toast.error("You must have meals in your cart to checkout");
-			return;
-		}
-
 		// ensure users can't place orders when restaurant's are closed
 		const restaurantOpen = isRestaurantOpen(openingTime, closingTime);
 		if (!restaurantOpen) {
@@ -205,8 +196,10 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 			toast.error("Failed to create order");
 		}
 	}
+
 	const productionPublicKey = 'FLWPUBK-692795778fbd1d8a213007824d31c5db-X';
 	const developmentPublicKey = 'FLWPUBK_TEST-eb8e43a97c6868b180417e27034530b7-X';
+	// flutterwave payment config
 	const config = {
 		public_key: process.env.NODE_ENV === 'production' ? productionPublicKey : developmentPublicKey,
 		tx_ref: Date.now(),
@@ -228,11 +221,14 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 	const handleFlutterPayment = useFlutterwave(config);
 
 	const handlePayment = () => {
+		if (!user) {
+			toast.error("You must be signed in to checkout");
+			return;
+		}
 		if (!deliveryLocation) {
 			toast.error("Please select a delivery location");
 			return;
 		}
-
 		if (!cart || cart.length < 1) {
 			toast.error("You must have meals in your cart to checkout");
 			return;
@@ -245,7 +241,6 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 					updateFirestoreCart([], user, restaurantId);
 					updateCartSession(restaurant.id, []);
 					history.push("/thanks");
-					closePaymentModal();
 				} else {
 					toast.error("Payment failed");
 					closePaymentModal();
