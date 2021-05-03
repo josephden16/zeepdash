@@ -188,3 +188,7 @@ export const validatePassword = (password) => {
 }
 
 export const DELIVERY_FEE = 300;
+
+export const getCuisinesArray = (string) => {
+  return string.split(",");
+}

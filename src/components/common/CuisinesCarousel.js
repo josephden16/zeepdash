@@ -33,7 +33,7 @@ const CuisinesCarousel = () => {
 							image={cuisine.imageURL}
 							imageClass='img-fluid'
 							imageAlt={cuisine.name}
-							linkUrl='#'
+							linkUrl={`/restaurants?cuisine=${cuisine.name}`}
 						/>
 					</div>
 				))

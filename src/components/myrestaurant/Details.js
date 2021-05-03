@@ -16,8 +16,8 @@ const seo = {
 const Details = () => {
   const [loading, setLoading] = useState(false);
   const [defaultCuisines, setDefaultCuisines] = useState(null);
-  const [cuisines, setCuisines] = useState([]);
   const restaurant = useContext(UserContext);
+  const [cuisines, setCuisines] = useState(restaurant.cuisines);
 
   useEffect(() => {
     const fetchCuisines = async () => {
@@ -107,7 +107,7 @@ const SelectCuisines = ({ defaultCuisines, restaurant, cuisines, updateCuisines 
         <Form.Check
           key={cuisine.id}
           custom
-          checked={restaurant.cuisines.includes(cuisine.name) ? true : false}
+          checked={cuisines.includes(cuisine.name) ? true : false}
           type='checkbox'
           id={`custom-cb${index + 1}`}
           value={cuisine.name}
