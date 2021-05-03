@@ -69,6 +69,7 @@ const Detail = () => {
 				setLoading(false);
 				setNotFound(true);
 				toast.error("Failed to fetch restaurant data");
+				console.log(error.message);
 			}
 		}
 
@@ -221,11 +222,11 @@ const RestaurantOpenStatus = ({ openingTime, closingTime }) => {
 	const restaurantOpen = isRestaurantOpen(openingTime, closingTime);
 	if (restaurantOpen) {
 		return (
-			<Badge variant="success" className="p-1">OPEN</Badge>
+			<Badge variant="success" className="p-1 ml-1">OPEN</Badge>
 		)
 	}
 	return (
-		<Badge variant="danger" className="p-1">CLOSED</Badge>
+		<Badge variant="danger" className="p-1 ml-1">CLOSED</Badge>
 	)
 }
 

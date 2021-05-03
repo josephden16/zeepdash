@@ -239,7 +239,7 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 				if (response["status"] === "success" || response["status"] === "successful") {
 					createOrder(response);
 					updateFirestoreCart([], user, restaurantId);
-					updateCartSession(restaurant.id, []);
+					updateCartSession(restaurantId, []);
 					history.push("/thanks");
 				} else {
 					toast.error("Payment failed");
