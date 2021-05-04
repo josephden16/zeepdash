@@ -49,7 +49,7 @@ const Index = () => {
 							<ProductBox
 								image='img/products/egusi.webp'
 								imageClass='img-fluid rounded'
-								imageAlt='Fried Rice'
+								imageAlt='Egusi Soup'
 								linkUrl=''
 							/>
 						</Col>
@@ -57,7 +57,7 @@ const Index = () => {
 							<ProductBox
 								image='img/products/amala.webp'
 								imageClass='img-fluid rounded'
-								imageAlt='Fried Rice'
+								imageAlt='Amala'
 								linkUrl=''
 							/>
 						</Col>
@@ -65,7 +65,7 @@ const Index = () => {
 							<ProductBox
 								image='img/products/jollof-rice.webp'
 								imageClass='img-fluid rounded'
-								imageAlt='Fried Rice'
+								imageAlt='Jollof Rice'
 								linkUrl=''
 							/>
 						</Col>

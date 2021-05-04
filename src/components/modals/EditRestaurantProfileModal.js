@@ -42,19 +42,21 @@ const EditProfileModal = (props) => {
     if (profileImageFile.current.files.length > 0) {
       const storageRef = storage.ref();
       const file = profileImageFile.current.files[0];
-      const profileFileName = uuid4();
+      let [, extension] = file.name.split(".");
+      const profileFileName = uuid4() + "-pp";
       const slug = props.slug;
       setLoading(true);
       storageRef
         .child("Restaurants")
         .child(slug)
         .child("Profile")
-        .child(profileFileName)
+        .child(`${profileFileName}.${extension}`)
         .put(file)
         .then(response => response.ref.getDownloadURL())
         .then(imageURL => {
           restaurantRef.set({
-            photoURL: imageURL
+            photoURL: imageURL,
+            profileFileName: profileFileName
           }, { merge: true })
             .then(() => {
               setLoading(false);
@@ -71,19 +73,21 @@ const EditProfileModal = (props) => {
     if (backgroundImageFile.current.files.length > 0) {
       const storageRef = storage.ref();
       const file = backgroundImageFile.current.files[0];
-      const bgFileName = uuid4();
+      let [, extension] = file.name.split(".");
+      const bgFileName = uuid4() + "-bg";
       const slug = props.slug;
       setLoading(true);
       storageRef
         .child("Restaurants")
         .child(slug)
         .child("Profile")
-        .child(bgFileName)
+        .child(`${bgFileName}.${extension}`)
         .put(file)
         .then(response => response.ref.getDownloadURL())
         .then(imageURL => {
           restaurantRef.set({
-            backgroundImageURL: imageURL
+            backgroundImageURL: imageURL,
+            bgFileName: bgFileName
           }, { merge: true });
         }).then(() => {
           setLoading(false);

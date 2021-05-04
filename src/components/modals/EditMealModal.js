@@ -11,7 +11,7 @@ const EditMealModal = (props) => {
   const [mealFileName, setMealFileName] = useState(null);
   const [loading, setLoading] = useState(false);
   let mealImageFileRef = useRef(null);
-
+  //TODO: delete old meal image after updating new one
   const updateMeal = () => {
     const mealId = props.defaultData.id;
     const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
@@ -22,18 +22,20 @@ const EditMealModal = (props) => {
     setLoading(true);
     if (mealImageFileRef.current.files.length > 0) {
       const imageFile = mealImageFileRef.current.files[0];
+      let [, extension] = imageFile.name.split(".");
       // generate a random file name
       const fileName = uuidv4();
       storageRef
         .child("Meals")
         .child(restaurantSlug)
-        .child(fileName)
+        .child(`${fileName}.${extension}`)
         .put(imageFile)
         .then(response => response.ref.getDownloadURL())
         .then(imageURL => {
           mealsRef.set({
             name: mealName || props.defaultData.name,
             price: parseInt(mealPrice) || parseInt(props.defaultData.price),
+            fileName: fileName,
             imageURL: imageURL,
           }, { merge: true })
             .then(() => {

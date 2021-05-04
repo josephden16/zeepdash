@@ -23,7 +23,7 @@ const DeleteMealModal = (props) => {
     try {
       // delete meal document in firestore
       mealRef.delete();
-      await storageRef.child("Meals").child(restaurantSlug).child(imageFile).delete();
+      await storageRef.child("Meals").child(restaurantSlug).child(`${imageFile}.webp`).delete();
       setLoading(false)
       toast.success("Meal deleted");
       // props.onHide();

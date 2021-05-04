@@ -196,7 +196,7 @@ const CuisinesFilter = ({ defaultCuisines }) => {
 							}
 						</div>
 						<div>
-							<Button onClick={filterRestaurants} variant="info" className="mx-auto mt-3">APPLY FILTER</Button>
+							<Button onClick={filterRestaurants} variant="danger" style={{width: '100%'}} className="mx-auto mt-3">APPLY FILTER</Button>
 						</div>
 					</div>
 				</Accordion.Collapse>
