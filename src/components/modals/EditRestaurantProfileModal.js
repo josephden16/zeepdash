@@ -144,7 +144,7 @@ const EditProfileModal = (props) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button type='button' onClick={props.onHide} variant="outline-primary" className="d-flex w-50 text-center justify-content-center">CANCEL</Button>
+        <Button type='button' onClick={() => { props.onHide(); setLoading(false) }} variant="outline-primary" className="d-flex w-50 text-center justify-content-center">CANCEL</Button>
         <Button onClick={handleProfileUpdate} type='button' variant="primary" className='d-flex w-50 text-center justify-content-center'>
           {!loading && <span>UPDATE</span>}
           {loading && <Image style={{ width: '28px' }} fluid src="/img/loading-2.svg" alt="loading" />}
