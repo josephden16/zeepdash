@@ -176,7 +176,7 @@ const Detail = () => {
 						</Row>
 					</Container>
 				</section>
-				<section className="offer-dedicated-body pt-2 pb-2 mt-4 mb-4">
+				<section className="offer-dedicated-body pt-2 pb-2 mt-4 mb-4 fade-in">
 					<Container>
 						<Row>
 							<Col md={8}>

@@ -313,7 +313,7 @@ const Cart = ({ cart, updateCart }) => {
 						(!cart || cart.length < 1) &&
 						<div className="mt-2" style={{ display: 'flex', flexFlow: 'column nowrap' }}>
 							<Image draggable={false} src="/img/empty-cart.svg" alt="empty-cart" fluid style={{ width: '20%', margin: 'auto' }} />
-							<p style={{ fontSize: '15px' }} className="text-center text-white mt-2">Your cart is empty. Add meals to your cart.</p>
+							<p style={{ fontSize: '15px' }} className="text-center text-white mt-3">Your cart is empty. Add meals to your cart.</p>
 						</div>
 					}
 					{
@@ -366,7 +366,7 @@ const OrderItem = ({ meal, updateCart, restaurantId }) => {
 const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
 	if (!addresses || addresses.length < 1) return (
 		<>
-			<Col md={12} className="h6 bg-white p-4 shadow-sm rounded text-center mb-4">
+			<Col md={12} style={{fontWeight: 'bold'}} className="h6 bg-white p-4 shadow-sm rounded text-center mb-4">
 				You don't have an address on ZeepDash, please fill the form above to create one.
 			</Col>
 		</>

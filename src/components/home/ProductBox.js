@@ -10,7 +10,7 @@ class ProductBox extends React.Component {
         <Link to={this.props.linkUrl}>
           <Image src={this.props.image} loading="lazy" width="508" height="320" className={this.props.imageClass} alt={this.props.imageAlt} />
           {this.props.title ?
-            <h6>{this.props.title}</h6>
+            <p className="h6 text-black">{this.props.title}</p>
             : ""
           }
           {this.props.counting ?

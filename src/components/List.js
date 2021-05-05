@@ -116,7 +116,7 @@ const List = () => {
 
 const ListContainer = ({ restaurants, defaultCuisines }) => {
 	return (
-		<section className="section pt-5 pb-5 products-listing">
+		<section className="section pt-5 pb-5 products-listing fade-in">
 			<Container>
 				<Row className="d-none-m">
 					<Col md={12}>
