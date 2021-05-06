@@ -2,7 +2,8 @@ import React, { useContext, useState, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Row, Col, Container, Form, Image } from 'react-bootstrap';
 import { UserContext } from '../components/providers/AuthProvider';
-import { auth, setPersistenceSession } from '../firebase';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth } from '../firebase';
 import { toast } from 'react-toastify';
 import { useQuery, validateEmail } from '../utils';
 import Seo from './Seo';
@@ -23,13 +24,11 @@ const Login = () => {
 		history.replace("/myaccount/orders");
 	}
 
-	const signInWithEmailAndPassword = (email, password) => {
+	const logInWithEmailAndPassword = (email, password) => {
 		setLoading(true);
-		auth.signInWithEmailAndPassword(email, password)
+		signInWithEmailAndPassword(auth, email, password)
 			.then(() => {
 				//signed in
-				// set auth persistence to session
-				setPersistenceSession();
 				setLoading(false);
 				let next = query.get("next");
 				if (next) {
@@ -75,10 +74,12 @@ const Login = () => {
 
 		// sign out if signed in
 		if (user) {
-			auth.signOut();
+			signOut(auth).then(() => {
+
+			})
 		}
 
-		signInWithEmailAndPassword(email, password);
+		logInWithEmailAndPassword(email, password);
 	}
 
 	const togglePassword = () => {
@@ -109,7 +110,7 @@ const Login = () => {
 								<Row>
 									<Col md={9} lg={8} className="mx-auto pl-5 pr-5">
 										<h2 className="login-heading mb-4">Welcome back!</h2>
-										<Form onSubmit={(evt) => { evt.preventDefault() }}>
+										<Form onSubmit={(evt) => evt.preventDefault()}>
 											<div className="form-label-group">
 												<input className="input" onChange={(evt) => setEmail(evt.target.value)} type="email" id="inputEmail" placeholder="Email" />
 											</div>

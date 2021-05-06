@@ -8,6 +8,7 @@ import CardItem from './common/CardItem';
 import SectionHeading from './common/SectionHeading';
 import FontAwesome from './common/FontAwesome';
 import Seo from './Seo';
+import { collection, getDocs, limit, query } from 'firebase/firestore';
 import { firestore } from '../firebase';
 
 
@@ -22,8 +23,9 @@ const Index = () => {
 	useEffect(() => {
 		const fetchRestaurants = async () => {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
-			const restaurantsRef = firestore.collection(collectionName).limit(8);
-			const snapshot = await restaurantsRef.get();
+			const restaurantRef = collection(firestore, collectionName);
+			const restaurantQuery = query(restaurantRef, limit(8)); 
+			const snapshot = await getDocs(restaurantQuery);
 			const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 			setRestaurants(data);
 		}
@@ -40,7 +42,7 @@ const Index = () => {
 						<Col md={3} xs={6}>
 							<ProductBox
 								image='img/products/fried-rice.webp'
-								imageClass='img-fluid rounded'
+								imageClass='img-fluid rounded-lg'
 								imageAlt='Fried Rice'
 								linkUrl=''
 							/>
@@ -48,7 +50,7 @@ const Index = () => {
 						<Col md={3} xs={6}>
 							<ProductBox
 								image='img/products/egusi.webp'
-								imageClass='img-fluid rounded'
+								imageClass='img-fluid rounded-lg'
 								imageAlt='Egusi Soup'
 								linkUrl=''
 							/>
@@ -56,7 +58,7 @@ const Index = () => {
 						<Col md={3} xs={6}>
 							<ProductBox
 								image='img/products/amala.webp'
-								imageClass='img-fluid rounded'
+								imageClass='img-fluid rounded-lg'
 								imageAlt='Amala'
 								linkUrl=''
 							/>
@@ -64,7 +66,7 @@ const Index = () => {
 						<Col md={3} xs={6}>
 							<ProductBox
 								image='img/products/jollof-rice.webp'
-								imageClass='img-fluid rounded'
+								imageClass='img-fluid rounded-lg'
 								imageAlt='Jollof Rice'
 								linkUrl=''
 							/>

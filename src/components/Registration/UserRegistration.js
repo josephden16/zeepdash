@@ -1,11 +1,13 @@
 import React, { useState, useRef, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Row, Col, Form, Image } from 'react-bootstrap';
-import { auth, firestore, setPersistenceSession } from '../../firebase';
+import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth, firestore } from '../../firebase';
 import { validateEmail, validateName, validatePassword, validatePhoneNumber, formatPhoneNumber } from '../../utils';
 import { toast } from 'react-toastify';
 import { UserContext } from '../providers/AuthProvider';
 import Seo from '../Seo';
+import { doc, setDoc } from '@firebase/firestore';
 
 
 
@@ -25,45 +27,44 @@ const UserRegistration = ({ className }) => {
     setLoading(true);
     // sign out the user is already signed in
     if (user) {
-      auth.signOut();
+      signOut(auth).then(() => { });
     }
-    auth.createUserWithEmailAndPassword(email, password)
+
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        setPersistenceSession();
-        setLoading(false);
         var user = userCredential.user;
         const usersCollectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-        const userRef = firestore.collection(usersCollectionName).doc(user.uid);
-        userRef.get()
-          .then(snapshot => {
-            if (snapshot.exists) {
-              toast.warning("User exists with this email address");
-            } else {
-              let phonenumber = formatPhoneNumber(phoneNum);
-              firestore.collection(usersCollectionName).doc(user.uid).set({
-                email: user.email,
-                role: 'customer',
-                phone: phonenumber,
-                name: name,
-                dateJoined: new Date(),
-                locations: []
-              }).then(() => {
-                toast.success("Account created successfully");
-                history.push("/");
-              })
-                .catch(() => {
-                  toast.error("Failed to create account");
-                })
-            }
+        const userRef = doc(firestore, usersCollectionName, user.uid);
+        let phonenumber = formatPhoneNumber(phoneNum);
+        setDoc(userRef, {
+          email: user.email,
+          role: 'customer',
+          phone: phonenumber,
+          name: name,
+          dateJoined: new Date(),
+          locations: []
+        })
+          .then(() => {
+            setLoading(false);
+            toast.success("Account created successfully");
+            history.push("/");
+          })
+          .catch(() => {
+            toast.error("Failed to create account");
           })
       })
       .catch((error) => {
         setLoading(false);
+        if (error.code === "auth/email-already-in-use") {
+          toast.error("An account exist with this emal address, please change it");
+          return;
+        } else {
+          toast.error("An unknown error occured, please try again later");
+        }
         // var errorCode = error.code;
         // var errorMessage = error.message;
         // console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
-        toast.error("An unknown error occured, please try again later");
       });
   }
 

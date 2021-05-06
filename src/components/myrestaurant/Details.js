@@ -5,6 +5,7 @@ import { capitalize } from '../../utils';
 import { firestore } from '../../firebase';
 import { toast } from 'react-toastify';
 import { UserContext } from '../providers/AuthProvider';
+import { collection, getDocs, doc, setDoc } from '@firebase/firestore';
 
 const seo = {
   metaTitle: 'My Restaurant | ZeepDash',
@@ -22,9 +23,9 @@ const Details = () => {
 
   useEffect(() => {
     const fetchCuisines = async () => {
-      const cuisinesRef = firestore.collection("Cuisines");
+      const cuisinesRef = collection(firestore, "Cuisines");
       try {
-        const snapshot = await cuisinesRef.get();
+        const snapshot = await getDocs(cuisinesRef);
         if (!snapshot.empty) {
           const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
           setDefaultCuisines(data);
@@ -44,9 +45,9 @@ const Details = () => {
     if (cuisines.length > 0) {
       const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
       const restaurantId = restaurant.id;
-      const restaurantRef = firestore.collection(collectionName).doc(restaurantId);
+      const restaurantRef = doc(firestore, collectionName, restaurantId);
       try {
-        await restaurantRef.set({ cuisines: cuisines }, { merge: true });
+        await setDoc(restaurantRef, { cuisines: cuisines }, { merge: true });
         toast.success("Update successful");
       } catch (err) {
         toast.error("Failed to update");

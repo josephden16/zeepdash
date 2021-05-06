@@ -5,6 +5,7 @@ import { UserContext } from '../providers/AuthProvider';
 import Seo from '../Seo';
 import Loading from '../common/Loading';
 import { generateSlug } from '../../utils';
+import { collection, getDocs, query, where } from '@firebase/firestore';
 
 
 const seo = {
@@ -33,10 +34,10 @@ const OrdersContainer = ({ restaurant }) => {
 	useEffect(() => {
 		const fetchOrders = async () => {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Orders' : 'Orders_dev';
-			const ordersRef = firestore.collection(collectionName)
-				.where("restaurantId", "==", restaurantId);
+			const ordersRef = collection(firestore, collectionName);
+			const q = query(ordersRef, where("restaurantId", "==", restaurantId));
 			try {
-				const snapshot = await ordersRef.get();
+				const snapshot = await getDocs(q);
 				if (!snapshot.empty) {
 					let data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 					data = data.filter(order => order.orderCompleted === true);

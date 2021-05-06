@@ -1,5 +1,7 @@
 import React, { useEffect, useState, createContext } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth, firestore } from '../../firebase';
+import { doc, getDoc } from '@firebase/firestore';
 
 
 export const UserContext = createContext(null);
@@ -9,17 +11,17 @@ const UserProvider = (props) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    let unsubscribeFromAuth = auth.onAuthStateChanged(async authenticateUser => {
+    let unsubscribeFromAuth = onAuthStateChanged(auth, async authenticateUser => {
       if (authenticateUser) {
         const userCollectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
         const restaurantCollectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
-        const userRef = firestore.collection(userCollectionName).doc(authenticateUser.uid);
-        const restaurantRef = firestore.collection(restaurantCollectionName).doc(authenticateUser.uid);
-        const restaurantSnapshot = await restaurantRef.get();
-        
+        const userRef = doc(firestore, userCollectionName, authenticateUser.uid);
+        const restaurantRef = doc(firestore, restaurantCollectionName, authenticateUser.uid);
+        const restaurantSnapshot = await getDoc(restaurantRef);
+
         // if the user owns a business account then add their data
         if (restaurantSnapshot.exists) {
-          const userSnapshot = await userRef.get()
+          const userSnapshot = await getDoc(userRef);
           const userData = userSnapshot.data();
           const restaurantData = restaurantSnapshot.data();
           setUser({
@@ -28,7 +30,7 @@ const UserProvider = (props) => {
             ...restaurantData
           });
         } else {
-          const userSnapshot = await userRef.get()
+          const userSnapshot = await getDoc(userRef);
           const userData = userSnapshot.data();
           setUser({
             id: authenticateUser.uid,

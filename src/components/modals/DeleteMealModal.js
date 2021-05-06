@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Modal, Button, Image } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { storage, firestore } from '../../firebase';
+import { ref, deleteObject } from 'firebase/storage';
+import { doc, deleteDoc } from 'firebase/firestore';
 
 
 const DeleteMealModal = (props) => {
@@ -16,15 +18,18 @@ const DeleteMealModal = (props) => {
     const mealId = props.deleteMealData.id;
     const restaurantSlug = props.deleteMealData.slug;
     const imageFile = props.deleteMealData.fileName;
-    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
-    const mealRef = firestore.collection(mealsCollectionName).doc(mealId);
-    const storageRef = storage.ref();
+    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
+    const mealRef = doc(firestore, mealsCollectionName, mealId);
+    const storageRef = ref(storage);
     setLoading(true);
     try {
-      // delete meal document in firestore
-      mealRef.delete();
       const mealsDirectoryName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
-      await storageRef.child(mealsDirectoryName).child(restaurantSlug).child(`${imageFile}.webp`).delete();
+      // delete meal document in firestore
+      await deleteDoc(mealRef);
+      const mealStorageRef = ref(storageRef, mealsDirectoryName);
+      const restaurantStorageRef = ref(mealStorageRef, restaurantSlug);
+      const mealImageRef = ref(restaurantStorageRef, `${imageFile}.webp`);
+      await deleteObject(mealImageRef);
       setLoading(false)
       toast.success("Meal deleted");
       // props.onHide();

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, InputGroup, Modal, ButtonToolbar, Button, ToggleButton, Image, ToggleButtonGroup } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { firestore } from '../../firebase';
+import { doc, setDoc } from 'firebase/firestore';
 
 
 
@@ -52,8 +53,8 @@ const EditAddressModal = (props) => {
 		setLoading(true);
 		try {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-			const userRef = firestore.collection(collectionName).doc(props.user.id);
-			await userRef.set({ locations: newLocations }, { merge: true });
+			const userRef = doc(firestore, collectionName, props.user.id);
+			await setDoc(userRef, { locations: newLocations }, { merge: true });
 			setLoading(false);
 			toast.success("Address edited");
 			props.refresh();
@@ -80,16 +81,16 @@ const EditAddressModal = (props) => {
 						<Form.Group className="col-md-12">
 							<Form.Label>Delivery Area</Form.Label>
 							<InputGroup>
-								<Form.Control type="text" onChange={(evt) => setDeliveryArea(evt.target.value)}  placeholder="Delivery Area" />
+								<Form.Control type="text" onChange={(evt) => setDeliveryArea(evt.target.value)} placeholder="Delivery Area" />
 							</InputGroup>
 						</Form.Group>
 						<Form.Group className="col-md-12">
 							<Form.Label>Complete Address</Form.Label>
-							<Form.Control type="text" onChange={(evt) => setAddress(evt.target.value)}  placeholder="Complete Address e.g. house number, street name, landmark" />
+							<Form.Control type="text" onChange={(evt) => setAddress(evt.target.value)} placeholder="Complete Address e.g. house number, street name, landmark" />
 						</Form.Group>
 						<Form.Group className="col-md-12">
 							<Form.Label>Delivery Instructions</Form.Label>
-							<Form.Control type="text" onChange={(evt) => setDeliveryInstruction(evt.target.value)}  placeholder="Delivery Instructions e.g. Opposite Gold Souk Mall" />
+							<Form.Control type="text" onChange={(evt) => setDeliveryInstruction(evt.target.value)} placeholder="Delivery Instructions e.g. Opposite Gold Souk Mall" />
 						</Form.Group>
 						<Form.Group className="mb-0 col-md-12">
 							<Form.Label>Category</Form.Label>

@@ -2,13 +2,14 @@ import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Row, Col, Container, Form, Image } from 'react-bootstrap';
 import { UserContext } from '../components/providers/AuthProvider';
-import { toast } from 'react-toastify';
-import { validateEmail } from '../utils';
-import { auth } from '../firebase';
 import Seo from './Seo';
+import { toast } from 'react-toastify';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../firebase';
+import { validateEmail } from '../utils';
 
 
-const Login = () => {
+const ResetPassword = () => {
   const history = useHistory();
   const user = useContext(UserContext);
   const [email, setEmail] = useState("");
@@ -29,21 +30,25 @@ const Login = () => {
       toast.error("Please enter a valid email address");
       return;
     }
-    sendResetPasswordEmail()
+
+    sendResetPasswordEmail();
   }
 
   const sendResetPasswordEmail = () => {
     setLoading(true);
 
-    auth.sendPasswordResetEmail(email)
+    sendPasswordResetEmail(auth, email)
       .then(() => {
         setLoading(false);
         toast.info("An email has been sent with instructions to reset your password");
       })
-
-      .catch(() => {
+      .catch((error) => {
         setLoading(false);
-        toast.error("Reset password failed");
+        if (error.code === "auth/user-not-found") {
+          toast.error("There is no user corresponding to this email address");
+        } else {
+          toast.error("Reset password failed");
+        }
       })
   }
 
@@ -85,4 +90,4 @@ const Login = () => {
   )
 }
 
-export default Login;
+export default ResetPassword;

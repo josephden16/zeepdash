@@ -9,6 +9,7 @@ import { FiArrowDown } from 'react-icons/fi';
 import { firestore } from '../firebase';
 import { capitalize, useQuery, getCuisinesArray } from '../utils';
 import { useHistory } from 'react-router';
+import { collection, getDocs, limit, where, query } from 'firebase/firestore';
 
 
 const List = () => {
@@ -16,8 +17,8 @@ const List = () => {
 	const [defaultCuisines, setDefaultCuisines] = useState(null);
 	const [dataFetchingFailed, setDataFetchingFailed] = useState(false);
 
-	const query = useQuery();
-	const cuisinesFilter = query.get("cuisine");
+	const routerQuery = useQuery();
+	const cuisinesFilter = routerQuery.get("cuisine");
 
 	useEffect(() => {
 		const fetchRestaurants = async () => {
@@ -29,10 +30,10 @@ const List = () => {
 			}
 
 			if (cuisinesArray.length > 0) {
-				const restaurantsRef = firestore.collection(collectionName)
-					.where("cuisines", "array-contains-any", cuisinesArray).limit(20);
+				const restaurantsRef = collection(firestore, collectionName);
+				const q = query(restaurantsRef, where("cuisines", "array-contains-any", cuisinesArray), limit(20));
 				try {
-					const snapshot = await restaurantsRef.get();
+					const snapshot = await getDocs(q);
 					if (!snapshot.empty) {
 						const restaurants = snapshot.docs.map(doc => {
 							let data = doc.data();
@@ -54,9 +55,10 @@ const List = () => {
 					setDataFetchingFailed(true);
 				}
 			} else {
-				const restaurantsRef = firestore.collection(collectionName).limit(20);
+				const restaurantsRef = collection(firestore, collectionName);
+				const q = query(restaurantsRef, limit(20));
 				try {
-					const snapshot = await restaurantsRef.get();
+					const snapshot = await getDocs(q);
 					if (!snapshot.empty) {
 						const restaurants = snapshot.docs.map(doc => {
 							let data = doc.data();
@@ -80,9 +82,9 @@ const List = () => {
 			}
 		}
 		const fetchCuisines = async () => {
-			const cuisinesRef = firestore.collection("Cuisines");
+			const cuisinesRef = collection(firestore, "Cuisines");
 
-			const snapshot = await cuisinesRef.get();
+			const snapshot = await getDocs(cuisinesRef);
 
 			if (!snapshot.empty) {
 				const cuisines = snapshot.docs.map(doc => (
@@ -196,7 +198,7 @@ const CuisinesFilter = ({ defaultCuisines }) => {
 							}
 						</div>
 						<div>
-							<Button onClick={filterRestaurants} variant="danger" style={{width: '100%'}} className="mx-auto mt-3">APPLY FILTER</Button>
+							<Button onClick={filterRestaurants} variant="danger" style={{ width: '100%' }} className="mx-auto mt-3">APPLY FILTER</Button>
 						</div>
 					</div>
 				</Accordion.Collapse>

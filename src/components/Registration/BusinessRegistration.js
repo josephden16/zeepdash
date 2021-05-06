@@ -3,11 +3,13 @@ import { Link, useHistory } from 'react-router-dom';
 import { Row, Col, Form, Image } from 'react-bootstrap';
 import Seo from '../Seo';
 import TimeKeeper from 'react-timekeeper';
-import { auth, firestore, setPersistenceSession } from '../../firebase';
 import { generateSlug, validateEmail, validateName, validatePassword, validatePhoneNumber, verifyTime, formatPhoneNumber } from '../../utils';
 import { toast } from 'react-toastify';
 import { FiClock } from 'react-icons/fi';
 import { UserContext } from '../providers/AuthProvider';
+import { doc, setDoc } from '@firebase/firestore';
+import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth, firestore } from '../../firebase';
 
 
 const BusinessRegsitration = ({ className }) => {
@@ -25,12 +27,73 @@ const BusinessRegsitration = ({ className }) => {
 	const [password, setPassword] = useState("");
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const areaCode = "+234";
 	const passwordRef = useRef(null);
 	const history = useHistory();
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
+	}
+
+	const registerBusinessAccountWithEmailAndPassword = (email, password) => {
+		setLoading(true);
+		createUserWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				// Signed in 
+				const { user } = userCredential;
+				const restaurantCollectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
+				const usersCollectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+				const phonenumber = formatPhoneNumber(phoneNum);
+				const restaurantRef = doc(firestore, restaurantCollectionName, user.uid);
+				setDoc(restaurantRef, {
+					email: user.email,
+					role: 'business',
+					phone: phonenumber,
+					name: name,
+					address: address,
+					dateJoined: new Date(),
+					openingTime: openingTime,
+					closingTime: closingTime,
+					cuisines: ['african'],
+					photoURL: '',
+					backgroundImageURL: '',
+					slug: generateSlug(name)
+				})
+					.then(() => {
+						const userRef = doc(firestore, usersCollectionName, user.uid);
+						setDoc(userRef, {
+							email: user.email,
+							role: 'business',
+							phone: phonenumber,
+							name: name,
+							address: address,
+							dateJoined: new Date(),
+						})
+							.then(() => {
+								setLoading(false);
+								history.push("/");
+								toast.success("Business account created successfully");
+							})
+							.catch(() => {
+								setLoading(false);
+								toast.error("Failed to register your business account");
+							})
+					})
+					.catch(() => {
+						setLoading(false);
+						toast.error("Failed to register your buisness account");
+					})
+			})
+			.catch((error) => {
+				setLoading(false);
+				console.log(error.message);
+				if (error.code === "auth/email-already-in-use") {
+					toast.error("This email address is taken please create a new one.");
+					return;
+				} else {
+					toast.error("Failed to register your business account");
+					return;
+				}
+			})
 	}
 
 	const validateFormData = () => {
@@ -74,76 +137,17 @@ const BusinessRegsitration = ({ className }) => {
 		return true;
 	}
 
-	const registerBusinessAccountWithEmailAndPassword = (email, password) => {
-		setLoading(true);
-		auth.createUserWithEmailAndPassword(email, password)
-			.then((userCredential) => {
-				// Signed in 
-				// set auth persistence to session
-				setPersistenceSession();
-				setLoading(false);
-				const { user } = userCredential;
-				const restaurantCollectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
-				const usersCollectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-				const userRef = firestore.collection(usersCollectionName).doc(user.uid);
-				userRef.get()
-					.then(snapshot => {
-						if (snapshot.exists) {
-							toast.warning("A business with these details exist");
-						} else {
-							const phonenumber = formatPhoneNumber(phoneNum);
-							firestore.collection(restaurantCollectionName).doc(user.uid).set({
-								email: user.email,
-								role: 'business',
-								phone: phonenumber,
-								name: name,
-								address: address,
-								dateJoined: new Date(),
-								openingTime: openingTime,
-								closingTime: closingTime,
-								cuisines: ['african'],
-								photoURL: '',
-								backgroundImageURL: '',
-								slug: generateSlug(name)
-							})
-								.then(() => {
-									firestore.collection(usersCollectionName).doc(user.uid).set({
-										email: user.email,
-										role: 'business',
-										phone: `${areaCode}${phoneNum.substring(1,)}`,
-										name: name,
-										address: address,
-										dateJoined: new Date(),
-									})
-										.then(() => {
-											history.push("/");
-											window.location.reload();
-											toast.success("Business account created successfully");
-										})
-								})
-								.catch(() => {
-									toast.error("Failed to create business account");
-								})
-						}
-					})
-			})
-			.catch((error) => {
-				setLoading(false);
-				// var errorCode = error.code;
-				// var errorMessage = error.message;
-				toast.error("Failed to register your business account");
-				// console.log(`Error Code: ${errorCode}, Error Message: ${errorMessage}`);
-			});
-	}
-
 	const handleRegistration = () => {
 		const isFormValid = validateFormData();
 		if (isFormValid) {
 			// sign out the user is already signed in
 			if (user) {
-				auth.signOut();
+				signOut(auth).then(() => {
+					registerBusinessAccountWithEmailAndPassword(email, password);
+				})
+			} else {
+				registerBusinessAccountWithEmailAndPassword(email, password);
 			}
-			registerBusinessAccountWithEmailAndPassword(email, password);
 		}
 	}
 

@@ -59,7 +59,7 @@ const Icon = ({ className, icon }) => {
 
 AddressCard.propTypes = {
   title: PropTypes.string.isRequired,
-  icoIcon: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
   iconclassName: PropTypes.string,
   address: PropTypes.string,
   onEditClick: PropTypes.func.isRequired,

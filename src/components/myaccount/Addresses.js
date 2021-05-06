@@ -9,6 +9,7 @@ import Seo from '../Seo';
 import { UserContext } from '../providers/AuthProvider';
 import { firestore } from '../../firebase';
 import { toast } from 'react-toastify';
+import { doc, getDoc, setDoc } from '@firebase/firestore';
 
 
 const Addresses = () => {
@@ -44,10 +45,10 @@ const Addresses = () => {
 
 	const fetchAddresses = async () => {
 		const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-		const userRef = firestore.collection(collectionName).doc(userId);
+		const userRef = doc(firestore, collectionName, userId);
 
 		try {
-			const snapshot = await userRef.get();
+			const snapshot = await getDoc(userRef);
 			if (snapshot.exists) {
 				let data = snapshot.data();
 				let { locations } = data;
@@ -92,10 +93,9 @@ const Addresses = () => {
 	useEffect(() => {
 		const fetchAddresses = async () => {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-			const userRef = firestore.collection(collectionName).doc(userId);
-
+			const userRef = doc(firestore, collectionName, userId);
 			try {
-				const snapshot = await userRef.get();
+				const snapshot = await getDoc(userRef);
 				if (snapshot.exists) {
 					let data = snapshot.data();
 					let { locations } = data;
@@ -233,12 +233,15 @@ const AddAddress = ({ refresh, addresses, user }) => {
 		setLoading(true);
 		try {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-			const userRef = firestore.collection(collectionName).doc(user.id);
-			await userRef.set({ locations: newLocations }, { merge: true });
+			const userRef = doc(firestore, collectionName, user.id);
+			await setDoc(userRef, {
+				locations: newLocations
+			}, { merge: true });
 			setLoading(false);
 			toast.success("Address added");
 			refresh();
 		} catch (error) {
+			console.log(error.message);
 			toast.error("Failed to add address");
 			setLoading(false);
 		}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import OwlCarousel from 'react-owl-carousel3';
+import { collection, getDocs } from 'firebase/firestore';
 import { firestore } from '../../firebase';
 import { capitalize } from '../../utils';
 import ProductBox from '../home/ProductBox';
@@ -11,8 +12,8 @@ const CuisinesCarousel = () => {
 
 	useEffect(() => {
 		const fetchCuisines = async () => {
-			const cuisinesRef = firestore.collection("Cuisines");
-			const snapshot = await cuisinesRef.get();
+			const cusinesRef = collection(firestore, "Cuisines");
+			const snapshot = await getDocs(cusinesRef);
 			const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 			setCuisines(data);
 		}

@@ -7,7 +7,8 @@ import { RiFileList3Fill, RiRestaurantFill } from 'react-icons/ri';
 import { IoLocationSharp, IoFastFood } from 'react-icons/io5';
 import { GoSignOut } from 'react-icons/go';
 import { UserContext } from '../providers/AuthProvider';
-import { signOut } from '../../firebase';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 
 class Header extends React.Component {
@@ -94,8 +95,13 @@ const UserDropDown = () => {
 		sessionStorage.clear();
 		// redirect them to the home page
 		history.replace("/");
-		signOut();
-		toast.success("You are signed out");
+		signOut(auth)
+			.then(() => {
+				toast.success("You are signed out");
+			})
+			.catch(() => {
+				toast.error("Failed to sign out");
+			})
 	}
 
 	if (!user) {
@@ -124,7 +130,7 @@ const UserDropDown = () => {
 				>
 					<NavDropdown.Item eventKey={1.1} as={NavLink} activeclassname="active" to="/myaccount/orders"><RiFileList3Fill /> Orders</NavDropdown.Item>
 					<NavDropdown.Item eventKey={1.2} as={NavLink} activeclassname="active" to="/myaccount/addresses"><IoLocationSharp /> Addresses</NavDropdown.Item>
-					<NavDropdown.Item eventKey={1.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: '#7a7e8a' }}><GoSignOut style={{fontSize: '18px'}} className="pr-1" />Sign out</button></NavDropdown.Item>
+					<NavDropdown.Item eventKey={1.3} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: '#7a7e8a' }}><GoSignOut style={{ fontSize: '18px' }} className="pr-1" />Sign out</button></NavDropdown.Item>
 				</NavDropdown>
 			</>
 		)
@@ -147,7 +153,7 @@ const UserDropDown = () => {
 					<NavDropdown.Item eventKey={2.1} as={NavLink} activeclassname="active" to="/myrestaurant/meals"><IoFastFood /> Meals</NavDropdown.Item>
 					<NavDropdown.Item eventKey={2.2} as={NavLink} activeclassname="active" to="/myrestaurant/orders"><RiFileList3Fill /> Orders</NavDropdown.Item>
 					<NavDropdown.Item eventKey={2.3} as={NavLink} activeclassname="active" to="/myrestaurant/details"><RiRestaurantFill /> My Restaurant</NavDropdown.Item>
-					<NavDropdown.Item eventKey={2.4} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: '#7a7e8a' }}><GoSignOut style={{fontSize: '18px', color: '#7a7e8a'}} className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
+					<NavDropdown.Item eventKey={2.4} ><button onClick={handleSignOut} style={{ background: 'transparent', border: 'none', color: '#7a7e8a' }}><GoSignOut style={{ fontSize: '18px', color: '#7a7e8a' }} className="pr-1" icon='sign-out' />Sign out</button></NavDropdown.Item>
 					{/* <NavDropdown.Item eventKey={4.5} as={NavLink} activeclassname="active" to="/myrestaurant/details"><Icofont icon='user-alt-7' /> Account</NavDropdown.Item> */}
 				</NavDropdown>
 			</>

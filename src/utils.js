@@ -1,6 +1,7 @@
 import { firestore } from './firebase';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
+import { deleteDoc, doc, setDoc } from '@firebase/firestore';
 
 
 export const MIN = 0;
@@ -52,18 +53,18 @@ export const updateCartSession = (restaurantId, cart) => {
 export const updateFirestoreCart = async (cart, user, restaurantId) => {
   if (!user) return;
   const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-  const userRef = firestore.collection(collectionName).doc(user.id);
-  const cartRef = userRef.collection("Cart").doc(restaurantId);
+  const userRef = doc(firestore, collectionName, user.id);
+  const cartRef = doc(userRef, "Cart", restaurantId);
   let sortedCart = cart.sort((a, b) => a.name.localeCompare(b.name))
   try {
     if (cart.length > 0) {
       let total = getTotalAmount(cart);
-      await cartRef.set({
+      await setDoc(cartRef, {
         totalAmount: total,
         cart: sortedCart
-      });
+      }, { merge: true });
     } else {
-      await cartRef.delete();
+      await deleteDoc(cartRef);
     }
   } catch (error) {
     toast.error("Cart update failed");

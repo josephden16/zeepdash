@@ -1,8 +1,8 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-import 'firebase/storage';
-import 'firebase/analytics';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
+import { getAnalytics } from 'firebase/analytics';
 
 
 const firebaseConfig = {
@@ -14,35 +14,11 @@ const firebaseConfig = {
   appId: "1:155466461030:web:651d9f699dab190e1722a7",
   measurementId: "G-RLZF2CZHFM"
 };
+
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
-export const storage = firebase.storage();
-
-
-// authentication functions
-export function setPersistenceSession() {
-  // [START auth_set_persistence_session]
-  auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
-    .then(() => {
-      // Existing and future Auth states are now persisted in the current
-      // session only. Closing the window would clear any existing state even
-      // if a user forgets to sign out.
-      // ...
-      // New sign-in will be persisted with session persistence.
-    })
-    .catch(() => {
-      // Handle Errors here.
-    });
-  // [END auth_set_persistence_session]
-}
-
-export const signOut = () => {
-  auth.signOut();
-}
-
-// window.firebase = firebase;
-export default firebase;
+const firebaseApp = initializeApp(firebaseConfig);
+ // eslint-disable-next-line
+const analytics = getAnalytics(firebaseApp);
+export const auth = getAuth(firebaseApp);
+export const firestore = getFirestore(firebaseApp);
+export const storage = getStorage(firebaseApp);

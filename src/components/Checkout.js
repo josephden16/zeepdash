@@ -14,6 +14,7 @@ import NotSignedIn from './NotSignedIn';
 import Seo from './Seo';
 import ChooseAddressCard from './common/ChooseAddressCard';
 import Loading from './common/Loading';
+import { doc, getDoc, setDoc, collection, addDoc } from 'firebase/firestore';
 
 
 const Checkout = () => {
@@ -34,10 +35,10 @@ const Checkout = () => {
 		const userId = user.id;
 
 		const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-		const userRef = firestore.collection(collectionName).doc(userId);
+		const userRef = doc(firestore, collectionName, userId);
 
 		try {
-			const snapshot = await userRef.get();
+			const snapshot = await getDoc(userRef);
 			if (snapshot.exists) {
 				let data = snapshot.data();
 				let { locations } = data;
@@ -65,10 +66,10 @@ const Checkout = () => {
 			const userId = user.id;
 
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-			const userRef = firestore.collection(collectionName).doc(userId);
+			const userRef = doc(firestore, collectionName, userId);
 
 			try {
-				const snapshot = await userRef.get();
+				const snapshot = await getDoc(userRef);
 				if (snapshot.exists) {
 					let data = snapshot.data();
 					let { locations } = data;
@@ -91,9 +92,9 @@ const Checkout = () => {
 
 		const fetchRestaurantData = async () => {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
-			const restaurantRef = firestore.collection(collectionName).doc(restaurantId);
+			const restaurantRef = doc(firestore, collectionName, restaurantId);
 			try {
-				const snapshot = await restaurantRef.get();
+				const snapshot = await getDoc(restaurantRef);
 				const data = snapshot.data();
 				// put the restaurant data in react state
 				setRestaurant(data);
@@ -146,10 +147,10 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 
 	const getNextOrderNumber = async () => {
 		const documentId = process.env.NODE_ENV === 'production' ? 'QvjfmXtjAV7AdoYurLNX' : 'jYWBXOsQpplQtPGZbN2L';
-		const ordersRef = firestore.collection("counters").doc(documentId);
-		const snapshot = await ordersRef.get();
+		const counterRef = doc(firestore, "counters", documentId);
+		const snapshot = await getDoc(counterRef);
 		const number = snapshot.data().orderLastCount;
-		await ordersRef.set({
+		await setDoc(counterRef, {
 			orderLastCount: number + 1
 		}, { merge: true });
 
@@ -167,10 +168,10 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 
 		let paymentStatus = (paymentResult["status"] === "successful" || paymentResult["status"] === "success") ? true : false;
 		const collectionName = process.env.NODE_ENV === 'production' ? 'Orders' : 'Orders_dev';
-		const ordersRef = firestore.collection(collectionName);
+		const ordersRef = collection(firestore, collectionName);
 		const orderNumber = await getNextOrderNumber();
 		try {
-			await ordersRef.add({
+			await addDoc(ordersRef, {
 				customerId: user.id,
 				customerName: user.name,
 				customerPhoneNumber: user.phone,
@@ -281,11 +282,10 @@ const Cart = ({ cart, updateCart }) => {
 	useEffect(() => {
 		const fetchCart = async () => {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-			const userRef = firestore.collection(collectionName).doc(user.id);
-			const cartRef = userRef.collection("Cart").doc(restaurantId);
-
+			const userRef = doc(firestore, collectionName, user.id);
+			const cartRef = doc(userRef, "Cart", restaurantId);
 			try {
-				const snapshot = await cartRef.get();
+				const snapshot = await getDoc(cartRef);
 				// cart data comes from firestore since only authenticated users should be able to checkout
 				if (snapshot.exists) {
 					const data = snapshot.data();
@@ -366,7 +366,7 @@ const OrderItem = ({ meal, updateCart, restaurantId }) => {
 const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
 	if (!addresses || addresses.length < 1) return (
 		<>
-			<Col md={12} style={{fontWeight: 'bold'}} className="h6 bg-white p-4 shadow-sm rounded text-center mb-4">
+			<Col md={12} style={{ fontWeight: 'bold' }} className="h6 bg-white p-4 shadow-sm rounded text-center mb-4">
 				You don't have an address on ZeepDash, please fill the form above to create one.
 			</Col>
 		</>
@@ -457,8 +457,8 @@ const AddDeliveryLocation = ({ addresses, refresh }) => {
 		setLoading(true);
 		try {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-			const userRef = firestore.collection(collectionName).doc(user.id);
-			await userRef.set({ locations: newLocations }, { merge: true });
+			const userRef = doc(firestore, collectionName, user.id);
+			await setDoc(userRef, { locations: newLocations }, { merge: true });
 			setLoading(false);
 			toast.success("Address added");
 			refresh();

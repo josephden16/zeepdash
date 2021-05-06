@@ -3,6 +3,8 @@ import { Form, Modal, Button, Image } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { firestore, storage } from '../../firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { ref, uploadBytes } from 'firebase/storage';
 
 
 const EditMealModal = (props) => {
@@ -14,9 +16,9 @@ const EditMealModal = (props) => {
   //TODO: delete old meal image after updating new one
   const updateMeal = () => {
     const mealId = props.defaultData.id;
-    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
-    const mealsRef = firestore.collection(mealsCollectionName).doc(mealId);
-    const storageRef = storage.ref();
+    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
+    const mealsRef = doc(firestore, mealsCollectionName, mealId);
+    const storageRef = ref(storage);
     const restaurantSlug = props.defaultData.restaurantSlug;
 
     setLoading(true);
@@ -25,14 +27,14 @@ const EditMealModal = (props) => {
       let [, extension] = imageFile.name.split(".");
       // generate a random file name
       const fileName = uuidv4();
-      storageRef
-        .child("Meals")
-        .child(restaurantSlug)
-        .child(`${fileName}.${extension}`)
-        .put(imageFile)
+      const mealsDirectoryName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
+      const mealRef = ref(storageRef, mealsDirectoryName);
+      const restaurantRef = ref(mealRef, restaurantSlug);
+      const fileRef = ref(restaurantRef, `${fileName}.${extension}`);
+      uploadBytes(fileRef, imageFile)
         .then(response => response.ref.getDownloadURL())
         .then(imageURL => {
-          mealsRef.set({
+          setDoc(mealsRef, {
             name: mealName || props.defaultData.name,
             price: parseInt(mealPrice) || parseInt(props.defaultData.price),
             fileName: fileName,
@@ -49,7 +51,7 @@ const EditMealModal = (props) => {
           setLoading(false);
         });
     } else {
-      mealsRef.set({
+      setDoc(mealsRef, {
         name: mealName || props.defaultData.name,
         price: parseInt(mealPrice) || parseInt(props.defaultData.price),
       }, { merge: true })
@@ -104,7 +106,7 @@ const EditMealModal = (props) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button type='button' onClick={props.onHide} variant="outline-primary" className="d-flex w-50 text-center justify-content-center">CANCEL</Button>
+        <Button type='button' onClick={closeModal} variant="outline-primary" className="d-flex w-50 text-center justify-content-center">CANCEL</Button>
         <Button disabled={loading ? true : false} type='button' onClick={updateMeal} variant="primary" className='d-flex w-50 text-center justify-content-center'>
           {!loading && <span>UPDATE</span>}
           {loading && <Image style={{ width: '28px' }} fluid src="/img/loading-2.svg" alt="loading" />}

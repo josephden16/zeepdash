@@ -2,8 +2,10 @@ import React, { useRef, useState } from 'react';
 import { Form, Modal, Button, Image } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { v4 as uuid4 } from 'uuid';
+import { doc, setDoc } from 'firebase/firestore';
 import { firestore, storage } from '../../firebase';
 import { validatePhoneNumber } from '../../utils';
+import { getDownloadURL, ref, uploadBytes } from '@firebase/storage';
 
 
 
@@ -17,7 +19,7 @@ const EditProfileModal = (props) => {
 
   const handleProfileUpdate = () => {
     const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
-    const restaurantRef = firestore.collection(collectionName).doc(props.restaurantId);
+    const restaurantRef = doc(firestore, collectionName, props.restaurantId);
 
     if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
       toast.warning("Please enter a valid phone number");
@@ -26,7 +28,7 @@ const EditProfileModal = (props) => {
 
     if (phoneNumber && validatePhoneNumber(phoneNumber)) {
       setLoading(true);
-      restaurantRef.set({
+      setDoc(restaurantRef, {
         phone: phoneNumber,
       }, { merge: true })
         .then(() => {
@@ -40,21 +42,20 @@ const EditProfileModal = (props) => {
     }
 
     if (profileImageFile.current.files.length > 0) {
-      const storageRef = storage.ref();
+      const storageRef = ref(storage);
       const file = profileImageFile.current.files[0];
       let [, extension] = file.name.split(".");
       const profileFileName = uuid4() + "-pp";
       const slug = props.slug;
       setLoading(true);
-      storageRef
-        .child("Restaurants")
-        .child(slug)
-        .child("Profile")
-        .child(`${profileFileName}.${extension}`)
-        .put(file)
-        .then(response => response.ref.getDownloadURL())
+      const restaurantsStorageRef = ref(storageRef, "Restaurants");
+      const restaurantStorageRef = ref(restaurantsStorageRef, slug);
+      const profileStorageRef = ref(restaurantStorageRef, "Profile");
+      const profileImageFileRef = ref(profileStorageRef, `${profileFileName}.${extension}`);
+      uploadBytes(profileImageFileRef, file)
+        .then(response => getDownloadURL(response.ref))
         .then(imageURL => {
-          restaurantRef.set({
+          setDoc(restaurantRef, {
             photoURL: imageURL,
             profileFileName: profileFileName
           }, { merge: true })
@@ -71,21 +72,20 @@ const EditProfileModal = (props) => {
     }
 
     if (backgroundImageFile.current.files.length > 0) {
-      const storageRef = storage.ref();
+      const storageRef = ref(storage)``;
       const file = backgroundImageFile.current.files[0];
       let [, extension] = file.name.split(".");
       const bgFileName = uuid4() + "-bg";
       const slug = props.slug;
       setLoading(true);
-      storageRef
-        .child("Restaurants")
-        .child(slug)
-        .child("Profile")
-        .child(`${bgFileName}.${extension}`)
-        .put(file)
-        .then(response => response.ref.getDownloadURL())
+      const restaurantsStorageRef = ref(storageRef, "Restaurants");
+      const restaurantStorageRef = ref(restaurantsStorageRef, slug);
+      const profileStorageRef = ref(restaurantStorageRef, "Profile");
+      const bgImageFileRef = ref(profileStorageRef, `${bgFileName}.${extension}`);
+      uploadBytes(bgImageFileRef, file)
+        .then(response => getDownloadURL(response.ref))
         .then(imageURL => {
-          restaurantRef.set({
+          setDoc(restaurantRef, {
             backgroundImageURL: imageURL,
             bgFileName: bgFileName
           }, { merge: true });

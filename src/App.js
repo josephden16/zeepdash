@@ -16,7 +16,7 @@ function App(props) {
       <Header />
       <Router />
       {
-        (props.location.pathname !== '/login' && props.location.pathname !== '/register') ? <Footer /> : ''
+        (props.location.pathname !== '/login' && props.location.pathname !== '/login/reset-password' && props.location.pathname !== '/register') ? <Footer /> : ''
       }
       <ToastContainer style={{ fontSize: '15px', color: 'white', fontFamily: 'Verdana' }} />
     </>

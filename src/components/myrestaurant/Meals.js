@@ -4,9 +4,12 @@ import { Row, Col, Form, Image } from 'react-bootstrap';
 import DeleteMealModal from '../modals/DeleteMealModal';
 import EditMealModal from '../modals/EditMealModal';
 import MealCard from '../common/MealCard';
-import { firestore, storage } from '../../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { UserContext } from '../providers/AuthProvider';
+import { firestore, storage } from '../../firebase';
+import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
+
 
 const Meals = () => {
   const [meals, setMeals] = useState(null);
@@ -62,10 +65,10 @@ const Meals = () => {
   }
 
   const fetchMeals = async () => {
-    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
-    const mealsRef = firestore.collection(mealsCollectionName)
-      .where("restaurantId", "==", restaurant.id);
-    const mealsSnapshot = await mealsRef.get();
+    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
+    const mealsRef = collection(firestore, mealsCollectionName);
+    const q = query(mealsRef, where("restaurantId", "==", restaurant.id));
+    const mealsSnapshot = await getDocs(q);
     if (!mealsSnapshot.empty) {
       const data = mealsSnapshot.docs.map((doc) => {
         return {
@@ -82,10 +85,10 @@ const Meals = () => {
 
   useEffect(() => {
     const fetchMeals = async () => {
-      const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
-      const mealsRef = firestore.collection(mealsCollectionName)
-        .where("restaurantId", "==", restaurant.id);
-      const mealsSnapshot = await mealsRef.get();
+      const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
+      const mealsRef = collection(firestore, mealsCollectionName);
+      const q = query(mealsRef, where("restaurantId", "==", restaurant.id));
+      const mealsSnapshot = await getDocs(q);
       if (!mealsSnapshot.empty) {
         const data = mealsSnapshot.docs.map((doc) => {
           return {
@@ -95,6 +98,8 @@ const Meals = () => {
         });
 
         setMeals(data);
+      } else {
+        setMeals(null);
       }
     }
     fetchMeals();
@@ -134,10 +139,10 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
 
 
   const fetchMeals = async () => {
-    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
-    const mealsRef = firestore.collection(mealsCollectionName)
-      .where("restaurantId", "==", restaurant.id);
-    const mealsSnapshot = await mealsRef.get();
+    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
+    const mealsRef = collection(firestore, mealsCollectionName);
+    const q = query(mealsRef, where("restaurantId", "==", restaurant.id));
+    const mealsSnapshot = await getDocs(q);
     if (!mealsSnapshot.empty) {
       const data = mealsSnapshot.docs.map((doc) => {
         return {
@@ -152,7 +157,6 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
     }
   }
 
-
   const addMeal = () => {
     if (!(mealName && mealPrice && mealImageFile)) {
       toast.warning("Please fill all form fields");
@@ -163,7 +167,7 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
       return;
     }
     if (!mealPrice) {
-      toast.warning("Pleas enter a valid meal price");
+      toast.warning("Please enter a valid meal price");
       return;
     }
     if (!mealImageFile) {
@@ -171,9 +175,9 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
       return;
     }
 
-    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev'; 
-    const mealsRef = firestore.collection(mealsCollectionName);
-    const storageRef = storage.ref();
+    const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
+    const mealsRef = collection(firestore, mealsCollectionName);
+    const storageRef = ref(storage);
     const restaurantId = restaurant.id;
     const restaurantSlug = restaurant.slug;
 
@@ -190,14 +194,16 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
         setLoading(false);
         return;
       }
-      storageRef
-        .child("Meals")
-        .child(restaurantSlug)
-        .child(`${fileName}.${extension}`)
-        .put(imageFile)
-        .then(response => response.ref.getDownloadURL())
+
+      const mealsDirectoryName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
+      const mealsStorageRef = ref(storageRef, mealsDirectoryName);
+      const restaurantRef = ref(mealsStorageRef, restaurantSlug);
+      const mealFileRef = ref(restaurantRef, `${fileName}.${extension}`);
+
+      uploadBytes(mealFileRef, imageFile)
+        .then(response => getDownloadURL(response.ref))
         .then(imageURL => {
-          mealsRef.add({
+          addDoc(mealsRef, {
             name: mealName,
             price: mealPrice,
             restaurantId: restaurantId,
@@ -212,13 +218,13 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
               setLoading(false);
             })
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error.message);
           toast.error("Failed to add meal");
           setLoading(false);
         });
     }
   }
-
 
 
   return (

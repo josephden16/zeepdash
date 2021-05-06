@@ -5,6 +5,7 @@ import { UserContext } from '../providers/AuthProvider';
 import Seo from '../Seo';
 import Loading from '../common/Loading';
 import { generateSlug } from '../../utils';
+import { collection, getDocs, query, where } from '@firebase/firestore';
 
 
 const seo = {
@@ -33,10 +34,10 @@ const OrdersContainer = ({ user }) => {
 	useEffect(() => {
 		const fetchOrders = async () => {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Orders' : 'Orders_dev';
-			const ordersRef = firestore.collection(collectionName)
-				.where("customerId", "==", userId);
+			const ordersRef = collection(firestore, collectionName);
+			const ordersQuery = query(ordersRef, where("customerId", "==", userId));
 			try {
-				const snapshot = await ordersRef.get();
+				const snapshot = await getDocs(ordersQuery);
 				if (!snapshot.empty) {
 					let data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 					data = data.filter(order => order.orderCompleted === true);
@@ -69,7 +70,7 @@ const OrdersContainer = ({ user }) => {
 						let formattedTime = new Date(time * 1000).toLocaleString();
 						// delivery time
 						let timeDelivered = order.timeDelivered;
-						let formattedDeliveryTime = timeDelivered !== undefined ?  new Date(timeDelivered * 1000).toLocaleString() : '';
+						let formattedDeliveryTime = timeDelivered !== undefined ? new Date(timeDelivered * 1000).toLocaleString() : '';
 						// orders
 						let formattedOrders = [];
 						let productsOrdered = order.productsOrdered;

@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import { firestore } from '../firebase';
 import { capitalize, getTotalAmount, isRestaurantOpen, MAX, MIN, updateCartSession, updateFirestoreCart } from '../utils';
 import { UserContext } from './providers/AuthProvider';
+import { collection, query, where, getDoc, getDocs, doc } from '@firebase/firestore';
 // import ItemsCarousel from './common/ItemsCarousel';
 // import QuickBite from './common/QuickBite';
 
@@ -30,18 +31,16 @@ const Detail = () => {
 	const { slug } = useParams();
 	useEffect(() => {
 		const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
-		const restaurantRef = firestore.collection(collectionName)
-			.where("slug", "==", slug);
-
 		const mealsCollectionName = process.env.NODE_ENV === 'production' ? 'Meals' : 'Meals_dev';
-		const offersRef = firestore.collection(mealsCollectionName)
-			.where("restaurantSlug", "==", slug);
-
+		const restaurantRef = collection(firestore, collectionName);
+		const offersRef = collection(firestore, mealsCollectionName)
+		const restaurantQuery = query(restaurantRef, where("slug", "==", slug));
+		const offersQuery = query(offersRef, where("restaurantSlug", "==", slug));
 		const fetchRestaurantData = async () => {
 			setLoading(true);
 
 			try {
-				const restaurantSnapshot = await restaurantRef.get();
+				const restaurantSnapshot = await getDocs(restaurantQuery);
 
 				if (!restaurantSnapshot.empty) {
 					// fetch restaurant data
@@ -75,7 +74,7 @@ const Detail = () => {
 
 		const fetchRestaurantOffers = async () => {
 			try {
-				const offersSnapshot = await offersRef.get();
+				const offersSnapshot = await getDocs(offersQuery);
 				if (!offersSnapshot.empty) {
 					const offers = offersSnapshot.docs.map(doc => {
 						return (
@@ -305,17 +304,18 @@ const Cart = ({ cart, updateCart, restaurant }) => {
 
 			// pull the cart data from firestore
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-			const cartRef = firestore.collection(collectionName).doc(user.id).collection("Cart").doc(restaurantId);
-
-			const snapshot = await cartRef.get();
+			const userRef = doc(firestore, collectionName, user.id);
+			const cartRef = doc(userRef, "Cart", restaurantId);
+			const snapshot = await getDoc(cartRef);
 
 			if (snapshot.exists) {
 				const data = snapshot.data();
-				let { cart } = data;
-				updateCart(cart);
-				updateCartSession(restaurantId, cart);
+				if (data) {
+					let { cart } = data;
+					updateCart(cart);
+					updateCartSession(restaurantId, cart);
+				}
 			}
-
 		}
 
 		fetchCart();

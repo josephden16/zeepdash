@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Image } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { setDoc, doc } from 'firebase/firestore';
 import { firestore } from '../../firebase';
 
 
@@ -10,11 +11,11 @@ const DeleteAddressModal = (props) => {
 
 	const deleteAddress = async () => {
 		const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-		const userRef = firestore.collection(collectionName).doc(props.user.id);
+		const userRef = doc(firestore, collectionName, props.user.id);
 		setLoading(true);
 		try {
 			const newLocations = props.addresses.filter((location) => location.id !== props.defaultData.id);
-			await userRef.set({ locations: newLocations }, { merge: true });
+			await setDoc(userRef, { locations: newLocations }, { merge: true })
 			toast.success("Address deleted");
 			setLoading(false);
 			props.refresh();
