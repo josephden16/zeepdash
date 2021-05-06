@@ -198,8 +198,6 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 		}
 	}
 
-	// const productionPublicKey = 'FLWPUBK-692795778fbd1d8a213007824d31c5db-X';
-	// const developmentPublicKey = 'FLWPUBK_TEST-eb8e43a97c6868b180417e27034530b7-X';
 	// flutterwave payment config
 	const config = {
 		public_key: process.env.NODE_ENV === 'production' ? process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY : process.env.REACT_APP_FLUTTERWAVE_DEV_PUBLIC_KEY,
