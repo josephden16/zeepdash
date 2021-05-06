@@ -241,7 +241,7 @@ const AddAddress = ({ refresh, addresses, user }) => {
 			toast.success("Address added");
 			refresh();
 		} catch (error) {
-			console.log(error.message);
+			// console.log(error.message);
 			toast.error("Failed to add address");
 			setLoading(false);
 		}

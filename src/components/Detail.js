@@ -68,7 +68,7 @@ const Detail = () => {
 				setLoading(false);
 				setNotFound(true);
 				toast.error("Failed to fetch restaurant data");
-				console.log(error.message);
+				// console.log(error.message);
 			}
 		}
 

@@ -219,9 +219,9 @@ const AddMeals = ({ setMeals, mealImageFile, restaurant }) => {
             })
         })
         .catch((error) => {
-          console.log(error.message);
           toast.error("Failed to add meal");
           setLoading(false);
+          // console.log(error.message);
         });
     }
   }

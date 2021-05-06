@@ -85,7 +85,7 @@ const BusinessRegsitration = ({ className }) => {
 			})
 			.catch((error) => {
 				setLoading(false);
-				console.log(error.message);
+				// console.log(error.message);
 				if (error.code === "auth/email-already-in-use") {
 					toast.error("This email address is taken please create a new one.");
 					return;
