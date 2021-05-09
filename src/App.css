@@ -442,6 +442,7 @@ h6 {
   display: flex !important;
   align-items: center;
   justify-content: center;
+  border: none;
 }
 .owl-theme .owl-nav [class*="owl-"] i {
   font-size: 13px !important;

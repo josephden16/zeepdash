@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import OwlCarousel from 'react-owl-carousel3';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { collection, getDocs } from 'firebase/firestore';
 import { firestore } from '../../firebase';
 import { capitalize } from '../../utils';

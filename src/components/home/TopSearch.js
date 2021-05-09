@@ -1,6 +1,8 @@
 import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
-import OwlCarousel from 'react-owl-carousel3';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 import ProductBox from './ProductBox';
 import CuisinesCarousel from '../common/CuisinesCarousel';
 

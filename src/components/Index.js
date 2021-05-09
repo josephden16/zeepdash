@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import OwlCarousel from 'react-owl-carousel3';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 import TopSearch from './home/TopSearch';
 import ProductBox from './home/ProductBox';
 import CardItem from './common/CardItem';
@@ -24,7 +26,7 @@ const Index = () => {
 		const fetchRestaurants = async () => {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
 			const restaurantRef = collection(firestore, collectionName);
-			const restaurantQuery = query(restaurantRef, limit(8)); 
+			const restaurantQuery = query(restaurantRef, limit(8));
 			const snapshot = await getDocs(restaurantQuery);
 			const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 			setRestaurants(data);
