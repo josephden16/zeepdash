@@ -1,7 +1,7 @@
 import React, { lazy } from 'react'
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import Index from "./components/Index";
 const MyRestaurant = lazy(() => import('./components/MyRestaurant'));
-const Index = lazy(() => import('./components/Index'));
 const Offers = lazy(() => import('./components/Offers'));
 const MyAccount = lazy(() => import('./components/MyAccount'));
 const List = lazy(() => import('./components/List'));
@@ -15,7 +15,7 @@ const Detail = lazy(() => import('./components/Detail'));
 const ResetPassword = lazy(() => import('./components/ResetPassword'));
 
 
-const Router = () => {
+const Routes = () => {
   return (
     <Switch>
       <Route path="/" exact component={Index} />
@@ -30,11 +30,10 @@ const Router = () => {
       <Route path="/checkout/:restaurantId" exact component={Checkout} />
       <Route path="/thanks" exact component={Thanks} />
       <Route path="/restaurant/:slug" exact component={Detail} />
-      {/* <Route path="/track-order" exact component={TrackOrder} /> */}
-      {/* <Route path="/extra" exact component={Extra} /> */}
-      <Route exact component={NotFound} />
+      <Route path="/404" component={NotFound} />
+      <Redirect to="/404" />
     </Switch>
   )
 }
 
-export default Router;
+export default Routes;

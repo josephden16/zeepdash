@@ -1,22 +1,26 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'react-select2-wrapper/css/select2.css';
 import './App.css';
-import Router from './Router';
+import Routes from './Routes';
 
 
-function App(props) {
+function App() {
+  const location = useLocation();
   return (
     <>
+      <ScrollToTop />
       <Header />
-      <Router />
+      <Routes />
       {
-        (props.location.pathname !== '/login' && props.location.pathname !== '/login/reset-password' && props.location.pathname !== '/register') ? <Footer /> : ''
+        (location.pathname !== '/login' && location.pathname !== '/login/reset-password' && location.pathname !== '/register') ? <Footer /> : ''
       }
       <ToastContainer style={{ fontSize: '15px', color: 'white', fontFamily: 'Verdana' }} />
     </>

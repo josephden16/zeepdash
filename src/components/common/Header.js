@@ -47,7 +47,7 @@ class Header extends React.Component {
 				<Navbar onToggle={this.setIsNavExpanded}
 					expanded={this.state.isNavExpanded} color="light" expand='lg' className="navbar-light osahan-nav shadow-sm">
 					<Container>
-						<Navbar.Brand to="/"><Link to="/"><Image draggable={false} style={{ width: '170px' }} src="/img/logo-2.png" alt='ZeepDash' /></Link></Navbar.Brand>
+						<Navbar.Brand to="/"><Link to="/"><Image draggable={false} style={{ width: '170px' }} width="170" height="40" src="/img/logo-2.png" alt='ZeepDash' /></Link></Navbar.Brand>
 						<Navbar.Toggle style={{ outline: 'none' }} className="bg-white" />
 						<Navbar.Collapse id="navbarNavDropdown">
 							<Nav activeKey={0} className="ml-auto" onSelect={this.closeMenu}>

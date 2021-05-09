@@ -78,13 +78,13 @@ class Footer extends React.Component {
 								<ul>
 									<li className="mb-2">
 										<a href="https://twitter.com/ZeepDash" style={{ fontSize: '14px' }} className="flex" target="_blank" rel="noreferrer">
-											<img width="20" alt="twitter" src="/img/twitter.svg" />
+											<img width="20" height="27" alt="twitter" src="/img/twitter.svg" />
 											<span className="ml-2">@ZeepDash</span>
 										</a>
 									</li>
 									<li className="mb-2">
 										<a href="https://www.instagram.com/zeepdash/" style={{ fontSize: '14px' }} target="_blank" className="flex" rel="noreferrer">
-											<img width="20" alt="twitter" src="/img/instagram.svg" />
+											<img width="20" height="27" alt="twitter" src="/img/instagram.svg" />
 											<span className="ml-2">@zeepdash</span>
 										</a>
 									</li>
