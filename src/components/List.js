@@ -21,6 +21,7 @@ const List = () => {
 	const cuisinesFilter = routerQuery.get("cuisine");
 
 	useEffect(() => {
+		setRestaurants(null);
 		const fetchRestaurants = async () => {
 			const collectionName = process.env.NODE_ENV === 'production' ? "Restaurants" : "Restaurants_dev";
 			let cuisinesArray = [];

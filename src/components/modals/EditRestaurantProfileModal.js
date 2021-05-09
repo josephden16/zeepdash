@@ -72,7 +72,7 @@ const EditProfileModal = (props) => {
     }
 
     if (backgroundImageFile.current.files.length > 0) {
-      const storageRef = ref(storage)``;
+      const storageRef = ref(storage);
       const file = backgroundImageFile.current.files[0];
       let [, extension] = file.name.split(".");
       const bgFileName = uuid4() + "-bg";
