@@ -1,6 +1,6 @@
 import React, { lazy } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Index from "./components/Index";
+const Index = lazy(() => import('./components/Index'));
 const MyRestaurant = lazy(() => import('./components/MyRestaurant'));
 const Offers = lazy(() => import('./components/Offers'));
 const MyAccount = lazy(() => import('./components/MyAccount'));
