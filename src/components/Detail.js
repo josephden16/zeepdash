@@ -209,7 +209,7 @@ const BestSellerContainer = ({ restaurantOffers, restaurant, updateCart }) => {
 
 	return (
 		<Row>
-			<h3 className="mb-4 mt-3 col-md-12">Our meals</h3>
+			<h2 className="mb-4 mt-3 col-md-12">Our meals 🍽️</h2>
 			{restaurantOffers && restaurantOffers.map(offer => (
 				<Meal key={offer.id} updateCart={updateCart} offer={offer} restaurant={restaurant} />
 			))}

@@ -145,7 +145,7 @@ const AddressesContainer = ({ displayEditAddressModal, displayDeleteAddressModal
 	return (
 		<Row>
 			<Col md={12}>
-				<h4 className="font-weight-bold mt-0 mb-3">Manage Addresses</h4>
+				<h4 className="font-weight-bold mt-0 mb-4 text-center">Manage Addresses</h4>
 			</Col>
 			{addresses && addresses.map(address => {
 				let iconName = "";
@@ -176,7 +176,7 @@ const AddressesContainer = ({ displayEditAddressModal, displayDeleteAddressModal
 			})}
 			{
 				addresses.length < 1 &&
-				<Col md={12} className="h5">
+				<Col className="h5 text-center mt-2 mb-2">
 					You don't have any address, fill the form above to create one.
 				</Col>
 			}
@@ -250,10 +250,10 @@ const AddAddress = ({ refresh, addresses, user }) => {
 	return (
 		<>
 			<div className="bg-white rounded p-0 mb-5">
-				<h3 className="font-weight-bold mt-3 mb-2">Add a delivery location</h3>
+				<h3 className="font-weight-bold mt-3 mb-2 text-center">Add a delivery location</h3>
 				<div className="auth-animation">
 					<Row>
-						<Col md={9} lg={8}>
+						<Col>
 							<Form className="mt-2 mb-2" onSubmit={(evt) => { evt.preventDefault() }}>
 								<div className="form-label-group">
 									<input type="text" onChange={(evt) => setAddress(evt.target.value)} className="input" id="inputAddress" placeholder="Address" />
