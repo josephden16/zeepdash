@@ -38,6 +38,19 @@ const Index = () => {
 		<>
 			<Seo seo={seo} />
 			<TopSearch />
+			<section className="section pt-5 pb-5 products-section">
+				<Container>
+					<SectionHeading
+						heading='Popular Brands'
+						subHeading='Top restaurants, cafes'
+					/>
+					<Row>
+						<Col md={12}>
+							<RestaurantsCarousel restaurants={restaurants} />
+						</Col>
+					</Row>
+				</Container>
+			</section>
 			<section className="section pt-5 pb-5 bg-white homepage-add-section">
 				<Container>
 					<Row>
@@ -72,19 +85,6 @@ const Index = () => {
 								imageAlt='Jollof Rice'
 								linkUrl=''
 							/>
-						</Col>
-					</Row>
-				</Container>
-			</section>
-			<section className="section pt-5 pb-5 products-section">
-				<Container>
-					<SectionHeading
-						heading='Popular Brands'
-						subHeading='Top restaurants, cafes'
-					/>
-					<Row>
-						<Col md={12}>
-							<RestaurantsCarousel restaurants={restaurants} />
 						</Col>
 					</Row>
 				</Container>

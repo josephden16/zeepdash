@@ -259,7 +259,7 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 				<AddDeliveryLocation addresses={addresses} refresh={refresh} />
 				<ChooseDeliveryLocation addresses={addresses} setDeliveryLocation={setDeliveryLocation} />
 				<div className="bg-white rounded shadow-sm p-4 osahan-payment">
-					<h3 className="text-center" style={{ fontWeight: 'bold' }}>Complete your order</h3>
+					<h3 className="text-center" style={{ fontWeight: 'bold' }}>Complete Your Order</h3>
 					<h4 className="text-center">Pay with <Image fluid style={{ width: '140px' }} src="/img/flutterwave.svg" alt="Flutterwave" /></h4>
 					<div>
 						<button onClick={handlePayment} className="btn btn-success btn-block btn-lg">
@@ -372,7 +372,7 @@ const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
 
 	return (
 		<div className="bg-white rounded shadow-sm p-4 mb-4">
-			<h4 className="mb-3">Choose a delivery location</h4>
+			<h4 className="mb-4 text-center">Choose a delivery location</h4>
 			<Row>
 				{addresses && addresses.map(address => {
 					let iconName = "";
@@ -467,10 +467,10 @@ const AddDeliveryLocation = ({ addresses, refresh }) => {
 	}
 	return (
 		<div className="bg-white rounded shadow-sm p-4 mb-4">
-			<h3 className="font-weight-bold mt-3 mb-2">Add a delivery location</h3>
+			<h3 className="font-weight-bold mt-3 mb-2 text-center">Add a delivery location</h3>
 			<div className="auth-animation">
 				<Row>
-					<Col md={9} lg={8}>
+					<Col>
 						<Form className="mt-2 mb-2" onSubmit={(evt) => { evt.preventDefault() }}>
 							<div className="form-label-group">
 								<input type="text" onChange={(evt) => setAddress(evt.target.value)} className="input" id="inputAddress" placeholder="Address" />

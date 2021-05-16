@@ -21,7 +21,7 @@ class AddressCard extends React.Component {
             </div>
             <div className="media-body">
               <h6 className="mb-1 text-secondary">{this.props.title}</h6>
-              <p className="text-black">{this.props.address}
+              <p className="text-black lead">{this.props.address}
               </p>
               <p className="mb-0 text-black font-weight-bold">
                 <Link className="text-primary mr-3" to="#" onClick={this.props.onEditClick}><FiEdit /> EDIT</Link>

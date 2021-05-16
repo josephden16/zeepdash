@@ -131,6 +131,10 @@ export const verifyTime = (openingTime, closingTime) => {
 export const validateName = (name) => {
   if (!name) return false;
 
+  if (typeof name !== "string") {
+    return false;
+  }
+
   var letters = /^[A-Za-z\s]+$/;
   if (name.match(letters)) {
     return true;
@@ -162,6 +166,12 @@ export const validatePhoneNumber = (phoneNumber) => {
 }
 
 export const formatPhoneNumber = (phoneNumber) => {
+  if (typeof phoneNumber !== 'string') {
+    return null;
+  }
+  if (phoneNumber.length < 11) {
+    return null;
+  }
   if (phoneNumber.startsWith("+234")) {
     return phoneNumber;
   } else {
@@ -171,6 +181,10 @@ export const formatPhoneNumber = (phoneNumber) => {
 
 export const validateEmail = (email) => {
   if (!email) return false;
+
+  if (typeof email !== "string") return false;
+
+  if (email.length < 4 || email.length > 320) return false;
 
   if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
     return (true)
