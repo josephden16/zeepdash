@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { getAnalytics } from 'firebase/analytics';
+import { getAnalytics, isSupported } from 'firebase/analytics';
 
 
 const firebaseConfig = {
@@ -17,8 +17,12 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
- // eslint-disable-next-line
-const analytics = getAnalytics(firebaseApp);
+// check if firebase analytics is supported in the current app context
+let isAnalyticsSupported = isSupported();
+if (isAnalyticsSupported === true) {
+  getAnalytics(firebaseApp);
+}
+// eslint-disable-next-line
 export const auth = getAuth(firebaseApp);
 export const firestore = getFirestore(firebaseApp);
 export const storage = getStorage(firebaseApp);
