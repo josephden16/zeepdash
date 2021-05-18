@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import * as Sentry from "@sentry/react";
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -10,6 +11,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'react-select2-wrapper/css/select2.css';
 import './App.css';
 import Routes from './Routes';
+
 
 
 function App() {
@@ -27,4 +29,4 @@ function App() {
   );
 }
 
-export default App;
+export default Sentry.withProfiler(App);
