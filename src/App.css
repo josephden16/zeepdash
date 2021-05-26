@@ -179,8 +179,7 @@ img {
 }
 
 .offer-img:hover {
-  opacity: 0.84;
-  transform: scale(1.13);
+  transform: scale(1.1);
 }
 
 .input {
@@ -216,6 +215,16 @@ img {
 
 .bg-white {
   background-color: white;
+}
+
+.password-visible-button {
+  border-radius: 50%;
+  transition: all 300ms ease-out;
+}
+
+.password-visible-button:active {
+  box-shadow: 0 10px 5px #ddd;
+  background: #ddd;
 }
 
 /* my custom styles (END) */
