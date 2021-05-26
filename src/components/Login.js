@@ -20,10 +20,6 @@ const Login = () => {
 
 	let query = useQuery();
 
-	if ((user && user.role !== "business")) {
-		history.replace("/myaccount/orders");
-	}
-
 	const logInWithEmailAndPassword = (email, password) => {
 		setLoading(true);
 		signInWithEmailAndPassword(auth, email, password)
@@ -116,7 +112,7 @@ const Login = () => {
 											</div>
 											<div className="form-label-group flex flex-row">
 												<input className="input" ref={passwordRef} onChange={(evt) => setPassword(evt.target.value)} type="password" id="inputPassword" placeholder="Password" />
-												<button onClick={togglePassword} style={{ position: 'absolute', marginTop: '12px', right: '0' }} className="bg-white border-white">
+												<button onClick={togglePassword} style={{ position: 'absolute', marginTop: '12px', right: '0' }} className="bg-white password-visible-button border-white">
 													{!passwordVisible && <Image style={{ width: '20px', height: '20px' }} fluid src="/img/eye.svg" alt="password-hidden" />}
 													{passwordVisible && <Image style={{ width: '20px', height: '20px' }} fluid src="/img/eye-closed.svg" alt="password-visible" />}
 												</button>
