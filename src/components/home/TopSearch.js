@@ -1,9 +1,7 @@
 import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
-import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
-import ProductBox from './ProductBox';
 import CuisinesCarousel from '../common/CuisinesCarousel';
 
 class TopSearch extends React.Component {
@@ -52,75 +50,11 @@ class TopSearch extends React.Component {
 							<h6 className="mt-4 text-shadow font-weight-normal">E.g. Beverages, Pizzas, Chinese, Bakery, Indian...</h6> */}
 							<CuisinesCarousel />
 						</Col>
-						<Col md={4}>
-							<div className="osahan-slider pl-4 pt-3">
-								<OwlCarousel nav loop {...options2} className="homepage-ad owl-theme">
-									<div className="item">
-										<ProductBox
-											image='img/sliders/slider-1.webp'
-											imageClass='img-fluid rounded'
-											imageAlt='carousel'
-											linkUrl='restaurants'
-										/>
-									</div>
-									<div className="item">
-										<ProductBox
-											image='img/sliders/slider-2.webp'
-											imageClass='img-fluid rounded'
-											imageAlt='carousel'
-											linkUrl='restaurants'
-										/>
-									</div>
-									<div className="item">
-										<ProductBox
-											image='img/sliders/slider-3.webp'
-											imageClass='img-fluid rounded'
-											imageAlt='carousel'
-											linkUrl='restaurants'
-										/>
-									</div>
-									<div className="item">
-										<ProductBox
-											image='img/sliders/slider-4.webp'
-											imageClass='img-fluid rounded'
-											imageAlt='carousel'
-											linkUrl='restaurants'
-										/>
-									</div>
-								</OwlCarousel>
-							</div>
-						</Col>
 					</Row>
 				</Container>
 			</section>
 		);
 	}
-}
-
-const options2 = {
-	responsive: {
-		0: {
-			items: 2,
-		},
-		764: {
-			items: 2,
-		},
-		765: {
-			items: 1,
-		},
-		1200: {
-			items: 1,
-		},
-	},
-	lazyLoad: true,
-	loop: true,
-	autoplay: true,
-	autoplaySpeed: 1000,
-	dots: false,
-	autoplayTimeout: 2000,
-	nav: true,
-	navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
-	autoplayHoverPause: true,
 }
 
 export default TopSearch;

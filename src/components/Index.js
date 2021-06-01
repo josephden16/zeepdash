@@ -5,7 +5,6 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import TopSearch from './home/TopSearch';
-import ProductBox from './home/ProductBox';
 import CardItem from './common/CardItem';
 import SectionHeading from './common/SectionHeading';
 import FontAwesome from './common/FontAwesome';
@@ -47,44 +46,6 @@ const Index = () => {
 					<Row>
 						<Col md={12}>
 							<RestaurantsCarousel restaurants={restaurants} />
-						</Col>
-					</Row>
-				</Container>
-			</section>
-			<section className="section pt-5 pb-5 bg-white homepage-add-section">
-				<Container>
-					<Row>
-						<Col md={3} xs={6}>
-							<ProductBox
-								image='img/products/fried-rice.webp'
-								imageClass='img-fluid rounded-lg'
-								imageAlt='Fried Rice'
-								linkUrl=''
-							/>
-						</Col>
-						<Col md={3} xs={6}>
-							<ProductBox
-								image='img/products/egusi.webp'
-								imageClass='img-fluid rounded-lg'
-								imageAlt='Egusi Soup'
-								linkUrl=''
-							/>
-						</Col>
-						<Col md={3} xs={6}>
-							<ProductBox
-								image='img/products/amala.webp'
-								imageClass='img-fluid rounded-lg'
-								imageAlt='Amala'
-								linkUrl=''
-							/>
-						</Col>
-						<Col md={3} xs={6}>
-							<ProductBox
-								image='img/products/jollof-rice.webp'
-								imageClass='img-fluid rounded-lg'
-								imageAlt='Jollof Rice'
-								linkUrl=''
-							/>
 						</Col>
 					</Row>
 				</Container>
@@ -162,8 +123,6 @@ const options = {
 	nav: true,
 	navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"]
 }
-
-
 
 
 export default Index;
