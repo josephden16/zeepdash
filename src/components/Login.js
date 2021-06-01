@@ -108,10 +108,10 @@ const Login = () => {
 										<h2 className="login-heading mb-4">Welcome back!</h2>
 										<Form onSubmit={(evt) => evt.preventDefault()}>
 											<div className="form-label-group">
-												<input className="input" onChange={(evt) => setEmail(evt.target.value)} type="email" id="inputEmail" placeholder="Email" />
+												<input className="input"  name="email" title="email" onChange={(evt) => setEmail(evt.target.value)} type="email" id="inputEmail" placeholder="Email" />
 											</div>
 											<div className="form-label-group flex flex-row">
-												<input className="input" ref={passwordRef} onChange={(evt) => setPassword(evt.target.value)} type="password" id="inputPassword" placeholder="Password" />
+												<input className="input" name="password" title="password" ref={passwordRef} onChange={(evt) => setPassword(evt.target.value)} type="password" id="inputPassword" placeholder="Password" />
 												<button onClick={togglePassword} style={{ position: 'absolute', marginTop: '12px', right: '0' }} className="bg-white password-visible-button border-white">
 													{!passwordVisible && <Image style={{ width: '20px', height: '20px' }} fluid src="/img/eye.svg" alt="password-hidden" />}
 													{passwordVisible && <Image style={{ width: '20px', height: '20px' }} fluid src="/img/eye-closed.svg" alt="password-visible" />}
