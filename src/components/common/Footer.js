@@ -13,7 +13,7 @@ class Footer extends React.Component {
 					<Container>
 						<Row>
 							<Col sm={12}>
-								<p style={{ fontSize: '22px' }} className="m-0 text-dark">Operate food store or restaurants? <Link to="/register?tab=business">Work With Us</Link></p>
+								<p style={{ fontSize: '22px' }} className="m-0 text-dark">Operate food store or restaurants? <a target="blank" href="https://wa.link/z6meu4">Work With Us</a></p>
 							</Col>
 						</Row>
 					</Container>
