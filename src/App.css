@@ -19,13 +19,13 @@ Version: 1.0
 -- Footer
 -- Mobile Media
 */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,700&display=swap");
 /* Body */
 body {
   background: #f3f7f8;
   font-size: 13px;
   font-weight: 500;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-display: swap;
 }
 button,
@@ -239,18 +239,52 @@ img {
   max-height: 400px;
 }
 
+/* restaurant listing page */
+@media screen and (min-width: 300px) {
+  .products-listing {
+    margin: 0 20px;
+  }
+}
+
+@media screen and (min-width: 370px) {
+  .products-listing {
+    margin: 0 32px;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  .products-listing {
+    margin: 0 52px;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .products-listing {
+    margin: 0 102px;
+  }
+}
+
+@media screen and (min-width: 575px) {
+  .products-listing {
+    margin: 0 5px;
+  }
+}
+
+
+
+
 @media screen and (min-width: 1000px) {
   .products-section {
     margin: 0 10px;
   }
-  
+
   .top-search {
     margin: 0 5px;
   }
 
   .restaurant-detail-bg {
     max-height: 300px;
-  }  
+  }
 }
 
 /* my custom styles (END) */
