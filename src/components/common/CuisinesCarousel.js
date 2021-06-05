@@ -25,23 +25,25 @@ const CuisinesCarousel = () => {
 	if (!cuisines) return null;
 
 	return (
-		<OwlCarousel nav loop {...options} className="owl-carousel-category owl-theme">
-			{
-				cuisines && cuisines.map(cuisine => (
-					<div key={cuisine.id} className="item">
-						<ProductBox
-							boxClass='osahan-category-item'
-							title={capitalize(cuisine.name)}
-							counting=''
-							image={cuisine.imageURL}
-							imageClass='img-fluid'
-							imageAlt={cuisine.name}
-							linkUrl={`/restaurants?cuisine=${cuisine.name}`}
-						/>
-					</div>
-				))
-			}
-		</OwlCarousel>
+		<div className="top-search">
+			<OwlCarousel nav loop {...options} className="owl-carousel-category owl-theme">
+				{
+					cuisines && cuisines.map(cuisine => (
+						<div key={cuisine.id} className="item">
+							<ProductBox
+								boxClass='osahan-category-item'
+								title={capitalize(cuisine.name)}
+								counting=''
+								image={cuisine.imageURL}
+								imageClass='img-fluid'
+								imageAlt={cuisine.name}
+								linkUrl={`/restaurants?cuisine=${cuisine.name}`}
+							/>
+						</div>
+					))
+				}
+			</OwlCarousel>
+		</div>
 	);
 }
 

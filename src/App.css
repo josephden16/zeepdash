@@ -227,6 +227,32 @@ img {
   background: #ddd;
 }
 
+.products-section {
+  margin: 0 20px;
+}
+
+.top-search {
+  margin: 0 15px;
+}
+
+.restaurant-detail-bg {
+  max-height: 400px;
+}
+
+@media screen and (min-width: 1000px) {
+  .products-section {
+    margin: 0 10px;
+  }
+  
+  .top-search {
+    margin: 0 5px;
+  }
+
+  .restaurant-detail-bg {
+    max-height: 300px;
+  }  
+}
+
 /* my custom styles (END) */
 
 .h1,
@@ -997,8 +1023,8 @@ iframe.position-absolute {
   right: -32px;
 }
 .menu-list img {
-  width: 41px;
-  height: 41px;
+  width: 51px;
+  height: 51px;
   object-fit: cover;
 }
 .restaurant-detailed-header-left img {
