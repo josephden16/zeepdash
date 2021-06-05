@@ -99,19 +99,18 @@ const Detail = () => {
 		metaTitle: `${restaurant.name}` || '',
 		metaDescription: `Welcome to the page of ${restaurant.name} on ZeepDash...` || ''
 	}
-
+	// share page with the Native Share API
 	const sharePage = async () => {
 
 		const data = {
 			title: 'ZeepDash',
-			text: `Check out ${restaurant.name}'s page on ZeepDash. https://zeepdash.com/restaurant/${restaurant.slug}`,
+			text: `Check out ${restaurant.name}'s page on ZeepDash.`,
 			url: `https://zeepdash.com/restaurant/${restaurant.slug}`,
 		}
+
 		try {
 			await navigator.share(data);
-		} catch {
-			toast.error("Share feature is not supported in your browser");
-		}
+		} catch {}
 	}
 
 	return (
