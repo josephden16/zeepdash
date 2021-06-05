@@ -44,9 +44,9 @@ export const getCart = (restaurantId) => {
 
 export const updateCartSession = (restaurantId, cart) => {
   if (!cart || cart.length === 0) {
-    sessionStorage.setItem(restaurantId, undefined);
+    sessionStorage.setItem(restaurantId, "");
   }
-  let sortedCart = cart.sort((a, b) => a.name.localeCompare(b.name))
+  let sortedCart = cart.sort((a, b) => a.name.localeCompare(b.name));
   sessionStorage.setItem(restaurantId, JSON.stringify(sortedCart));
 }
 
@@ -83,6 +83,16 @@ export const getTotalAmount = (cart) => {
 
   return total;
 }
+
+export const getItemQuantity = (cart, mealId) => {
+  if (!cart || !mealId) return 0;
+
+  // find the meal in the cart
+  const meal = cart.find(meal => meal.id === mealId);
+  if (meal) return meal.quantity;
+  return 0;
+}
+
 
 export const isRestaurantOpen = (openingTime, closingTime) => {
   let [openingTimeHour, openingTimeMinute] = openingTime.split(":");

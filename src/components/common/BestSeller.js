@@ -17,11 +17,9 @@ const BestSeller = (props) => {
 
 
   const addToCart = () => {
-    if (user) {
-      if (user.role === "business") {
-        toast.info("Business accounts cannot make orders");
-        return;
-      }
+    if (user && user.role === "business") {
+      toast.info("Business accounts cannot make orders");
+      return;
     }
 
     // ensure users can't place orders when restaurant's are closed
@@ -32,6 +30,7 @@ const BestSeller = (props) => {
     }
 
     let currentCart = JSON.parse(sessionStorage.getItem(restaurantId));
+
     if (currentCart) {
       // check if item already exists in cart
       const mealExist = currentCart.find(item => item.id === mealId);
