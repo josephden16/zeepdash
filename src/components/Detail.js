@@ -126,7 +126,7 @@ const Detail = () => {
 						<Row className="d-flex align-items-end">
 							<Col md={8}>
 								<div className="restaurant-detailed-header-left">
-									<Image draggable={false} fluid className="mr-3 float-left" alt="osahan" src={restaurant.photoURL || '/img/default-list.png'} />
+									<Image draggable={false} fluid className="mr-3 float-left" alt="osahan" src={restaurant.photoURL || '/img/1.jpg'} />
 									<h2 className="text-white">{restaurant.name}</h2>
 									<p className="text-white mb-1"><FiNavigation /> {" "}{restaurant.address.toUpperCase()} <RestaurantOpenStatus openingTime={restaurant.openingTime} closingTime={restaurant.closingTime} />
 									</p>
