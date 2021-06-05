@@ -15,6 +15,7 @@ import Seo from './Seo';
 import ChooseAddressCard from './common/ChooseAddressCard';
 import Loading from './common/Loading';
 import { doc, getDoc, setDoc, collection, addDoc } from 'firebase/firestore';
+import { CartContext } from './providers/CartProvider';
 
 
 const Checkout = () => {
@@ -24,7 +25,6 @@ const Checkout = () => {
 	const [addresses, setAddresses] = useState(null);
 	const [restaurant, setRestaurant] = useState(null);
 	const { restaurantId } = useParams();
-	const [cart, setCart] = useState(null);
 	const user = useContext(UserContext);
 	const hideAddressModal = () => setShowAddressModal(false);
 
@@ -125,8 +125,8 @@ const Checkout = () => {
 					<EditAddressModal show={showAddressModal} onHide={hideAddressModal} />
 					<Container>
 						<Row>
-							<OrderInfo refresh={fetchAddresses} user={user} addresses={addresses} restaurant={restaurant} cart={cart} setShowAddressModal={setShowAddressModal} />
-							{restaurant && <Cart cart={cart} updateCart={setCart} restaurant={restaurant} />}
+							<OrderInfo refresh={fetchAddresses} user={user} addresses={addresses} restaurant={restaurant} setShowAddressModal={setShowAddressModal} />
+							{restaurant && <Cart restaurant={restaurant} />}
 						</Row>
 					</Container>
 				</section>
@@ -135,7 +135,8 @@ const Checkout = () => {
 	);
 }
 
-const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
+const OrderInfo = ({ refresh, addresses, restaurant, user }) => {
+	const { cart } = useContext(CartContext);
 	const totalAmount = parseInt(getTotalAmount(cart) + DELIVERY_FEE);
 	const { restaurantId } = useParams();
 	const history = useHistory();
@@ -273,7 +274,8 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 	)
 }
 
-const Cart = ({ cart, updateCart }) => {
+const Cart = () => {
+	const { cart, updateCart } = useContext(CartContext);
 	const { restaurantId } = useParams();
 	const user = useContext(UserContext);
 	let total = cart ? getTotalAmount(cart) : 0;
