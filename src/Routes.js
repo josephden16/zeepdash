@@ -13,6 +13,7 @@ const Invoice = lazy(() => import('./components/Invoice'));
 const Checkout = lazy(() => import('./components/Checkout'));
 const Detail = lazy(() => import('./components/Detail'));
 const ResetPassword = lazy(() => import('./components/ResetPassword'));
+const AddLocation = lazy(() => import('./components/AddLocation'));
 
 
 const Routes = () => {
@@ -30,6 +31,7 @@ const Routes = () => {
       <Route path="/checkout/:restaurantId" exact component={Checkout} />
       <Route path="/thanks" exact component={Thanks} />
       <Route path="/restaurant/:slug" exact component={Detail} />
+      <Route path="/add-location" exact component={AddLocation}  />
       <Route path="/404" component={NotFound} />
       <Redirect to="/404" />
     </Switch>

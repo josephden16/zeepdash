@@ -239,6 +239,65 @@ img {
   max-height: 400px;
 }
 
+.add-location-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.save-location-container {
+  border-radius: 8px;
+  padding: 13px 15px;
+  z-index: 9999;
+  position: absolute;
+  bottom: 20px;
+  width: 99%;
+  max-width: 420px;
+  box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.save-location-input {
+  background: white;
+  width: 100%;
+  margin-bottom: 15px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 10px 8px;
+  outline: none;
+  transition: color 300ms ease-out;
+}
+
+.save-location-input-select {
+  margin-bottom: 15px;
+}
+
+.save-location-button {
+  background-color: #fe0000;
+  color: white;
+  font-weight: 600;
+  border: none;
+  width: 100%;
+  padding: 10px 5px;
+  border-radius: 5px;
+  font-size: large;
+  transition: box-shadow 300ms ease-out;
+}
+
+.save-location-button:hover {
+  color: white;
+}
+
+.home-button {
+  border: none;
+  border-radius: 50%;
+  position: absolute;
+  top: 11px;
+  left: 10px;
+  background-color: white;
+  padding: 6px 8px 8px 6px;
+  box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.075);
+}
+
 /* restaurant listing page */
 @media screen and (min-width: 300px) {
   .products-listing {
@@ -269,9 +328,6 @@ img {
     margin: 0 5px;
   }
 }
-
-
-
 
 @media screen and (min-width: 1000px) {
   .products-section {
