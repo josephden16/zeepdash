@@ -250,8 +250,8 @@ img {
   padding: 13px 15px;
   z-index: 9999;
   position: absolute;
-  bottom: 20px;
-  width: 99%;
+  bottom: 25px;
+  width: 100%;
   max-width: 420px;
   box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.1);
 }
@@ -287,14 +287,14 @@ img {
   color: white;
 }
 
-.home-button {
+.back-button {
   border: none;
   border-radius: 50%;
   position: absolute;
   top: 11px;
   left: 10px;
   background-color: white;
-  padding: 6px 8px 8px 6px;
+  padding: 6px 10px 8px 8px;
   box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.075);
 }
 
