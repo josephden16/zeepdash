@@ -246,11 +246,12 @@ img {
 }
 
 .save-location-container {
-  border-radius: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   padding: 13px 15px;
   z-index: 9999;
   position: absolute;
-  bottom: 25px;
+  bottom: -16px;
   width: 100%;
   max-width: 420px;
   box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.1);
