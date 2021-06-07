@@ -240,6 +240,7 @@ img {
 }
 
 .add-location-container {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -293,7 +294,7 @@ img {
   border-radius: 50%;
   position: absolute;
   top: 10px;
-  left: 10px;
+  left: 20px;
   background-color: white;
   padding: 6px 10px 8px 8px;
   box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.075);

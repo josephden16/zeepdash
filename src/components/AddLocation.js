@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
+import { firestore } from '../firebase';
+import { v4 as uuid4 } from 'uuid';
+import { UserContext } from './providers/AuthProvider';
 import { useHistory } from "react-router-dom";
 import ReactMapGl, { Marker, GeolocateControl, FullscreenControl } from "react-map-gl";
-import { Form } from "react-bootstrap";
+import { Form, Image } from "react-bootstrap";
 import Seo from "./Seo";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
@@ -23,25 +28,56 @@ export default function AddLocation() {
     height: "100vh",
     zoom: 14,
   });
+  const [addresses, setAddresses] = useState(null);
+  const user = useContext(UserContext);
 
+  const history = useHistory();
+
+  const fetchAddresses = async () => {
+    if (!user) return null;
+
+    const userId = user.id;
+
+    const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+    const userRef = doc(firestore, collectionName, userId);
+
+    try {
+      const snapshot = await getDoc(userRef);
+      if (snapshot.exists) {
+        let data = snapshot.data();
+        let { locations } = data;
+        if (locations.length > 0) {
+          setAddresses(locations);
+        } else {
+          setAddresses([]);
+        }
+      } else {
+        setAddresses([]);
+      }
+
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    fetchAddresses();
+  });
+
+  // mapbox controls styles
   const geolocateControlStyle = {
     right: 10,
     top: 10,
   };
 
-  const fullscreenControlStyle= {
+  const fullscreenControlStyle = {
     right: 50,
     top: 10
   };
-
-
-  const history = useHistory();
 
   return (
     <>
       <Seo seo={seo} />
       <div className="add-location-container">
-        <SaveLocation />
+        <SaveLocation addresses={addresses} viewport={viewport} />
         <ReactMapGl {...viewport}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           mapStyle="mapbox://styles/csjoe/ckpl49lev0qyh17mz57yi1zgd"
@@ -83,9 +119,56 @@ export default function AddLocation() {
 }
 
 
-const SaveLocation = () => {
+const SaveLocation = ({ addresses, viewport }) => {
   const [category, setCategory] = useState("");
-  console.log(category);
+  const user = useContext(UserContext);
+  const [address, setAddress] = useState("");
+  const [loading, setLoading] = useState(false);
+
+
+  const addAddress = async () => {
+    if (addresses && addresses.length === 3) {
+      toast.info("You can't add more than 3 addresses");
+      return;
+    }
+    if (address === "" && category === "") {
+      toast.error("Please fill all form fields");
+      return;
+    }
+    if (!address || address.length < 10) {
+      toast.error("Please enter a valid address");
+      return;
+    }
+
+    if (category === "") {
+      toast.error("Please select a category");
+      return;
+    }
+
+    let id = uuid4();
+    let data = {
+      id: id,
+      name: address,
+      category: category,
+      googleMapsURL: `https://maps.google.com/maps?q=loc:${viewport.latitude},${viewport.longitude}`,
+      latitude: viewport.latitude,
+      longitude: viewport.longitude
+    }
+
+    let newLocations = addresses.concat(data);
+    setLoading(true);
+
+    try {
+      const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
+      const userRef = doc(firestore, collectionName, user.id);
+      await setDoc(userRef, { locations: newLocations }, { merge: true });
+      setLoading(false);
+      toast.success("Location saved");
+    } catch (error) {
+      toast.error("Failed to save location");
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="bg-white my-3 mx-2 save-location-container">
@@ -93,7 +176,7 @@ const SaveLocation = () => {
         <input className="save-location-input" disabled />
       </div>
       <div>
-        <input type="text" placeholder="Enter Address" className="save-location-input" title="Enter Address" />
+        <input type="text" onChange={(evt) => setAddress(evt.target.value)} placeholder="Enter Address" className="save-location-input" title="Enter Address" />
       </div>
       <div>
         <Form.Control className="save-location-input-select" onChange={(evt) => setCategory(evt.target.value)} as="select">
@@ -104,7 +187,10 @@ const SaveLocation = () => {
         </Form.Control>
       </div>
       <div>
-        <button className="save-location-button btn">SAVE LOCATION</button>
+        <button disabled={loading ? true : false} onClick={addAddress} className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">
+          {!loading && <span>save location</span>}
+          {loading && <Image style={{ width: '30px' }} fluid src="/img/loading-2.svg" alt="loading" />}
+        </button>
       </div>
     </div>
   )
