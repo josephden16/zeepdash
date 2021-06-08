@@ -32,7 +32,7 @@ const List = () => {
 
 			if (cuisinesArray.length > 0) {
 				const restaurantsRef = collection(firestore, collectionName);
-				const q = query(restaurantsRef, where("cuisines", "array-contains-any", cuisinesArray), limit(20));
+				const q = query(restaurantsRef, where("cuisines", "array-contains-any", cuisinesArray), where("available", "==", true), limit(20));
 				try {
 					const snapshot = await getDocs(q);
 					if (!snapshot.empty) {
@@ -57,7 +57,7 @@ const List = () => {
 				}
 			} else {
 				const restaurantsRef = collection(firestore, collectionName);
-				const q = query(restaurantsRef, limit(20));
+				const q = query(restaurantsRef, where("available", "==", true), limit(20));
 				try {
 					const snapshot = await getDocs(q);
 					if (!snapshot.empty) {
