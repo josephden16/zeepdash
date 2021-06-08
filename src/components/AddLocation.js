@@ -107,8 +107,7 @@ export default function AddLocation() {
               setViewport(currentViewport);
             }}
             style={geolocateControlStyle}
-            positionOptions={{ enableHighAccuracy: true }}
-            trackUserLocation={true}
+            positionOptions={{ enableHighAccuracy: true, maxZoom: 17 }}
           />
           <Marker
             onDrag={(evt) => {
