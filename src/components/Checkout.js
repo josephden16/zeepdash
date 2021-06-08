@@ -398,6 +398,7 @@ const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
 				<Col md={6}>
 					<NewAddressCard
 						iconclassName='h1'
+						addresses={addresses}
 					/>
 				</Col>
 			</Row>

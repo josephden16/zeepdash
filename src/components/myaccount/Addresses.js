@@ -176,6 +176,7 @@ const AddressesContainer = ({ displayEditAddressModal, displayDeleteAddressModal
 			<Col md={6}>
 				<NewAddressCard
 					iconclassName='h1'
+					addresses={addresses}
 				/>
 			</Col>
 		</Row>

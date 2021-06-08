@@ -9,7 +9,6 @@ const NewAddressCard = (props) => {
   const user = useContext(UserContext);
   const history = useHistory();
 
-  const { locations } = user;
 
   const handleClick = (evt) => {
     evt.preventDefault();
@@ -19,12 +18,12 @@ const NewAddressCard = (props) => {
       return;
     }
 
-    if (locations.length === 3) {
+    if (props.addresses.length === 3) {
       toast.info("You can't add more than 3 addresses");
       return;
     }
   
-    history.push("/add-location");
+    history.push(`/add-location?next=${window.location.pathname}`);
   }
 
   return (

@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { firestore } from '../firebase';
+import { useQuery } from '../utils';
 import { v4 as uuid4 } from 'uuid';
 import { UserContext } from './providers/AuthProvider';
 import { useHistory } from "react-router-dom";
@@ -55,7 +56,7 @@ export default function AddLocation() {
         setAddresses([]);
       }
 
-    } catch (error) {}
+    } catch (error) { }
   }
 
   useEffect(() => {
@@ -84,9 +85,9 @@ export default function AddLocation() {
           attributionControl={false}
           onViewportChange={viewport => {
             setViewport(viewport);
-            const { longitude, latitude } = viewport;
-            console.log("longitude: ", longitude);
-            console.log("latitude: ", latitude);
+            // const { longitude, latitude } = viewport;
+            // console.log("longitude: ", longitude);
+            // console.log("latitude: ", latitude);
           }}
         >
           <div>
@@ -109,7 +110,17 @@ export default function AddLocation() {
             positionOptions={{ enableHighAccuracy: true }}
             trackUserLocation={true}
           />
-          <Marker draggable offsetTop={-90} latitude={viewport.latitude} longitude={viewport.longitude}>
+          <Marker
+            onDrag={(evt) => {
+              const { lngLat } = evt;
+              const longitude = lngLat[0];
+              const latitude = lngLat[1];
+              let currentViewport = viewport;
+              currentViewport.latitude = latitude;
+              currentViewport.longitude = longitude;
+              setViewport(currentViewport);
+            }}
+            draggable offsetTop={-90} latitude={viewport.latitude} longitude={viewport.longitude}>
             <img alt="marker" width="30" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTI1NiwwQzE1My43NTUsMCw3MC41NzMsODMuMTgyLDcwLjU3MywxODUuNDI2YzAsMTI2Ljg4OCwxNjUuOTM5LDMxMy4xNjcsMTczLjAwNCwzMjEuMDM1ICAgIGM2LjYzNiw3LjM5MSwxOC4yMjIsNy4zNzgsMjQuODQ2LDBjNy4wNjUtNy44NjgsMTczLjAwNC0xOTQuMTQ3LDE3My4wMDQtMzIxLjAzNUM0NDEuNDI1LDgzLjE4MiwzNTguMjQ0LDAsMjU2LDB6IE0yNTYsMjc4LjcxOSAgICBjLTUxLjQ0MiwwLTkzLjI5Mi00MS44NTEtOTMuMjkyLTkzLjI5M1MyMDQuNTU5LDkyLjEzNCwyNTYsOTIuMTM0czkzLjI5MSw0MS44NTEsOTMuMjkxLDkzLjI5M1MzMDcuNDQxLDI3OC43MTksMjU2LDI3OC43MTl6IiBmaWxsPSIjZmUwMDAwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBzdHlsZT0iIiBjbGFzcz0iIj48L3BhdGg+Cgk8L2c+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPC9nPjwvc3ZnPg==" />
           </Marker>
         </ReactMapGl>
@@ -124,7 +135,8 @@ const SaveLocation = ({ addresses, viewport }) => {
   const user = useContext(UserContext);
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const history = useHistory();
+  let query = useQuery();
 
   const addAddress = async () => {
     if (addresses && addresses.length === 3) {
@@ -164,6 +176,10 @@ const SaveLocation = ({ addresses, viewport }) => {
       await setDoc(userRef, { locations: newLocations }, { merge: true });
       setLoading(false);
       toast.success("Location saved");
+      let next = query.get("next");
+      if (next) {
+        history.push(next.substring(1));
+      }
     } catch (error) {
       toast.error("Failed to save location");
       setLoading(false);
@@ -172,9 +188,9 @@ const SaveLocation = ({ addresses, viewport }) => {
 
   return (
     <div className="bg-white my-3 mx-2 save-location-container">
-      <div>
+      {/* <div>
         <input className="save-location-input" disabled />
-      </div>
+      </div> */}
       <div>
         <input type="text" onChange={(evt) => setAddress(evt.target.value)} placeholder="Enter Address" className="save-location-input" title="Enter Address" />
       </div>
