@@ -9,7 +9,7 @@ import CardItem from './common/CardItem';
 import SectionHeading from './common/SectionHeading';
 import FontAwesome from './common/FontAwesome';
 import Seo from './Seo';
-import { collection, getDocs, limit, query } from 'firebase/firestore';
+import { collection, getDocs, limit, query, where } from 'firebase/firestore';
 import { firestore } from '../firebase';
 
 
@@ -25,7 +25,7 @@ const Index = () => {
 		const fetchRestaurants = async () => {
 			const collectionName = process.env.NODE_ENV === 'production' ? 'Restaurants' : 'Restaurants_dev';
 			const restaurantRef = collection(firestore, collectionName);
-			const restaurantQuery = query(restaurantRef, limit(8));
+			const restaurantQuery = query(restaurantRef, where("available", "==", true), limit(8));
 			const snapshot = await getDocs(restaurantQuery);
 			const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 			setRestaurants(data);
