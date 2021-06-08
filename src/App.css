@@ -252,10 +252,17 @@ img {
   padding: 18px 15px 13px 15px;
   z-index: 9999;
   position: fixed;
+  left: -8px;
   bottom: -16px;
   width: 100%;
   max-width: 420px;
   box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.1);
+}
+/*place the container in the middle if the screen exceeds a width of 420px*/
+@media screen and (min-width: 420px) {
+  .save-location-container {
+    left: auto;
+  }
 }
 
 .save-location-input {
