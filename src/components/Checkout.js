@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
-import { Row, Col, Container, Image, Form } from 'react-bootstrap';
-import { v4 as uuid4 } from 'uuid';
+import { Row, Col, Container, Image } from 'react-bootstrap';
 import CheckoutItem from './common/CheckoutItem';
 import EditAddressModal from './modals/EditAddressModal';
 import { MIN, MAX, getTotalAmount, updateFirestoreCart, updateCartSession, DELIVERY_FEE, capitalize, isRestaurantOpen } from '../utils';
@@ -13,8 +12,10 @@ import { UserContext } from './providers/AuthProvider';
 import NotSignedIn from './NotSignedIn';
 import Seo from './Seo';
 import ChooseAddressCard from './common/ChooseAddressCard';
+import NewAddressCard from './common/NewAddressCard';
 import Loading from './common/Loading';
 import { doc, getDoc, setDoc, collection, addDoc } from 'firebase/firestore';
+import { CartContext } from './providers/CartProvider';
 
 
 const Checkout = () => {
@@ -24,7 +25,6 @@ const Checkout = () => {
 	const [addresses, setAddresses] = useState(null);
 	const [restaurant, setRestaurant] = useState(null);
 	const { restaurantId } = useParams();
-	const [cart, setCart] = useState(null);
 	const user = useContext(UserContext);
 	const hideAddressModal = () => setShowAddressModal(false);
 
@@ -125,8 +125,8 @@ const Checkout = () => {
 					<EditAddressModal show={showAddressModal} onHide={hideAddressModal} />
 					<Container>
 						<Row>
-							<OrderInfo refresh={fetchAddresses} user={user} addresses={addresses} restaurant={restaurant} cart={cart} setShowAddressModal={setShowAddressModal} />
-							{restaurant && <Cart cart={cart} updateCart={setCart} restaurant={restaurant} />}
+							<OrderInfo refresh={fetchAddresses} user={user} addresses={addresses} restaurant={restaurant} setShowAddressModal={setShowAddressModal} />
+							{restaurant && <Cart restaurant={restaurant} />}
 						</Row>
 					</Container>
 				</section>
@@ -135,7 +135,8 @@ const Checkout = () => {
 	);
 }
 
-const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
+const OrderInfo = ({ refresh, addresses, restaurant, user }) => {
+	const { cart } = useContext(CartContext);
 	const totalAmount = parseInt(getTotalAmount(cart) + DELIVERY_FEE);
 	const { restaurantId } = useParams();
 	const history = useHistory();
@@ -256,7 +257,7 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 	return (
 		<Col md={8}>
 			<div className="offer-dedicated-body-left">
-				<AddDeliveryLocation addresses={addresses} refresh={refresh} />
+				{/* <AddDeliveryLocation addresses={addresses} refresh={refresh} /> */}
 				<ChooseDeliveryLocation addresses={addresses} setDeliveryLocation={setDeliveryLocation} />
 				<div className="bg-white rounded shadow-sm p-4 osahan-payment">
 					<h3 className="text-center" style={{ fontWeight: 'bold' }}>Complete Your Order</h3>
@@ -273,7 +274,8 @@ const OrderInfo = ({ refresh, addresses, restaurant, cart, user }) => {
 	)
 }
 
-const Cart = ({ cart, updateCart }) => {
+const Cart = () => {
+	const { cart, updateCart } = useContext(CartContext);
 	const { restaurantId } = useParams();
 	const user = useContext(UserContext);
 	let total = cart ? getTotalAmount(cart) : 0;
@@ -362,13 +364,6 @@ const OrderItem = ({ meal, updateCart, restaurantId }) => {
 }
 
 const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
-	if (!addresses || addresses.length < 1) return (
-		<>
-			<Col md={12} style={{ fontWeight: 'bold' }} className="h6 bg-white p-4 shadow-sm rounded text-center mb-4">
-				You don't have an address on ZeepDash, please fill the form above to create one.
-			</Col>
-		</>
-	)
 
 	return (
 		<div className="bg-white rounded shadow-sm p-4 mb-4">
@@ -400,103 +395,13 @@ const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
 						</Col>
 					)
 				})}
+				<Col md={6}>
+					<NewAddressCard
+						iconclassName='h1'
+						addresses={addresses}
+					/>
+				</Col>
 			</Row>
-		</div>
-	)
-}
-
-const AddDeliveryLocation = ({ addresses, refresh }) => {
-	const [loading, setLoading] = useState(false);
-	const [address, setAddress] = useState("");
-	const [deliveryInstruction, setDeliveryInstruction] = useState("");
-	const [deliveryArea, setDeliveryArea] = useState("");
-	const [category, setCategory] = useState("");
-	const user = useContext(UserContext);
-
-	const addAddress = async () => {
-		if (addresses && addresses.length === 3) {
-			toast.info("You can't add more than 3 addresses");
-			return;
-		}
-		if (address === "" && category === "" && deliveryArea && deliveryInstruction) {
-			toast.warning("Please fill all form fields");
-			return;
-		}
-
-		if (!address) {
-			toast.warning("Please enter a valid address");
-			return;
-		}
-
-		if (!deliveryArea) {
-			toast.warning("Please enter the area you stay");
-			return;
-		}
-
-		if (!deliveryInstruction) {
-			toast.warning("Please enter a delivery instruction");
-			return;
-		}
-
-		if (category === "") {
-			toast.warning("Please select a category");
-			return;
-		}
-
-		let id = uuid4();
-		let data = {
-			id: id,
-			name: address,
-			category: category,
-			area: deliveryArea,
-			deliveryInstruction: deliveryInstruction
-		}
-		let newLocations = addresses.concat(data);
-		setLoading(true);
-		try {
-			const collectionName = process.env.NODE_ENV === 'production' ? 'Users' : 'Users_dev';
-			const userRef = doc(firestore, collectionName, user.id);
-			await setDoc(userRef, { locations: newLocations }, { merge: true });
-			setLoading(false);
-			toast.success("Address added");
-			refresh();
-		} catch (error) {
-			toast.error("Failed to add address");
-			setLoading(false);
-		}
-	}
-	return (
-		<div className="bg-white rounded shadow-sm p-4 mb-4">
-			<h3 className="font-weight-bold mt-3 mb-2 text-center">Add a delivery location</h3>
-			<div className="auth-animation">
-				<Row>
-					<Col>
-						<Form className="mt-2 mb-2" onSubmit={(evt) => { evt.preventDefault() }}>
-							<div className="form-label-group">
-								<input type="text" onChange={(evt) => setAddress(evt.target.value)} className="input" id="inputAddress" placeholder="Address" />
-							</div>
-							<div className="form-label-group">
-								<input type="text" onChange={(evt) => setDeliveryArea(evt.target.value)} className="input" id="inputDeliveryArea" placeholder="Area" />
-							</div>
-							<div className="form-label-group">
-								<input type="text" onChange={(evt) => setDeliveryInstruction(evt.target.value)} className="input" id="inputDeliveryInstruction" placeholder="Delivery Instruction" />
-							</div>
-							<div className="form-label-group flex flex-row">
-								<Form.Control onChange={(evt) => setCategory(evt.target.value)} as="select">
-									<option value="">Select a category...</option>
-									<option value="home">Home</option>
-									<option value="work">Work</option>
-									<option value="other">Other</option>
-								</Form.Control>
-							</div>
-							<button disabled={loading ? true : false} onClick={addAddress} className="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">
-								{!loading && <span>Add Location</span>}
-								{loading && <Image style={{ width: '30px' }} fluid src="/img/loading-2.svg" alt="loading" />}
-							</button>
-						</Form>
-					</Col>
-				</Row>
-			</div>
 		</div>
 	)
 }

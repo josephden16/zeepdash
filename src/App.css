@@ -19,13 +19,13 @@ Version: 1.0
 -- Footer
 -- Mobile Media
 */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,700&display=swap");
 /* Body */
 body {
   background: #f3f7f8;
   font-size: 13px;
   font-weight: 500;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-display: swap;
 }
 button,
@@ -225,6 +225,131 @@ img {
 .password-visible-button:active {
   box-shadow: 0 10px 5px #ddd;
   background: #ddd;
+}
+
+.products-section {
+  margin: 0 20px;
+}
+
+.top-search {
+  margin: 0 15px;
+}
+
+.restaurant-detail-bg {
+  max-height: 400px;
+}
+
+.add-location-container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.save-location-container {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 18px 15px 13px 15px;
+  z-index: 9999;
+  position: fixed;
+  left: -8px;
+  bottom: -16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.1);
+}
+/*place the container in the middle if the screen exceeds a width of 420px*/
+@media screen and (min-width: 420px) {
+  .save-location-container {
+    left: auto;
+  }
+}
+
+.save-location-input {
+  background: white;
+  width: 100%;
+  margin-bottom: 15px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 10px 8px;
+  outline: none;
+  transition: color 300ms ease-out;
+}
+
+.save-location-input-select {
+  margin-bottom: 15px;
+}
+
+.save-location-button {
+  background-color: #fe0000;
+  color: white;
+  font-weight: 600;
+  border: none;
+  width: 100%;
+  padding: 10px 5px;
+  border-radius: 5px;
+  font-size: large;
+  transition: box-shadow 300ms ease-out;
+}
+
+.save-location-button:hover {
+  color: white;
+}
+
+.back-button {
+  border: none;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  background-color: white;
+  padding: 8px 12px 10px 10px;
+  box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.075);
+}
+
+/* restaurant listing page */
+@media screen and (min-width: 300px) {
+  .products-listing {
+    margin: 0 20px;
+  }
+}
+
+@media screen and (min-width: 370px) {
+  .products-listing {
+    margin: 0 32px;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  .products-listing {
+    margin: 0 52px;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .products-listing {
+    margin: 0 102px;
+  }
+}
+
+@media screen and (min-width: 575px) {
+  .products-listing {
+    margin: 0 5px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .products-section {
+    margin: 0 10px;
+  }
+
+  .top-search {
+    margin: 0 5px;
+  }
+
+  .restaurant-detail-bg {
+    max-height: 300px;
+  }
 }
 
 /* my custom styles (END) */
@@ -997,8 +1122,8 @@ iframe.position-absolute {
   right: -32px;
 }
 .menu-list img {
-  width: 41px;
-  height: 41px;
+  width: 51px;
+  height: 51px;
   object-fit: cover;
 }
 .restaurant-detailed-header-left img {

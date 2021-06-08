@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, InputGroup, Modal, ButtonToolbar, Button, ToggleButton, Image, ToggleButtonGroup } from 'react-bootstrap';
+import { Form, Modal, ButtonToolbar, Button, ToggleButton, Image, ToggleButtonGroup } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { firestore } from '../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
@@ -9,13 +9,12 @@ import { doc, setDoc } from 'firebase/firestore';
 const EditAddressModal = (props) => {
 	const [loading, setLoading] = useState(false);
 	const [address, setAddress] = useState("");
-	const [deliveryInstruction, setDeliveryInstruction] = useState("");
-	const [deliveryArea, setDeliveryArea] = useState("");
 	const [category, setCategory] = useState("");
+	const [deliveryInstruction, setDeliveryInstruction] = useState("");
 
 
 	const editAddress = async () => {
-		if (address === "" && category === "" && deliveryArea && deliveryInstruction) {
+		if (address === "" && category === "") {
 			toast.warning("Please fill all form fields");
 			return;
 		}
@@ -23,11 +22,6 @@ const EditAddressModal = (props) => {
 		if (!address) {
 			// console.log(address);
 			toast.warning("Please enter a valid address");
-			return;
-		}
-
-		if (!deliveryArea) {
-			toast.warning("Please enter the area you stay");
 			return;
 		}
 
@@ -45,7 +39,6 @@ const EditAddressModal = (props) => {
 			id: props.defaultData.id,
 			name: address,
 			category: category,
-			area: deliveryArea,
 			deliveryInstruction: deliveryInstruction
 		}
 		let newLocations = props.addresses.filter((location) => location.id !== props.defaultData.id);
@@ -78,12 +71,6 @@ const EditAddressModal = (props) => {
 			<Modal.Body>
 				<Form>
 					<div className="form-row">
-						<Form.Group className="col-md-12">
-							<Form.Label>Delivery Area</Form.Label>
-							<InputGroup>
-								<Form.Control type="text" onChange={(evt) => setDeliveryArea(evt.target.value)} placeholder="Delivery Area" />
-							</InputGroup>
-						</Form.Group>
 						<Form.Group className="col-md-12">
 							<Form.Label>Complete Address</Form.Label>
 							<Form.Control type="text" onChange={(evt) => setAddress(evt.target.value)} placeholder="Complete Address e.g. house number, street name, landmark" />

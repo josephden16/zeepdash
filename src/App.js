@@ -19,10 +19,12 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <Header />
+      {
+        location.pathname !== '/add-location' && <Header />
+      }
       <Routes />
       {
-        (location.pathname !== '/login' && location.pathname !== '/login/reset-password' && location.pathname !== '/register') ? <Footer /> : ''
+        (location.pathname !== '/login' && location.pathname !== '/login/reset-password' && location.pathname !== '/register' && location.pathname !== '/add-location') ? <Footer /> : ''
       }
       <ToastContainer style={{ fontSize: '15px', color: 'white', fontFamily: 'Verdana' }} />
     </>

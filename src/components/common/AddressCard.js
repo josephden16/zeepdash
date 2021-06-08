@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import { RiHome4Fill } from 'react-icons/ri';
 import { BsBriefcaseFill } from 'react-icons/bs';
-import {IoLocationSharp} from 'react-icons/io5';
+import { IoLocationSharp } from 'react-icons/io5';
 
 
 class AddressCard extends React.Component {
@@ -20,12 +20,13 @@ class AddressCard extends React.Component {
               <Icon icon={this.props.icon} className={this.props.iconclassName} />
             </div>
             <div className="media-body">
-              <h6 className="mb-1 text-secondary">{this.props.title}</h6>
-              <p className="text-black lead">{this.props.address}
+              <h6 className="mb-1 text-black font-weight-bold ">{this.props.title}</h6>
+              <p className="text-black">{this.props.address}
               </p>
               <p className="mb-0 text-black font-weight-bold">
-                <Link className="text-primary mr-3" to="#" onClick={this.props.onEditClick}><FiEdit /> EDIT</Link>
-                <Link className="text-danger" to="#" onClick={this.props.onDeleteClick}><FiTrash2 /> DELETE</Link></p>
+                <Link className="text-danger mr-2" to="#" onClick={this.props.onEditClick}><FiEdit /> EDIT</Link>
+                <Link className="text-danger" to="#" onClick={this.props.onDeleteClick}><FiTrash2 /> DELETE</Link>
+              </p>
             </div>
           </Media>
         </div>

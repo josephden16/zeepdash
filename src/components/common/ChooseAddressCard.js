@@ -21,8 +21,8 @@ const ChooseAddressCard = (props) => {
             <Icon icon={props.icon} className={props.iconclassName} />
           </div>
           <div className="media-body">
-            <h6 className="mb-1 text-secondary">{props.title}</h6>
-            <p className="text-black lead">{props.address}
+            <h6 className="mb-1 text-black font-weight-bold">{props.title}</h6>
+            <p className="text-black">{props.address}
             </p>
             <p className="mb-0 text-black font-weight-bold">
               <button onClick={selectDeliveryLocation} className="btn btn-sm btn-success mr-2">DELIVER HERE</button>

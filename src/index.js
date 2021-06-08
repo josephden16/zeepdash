@@ -5,6 +5,7 @@ import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 import App from './App';
 import UserProvider from './components/providers/AuthProvider'
+import CartProvider from './components/providers/CartProvider';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 
@@ -21,9 +22,11 @@ Sentry.init({
 ReactDOM.render(
   <Suspense fallback={<div>loading...</div>}>
     <UserProvider>
-      <Router>
-        <App />
-      </Router>
+      <CartProvider>
+        <Router>
+          <App />
+        </Router>
+      </CartProvider>
     </UserProvider>
   </Suspense>,
   document.getElementById('root'));
