@@ -56,7 +56,7 @@ const BusinessRegsitration = ({ className }) => {
 					cuisines: ['african'],
 					photoURL: '',
 					backgroundImageURL: '',
-					available: true,
+					available: false,
 					slug: generateSlug(name)
 				})
 					.then(() => {
