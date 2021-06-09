@@ -138,6 +138,12 @@ const SaveLocation = ({ addresses, viewport }) => {
   let query = useQuery();
 
   const addAddress = async () => {
+    if (!user) {
+      toast.error("You must be signed in to save your location");
+      history.push(`/login?next=${window.location.pathname}`);
+      return;
+    }
+
     if (addresses && addresses.length === 3) {
       toast.info("You can't add more than 3 addresses");
       return;
