@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
 import { Card, Media } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { UserContext } from '../providers/AuthProvider';
 
 
 const NewAddressCard = (props) => {
   const user = useContext(UserContext);
-  const history = useHistory();
-
 
   const handleClick = (evt) => {
     evt.preventDefault();
@@ -21,9 +19,8 @@ const NewAddressCard = (props) => {
     if (props.addresses.length === 3) {
       toast.info("You can't add more than 3 addresses");
       return;
-    }
-  
-    history.push(`/add-location?next=${window.location.pathname}`);
+    }  
+    window.location.href = `/add-location?next=${window.location.pathname}`;
   }
 
   return (
