@@ -183,7 +183,7 @@ const SaveLocation = ({ addresses, viewport }) => {
       toast.success("Location saved");
       let next = query.get("next");
       if (next) {
-        history.push(next.substring(1));
+        document.location.href = next.substring(1);
       }
     } catch (error) {
       toast.error("Failed to save location");
