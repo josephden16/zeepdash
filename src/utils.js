@@ -2,6 +2,7 @@ import { firestore } from './firebase';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 import { deleteDoc, doc, setDoc } from '@firebase/firestore';
+import { v4 as uuid } from 'uuid';
 
 
 export const MIN = 0;
@@ -27,8 +28,10 @@ export const generateSlug = (str) => {
   str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
     .replace(/\s+/g, '-') // collapse whitespace and replace by -
     .replace(/-+/g, '-'); // collapse dashes
-
-  return str;
+  let randomText = uuid();
+  randomText = randomText.substr(0, 4);
+  let result = str + "_" + randomText;
+  return result;
 }
 
 export const getMealFromCart = (mealId, restaurantId) => {
@@ -93,7 +96,6 @@ export const getItemQuantity = (cart, mealId) => {
   return 0;
 }
 
-
 export const isRestaurantOpen = (openingTime, closingTime) => {
   let [openingTimeHour, openingTimeMinute] = openingTime.split(":");
   let [closingTimeHour, closingTimeMinute] = closingTime.split(":");
@@ -108,8 +110,6 @@ export const isRestaurantOpen = (openingTime, closingTime) => {
   }
   return false;
 }
-
-
 
 export const useQuery = () => {
   return new URLSearchParams(useLocation().search);
