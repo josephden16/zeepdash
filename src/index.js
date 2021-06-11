@@ -8,6 +8,7 @@ import UserProvider from './components/providers/AuthProvider'
 import CartProvider from './components/providers/CartProvider';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
+import ScreenLoader from './components/common/ScreenLoader';
 
 Sentry.init({
   dsn: "https://d9c11e37b49d47fcb4b6c74a3deb06ed@o684222.ingest.sentry.io/5771452",
@@ -20,7 +21,7 @@ Sentry.init({
 });
 
 ReactDOM.render(
-  <Suspense fallback={<div>loading...</div>}>
+  <Suspense fallback={<ScreenLoader />}>
     <UserProvider>
       <CartProvider>
         <Router>
