@@ -41,7 +41,6 @@ const OrdersContainer = ({ user }) => {
 				if (!snapshot.empty) {
 					let data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 					data = data.filter(order => order.orderCompleted === true);
-					// console.log(data);
 					setOrders(data);
 				} else {
 					const data = [];
@@ -61,7 +60,7 @@ const OrdersContainer = ({ user }) => {
 			{(!orders && failedDataFetch === true) && <FailedToFetch />}
 			{!orders && <Loading text="Fetching orders..." />}
 			{
-				(orders && orders.length > 1) &&
+				(orders && orders.length > 0) &&
 				<>
 					<h4 className="font-weight-bold mt-0 mb-4">Past Orders</h4>
 					{orders.map(order => {
