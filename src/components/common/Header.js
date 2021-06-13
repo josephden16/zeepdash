@@ -43,23 +43,25 @@ class Header extends React.Component {
 	}
 	render() {
 		return (
-			<div ref={node => this.node = node}>
-				<Navbar onToggle={this.setIsNavExpanded}
-					expanded={this.state.isNavExpanded} color="light" expand='lg' className="navbar-light osahan-nav shadow-sm">
-					<Container>
-						<Navbar.Brand to="/"><Link to="/"><Image draggable={false} style={{ width: '170px' }} width="170" height="40" src="/img/logo-2.png" alt='ZeepDash' /></Link></Navbar.Brand>
-						<Navbar.Toggle style={{ outline: 'none' }} className="bg-white" />
-						<Navbar.Collapse id="navbarNavDropdown">
-							<Nav activeKey={0} className="ml-auto" onSelect={this.closeMenu}>
-								<Nav.Link eventKey={0} as={NavLink} activeclassname="active" to="/">
-									Home <span className="sr-only">(current)</span>
-								</Nav.Link>
-								<RestaurantLink />
-								<UserDropDown />
-								{/* <Nav.Link eventKey={1} as={NavLink} activeclassname="active" to="/offers">
+			<>
+				<div style={{ background: '#FE0000', color: 'white', fontWeight: 'bold', textAlign: 'center', 'width': '100%' }}>For more info or complaints please call <a style={{ 'color': 'white', 'marginLeft': '5px' }} href="tel:+2348076890765">08076890765</a></div>
+				<div ref={node => this.node = node}>
+					<Navbar onToggle={this.setIsNavExpanded}
+						expanded={this.state.isNavExpanded} color="light" expand='lg' className="navbar-light osahan-nav shadow-sm">
+						<Container>
+							<Navbar.Brand to="/"><Link to="/"><Image draggable={false} style={{ width: '170px' }} width="170" height="40" src="/img/logo-2.png" alt='ZeepDash' /></Link></Navbar.Brand>
+							<Navbar.Toggle style={{ outline: 'none' }} className="bg-white" />
+							<Navbar.Collapse id="navbarNavDropdown">
+								<Nav activeKey={0} className="ml-auto" onSelect={this.closeMenu}>
+									<Nav.Link eventKey={0} as={NavLink} activeclassname="active" to="/">
+										Home <span className="sr-only">(current)</span>
+									</Nav.Link>
+									<RestaurantLink />
+									<UserDropDown />
+									{/* <Nav.Link eventKey={1} as={NavLink} activeclassname="active" to="/offers">
 									<Icofont icon='sale-discount' /> Offers <Badge variant="danger">New</Badge>
 								</Nav.Link> */}
-								{/* <NavDropdown title="Pages" alignRight>
+									{/* <NavDropdown title="Pages" alignRight>
 									<NavDropdown.Item eventKey={3.1} as={NavLink} activeclassname="active" to="/track-order">Track Order</NavDropdown.Item>
 									<NavDropdown.Item eventKey={3.2} as={NavLink} activeclassname="active" to="/invoice">Invoice</NavDropdown.Item>
 									<NavDropdown.Item eventKey={3.3} as={NavLink} activeclassname="active" to="/login">Login</NavDropdown.Item>
@@ -67,11 +69,12 @@ class Header extends React.Component {
 									<NavDropdown.Item eventKey={3.5} as={NavLink} activeclassname="active" to="/404">404</NavDropdown.Item>
 									<NavDropdown.Item eventKey={3.6} as={NavLink} activeclassname="active" to="/extra">Extra</NavDropdown.Item>
 								</NavDropdown> */}
-							</Nav>
-						</Navbar.Collapse>
-					</Container>
-				</Navbar>
-			</div>
+								</Nav>
+							</Navbar.Collapse>
+						</Container>
+					</Navbar>
+				</div>
+			</>
 		);
 	}
 }
