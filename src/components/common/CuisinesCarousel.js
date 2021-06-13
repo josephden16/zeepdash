@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestore } from '../../firebase';
 import { capitalize } from '../../utils';
 import ProductBox from '../home/ProductBox';
+import data from "../../data/cusisines.json";
 
 
 
 const CuisinesCarousel = () => {
-	const [cuisines, setCuisines] = useState(null);
+	const { cuisines } = data;
 
-	useEffect(() => {
-		const fetchCuisines = async () => {
-			const cusinesRef = collection(firestore, "Cuisines");
-			const snapshot = await getDocs(cusinesRef);
-			const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-			setCuisines(data);
-		}
-
-		fetchCuisines();
-	}, []);
 	if (!cuisines) return null;
 
 	return (
@@ -29,7 +18,7 @@ const CuisinesCarousel = () => {
 			<OwlCarousel nav loop {...options} className="owl-carousel-category owl-theme">
 				{
 					cuisines && cuisines.map(cuisine => (
-						<div key={cuisine.id} className="item">
+						<div key={cuisine.name} className="item">
 							<ProductBox
 								boxClass='osahan-category-item'
 								title={capitalize(cuisine.name)}
