@@ -126,7 +126,7 @@ const Detail = () => {
 							<Col md={8}>
 								<div className="restaurant-detailed-header-left">
 									<Image draggable={false} fluid className="mr-3 float-left" alt="osahan" src={restaurant.photoURL || '/img/1.jpg'} />
-									<h2 className="text-white">{restaurant.name}</h2>
+									<h4 className="text-white">{restaurant.name}</h4>
 									<p className="text-white mb-1"><FiNavigation /> {" "}{restaurant.address.toUpperCase()} <RestaurantOpenStatus openingTime={restaurant.openingTime} closingTime={restaurant.closingTime} />
 									</p>
 									<p className="text-white mb-0"><IoFastFood />{" "}{restaurant.cuisines.join(" , ").toUpperCase()}</p>
