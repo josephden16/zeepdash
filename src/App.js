@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import AddToHomeScreen from '@ideasio/add-to-homescreen-react';
 import * as Sentry from "@sentry/react";
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
@@ -18,6 +19,7 @@ function App() {
   const location = useLocation();
   return (
     <>
+      <AddToHomeScreen />
       <ScrollToTop />
       {
         location.pathname !== '/add-location' && <Header />

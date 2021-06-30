@@ -1,6 +1,8 @@
 {
     "name": "ZeepDash",
+    "description": "ZeepDash. ZeepDash is a food delivery service that helps you get access to meals in the shortest possible time.",
     "short_name": "ZeepDash",
+    "start_url": "/",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -10,5 +12,5 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "display": "fullscreen"
 }
