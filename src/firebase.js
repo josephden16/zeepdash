@@ -6,13 +6,13 @@ import { getAnalytics, isSupported } from 'firebase/analytics';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDEmE0Kntqe4ohSYtn8h8dYFu4G_37Cop0",
-  authDomain: "zeepdash-5dc81.firebaseapp.com",
-  projectId: "zeepdash-5dc81",
-  storageBucket: "zeepdash-5dc81.appspot.com",
-  messagingSenderId: "155466461030",
-  appId: "1:155466461030:web:651d9f699dab190e1722a7",
-  measurementId: "G-RLZF2CZHFM"
+  apiKey: "AIzaSyDFTPvfLe81TKbSHfL_HkopFa9qrMEocFI",
+  authDomain: "food-delivery-app-a941f.firebaseapp.com",
+  projectId: "food-delivery-app-a941f",
+  storageBucket: "food-delivery-app-a941f.appspot.com",
+  messagingSenderId: "132897372614",
+  appId: "1:132897372614:web:1aa84075cff6424fd9dac7",
+  measurementId: "G-G8FCYE4PZW"
 };
 
 // Initialize Firebase
