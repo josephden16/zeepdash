@@ -1,55 +1,55 @@
 {
   "cuisines": [
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fchicken.webp?alt=media&token=c7de4af6-205e-4635-9266-926d5c00d5e5",
+      "imageURL": "",
       "name": "chicken"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fsandwich.webp?alt=media&token=ce4d53f6-dea1-4e65-b3eb-a723cde7f52d",
+      "imageURL": "",
       "name": "sandwiches"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fhamburger.webp?alt=media&token=dd6e608d-d16a-449c-baf0-898872c13928",
+      "imageURL": "",
       "name": "burgers"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fafrican.webp?alt=media&token=4e3f8dab-d6b8-4841-959f-e80c634ab745",
+      "imageURL": "",
       "name": "african"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fice-cream.webp?alt=media&token=e8efe750-d243-4edb-80f2-042147b1756b",
+      "imageURL": "",
       "name": "ice-cream"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fswallows.webp?alt=media&token=69208a02-4215-41bb-94dd-36155512d989",
+      "imageURL": "",
       "name": "swallows"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fsalad.webp?alt=media&token=ecb5c382-6559-4ae4-986d-8ba4bae79aaf",
+      "imageURL": "",
       "name": "salads"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fbreakfast.webp?alt=media&token=80180f97-2449-419c-91af-b6cf5bf5d8f2",
+      "imageURL": "",
       "name": "breakfast"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fcake.webp?alt=media&token=07db7c13-d946-428c-938a-68de6b36d1fd",
+      "imageURL": "",
       "name": "cake"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fpastries.webp?alt=media&token=28c9ccc2-78f8-4bf2-a9b3-f1d860cf45f3",
+      "imageURL": "",
       "name": "pastries"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Fpizza.webp?alt=media&token=444c3219-5d57-44d5-b9a5-fa9088679c45",
+      "imageURL": "",
       "name": "pizza"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Finternational.webp?alt=media&token=7868208a-d9b4-49d3-b81a-d735001a38ad",
+      "imageURL": "",
       "name": "int'l"
     },
     {
-      "imageURL": "https://firebasestorage.googleapis.com/v0/b/zeepdash-5dc81.appspot.com/o/home-page%2Fcuisines%2Frice.webp?alt=media&token=489ce3bd-1da0-4249-9597-dc9876b1e536",
+      "imageURL": "",
       "name": "rice"
     }
   ]
