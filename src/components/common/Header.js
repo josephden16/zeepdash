@@ -44,7 +44,6 @@ class Header extends React.Component {
 	render() {
 		return (
 			<>
-				<div style={{ background: '#FE0000', color: 'white', fontWeight: 'bold', textAlign: 'center', 'width': '100%' }}>For more info or complaints please call <a style={{ 'color': 'white', 'marginLeft': '5px' }} href="tel:+2349025351244">09025351244</a></div>
 				<div ref={node => this.node = node}>
 					<Navbar onToggle={this.setIsNavExpanded}
 						expanded={this.state.isNavExpanded} color="light" expand='lg' className="navbar-light osahan-nav shadow-sm">
