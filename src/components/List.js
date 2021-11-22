@@ -94,7 +94,6 @@ const List = () => {
 						name: doc.data().name
 					}
 				));
-
 				setDefaultCuisines(cuisines);
 			}
 		}
