@@ -6,10 +6,6 @@
     },
     {
       "imageURL": "",
-      "name": "sandwiches"
-    },
-    {
-      "imageURL": "",
       "name": "burgers"
     },
     {
@@ -30,27 +26,11 @@
     },
     {
       "imageURL": "",
-      "name": "breakfast"
-    },
-    {
-      "imageURL": "",
-      "name": "cake"
-    },
-    {
-      "imageURL": "",
       "name": "pastries"
     },
     {
       "imageURL": "",
       "name": "pizza"
-    },
-    {
-      "imageURL": "",
-      "name": "int'l"
-    },
-    {
-      "imageURL": "",
-      "name": "rice"
     }
   ]
 }

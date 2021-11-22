@@ -11,9 +11,7 @@ class Footer extends React.Component {
               <Col sm={12}>
                 <p style={{ fontSize: "22px" }} className="m-0 text-dark">
                   Operate food store or restaurants?{" "}
-                  <a href="/register?tab=business">
-                    Work With Us
-                  </a>
+                  <a href="/register?tab=business">Work With Us</a>
                 </p>
               </Col>
             </Row>
