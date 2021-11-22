@@ -91,7 +91,8 @@ const EditProfileModal = (props) => {
           }, { merge: true });
         }).then(() => {
           setLoading(false);
-          toast.success("Update successful, please refresh this page to see changes");
+          toast.success("Update successful");
+          window.location.reload();
         }).catch(() => {
           toast.error("Update failed");
           setLoading(false);
@@ -126,7 +127,7 @@ const EditProfileModal = (props) => {
                 custom
                 ref={profileImageFile}
                 accept="image/*"
-                onChange={() => setProfileFileName(profileImageFile.current.files[0].name)}
+                onChange={() => setProfileFileName(profileImageFile.current.files[0]?.name)}
               />
             </Form.Group>
             <Form.Group className="col-md-12">

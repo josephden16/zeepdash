@@ -56,7 +56,7 @@ const BusinessRegsitration = ({ className }) => {
 					cuisines: ['african'],
 					photoURL: '',
 					backgroundImageURL: '',
-					available: false,
+					available: true,
 					slug: generateSlug(name)
 				})
 					.then(() => {
@@ -178,7 +178,7 @@ const BusinessRegsitration = ({ className }) => {
 					<h3 className="login-heading mb-3">Create a business account</h3>
 					<Form onSubmit={handleSubmit}>
 						<div className="form-label-group">
-							<input className="input" onChange={(evt) => setName(evt.target.value)} type="text" id="inputName" placeholder="Name" />
+							<input className="input" onChange={(evt) => setName(evt.target.value)} type="text" id="inputName" placeholder="Business Name" />
 						</div>
 						<div className="form-label-group">
 							<input className="input" onChange={(evt) => setEmail(evt.target.value)} type="email" id="inputEmail" placeholder="Email" />
