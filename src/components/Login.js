@@ -99,7 +99,7 @@ const Login = () => {
 			<Seo seo={seo} />
 			<Container fluid className='bg-white'>
 				<Row>
-					<Col md={4} lg={6} className="d-none d-md-flex bg-image"></Col>
+					<Col md={4} lg={6} className="d-none d-md-flex bg-login-image"></Col>
 					<Col md={8} lg={6}>
 						<div className="login d-flex align-items-center py-5">
 							<Container className="auth-animation">

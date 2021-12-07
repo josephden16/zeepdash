@@ -438,9 +438,9 @@ h6 {
 .image {
   min-height: 100vh;
 }
-.bg-image {
+.bg-login-image {
   /* background-image: url("/img/bg-food.png"); */
-  background-image: url("./assets/img/food-bg.webp");
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/food-delivery-app-a941f.appspot.com/o/food-bg.3b66a373.webp?alt=media&token=5f736659-6619-4306-afd2-1c6a2dada3bd");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
