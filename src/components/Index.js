@@ -43,10 +43,7 @@ const Index = () => {
         setRestaurants(data);
       } catch {}
     };
-    fetchRestaurants();
-  }, []);
-
-  useEffect(() => {
+  
     const fetchCuisines = async () => {
       const collectionName = "Cuisines";
       const ref = collection(firestore, collectionName);
@@ -60,6 +57,7 @@ const Index = () => {
       } catch {}
     };
     fetchCuisines();
+    fetchRestaurants();
   }, []);
 
   return (

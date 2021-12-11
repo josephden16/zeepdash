@@ -22,7 +22,7 @@ function App() {
       <AddToHomeScreen />
       <ScrollToTop />
       {
-        location.pathname !== '/add-location' && <Header />
+        (location.pathname !== '/add-location' && location.pathname !== '/register' && location.pathname !== '/login' && location.pathname !== '/login/reset-password') && <Header />
       }
       <Routes />
       {
