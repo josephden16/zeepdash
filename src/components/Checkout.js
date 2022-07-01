@@ -18,13 +18,13 @@ import {
 import { firestore } from "../firebase";
 import { CgArrowLongRight } from "react-icons/cg";
 import { UserContext } from "./providers/AuthProvider";
-import NotSignedIn from "./NotSignedIn";
 import Seo from "./Seo";
 import ChooseAddressCard from "./common/ChooseAddressCard";
 import NewAddressCard from "./common/NewAddressCard";
 import Loading from "./common/Loading";
 import { doc, getDoc, setDoc, collection, addDoc } from "firebase/firestore";
 import { CartContext } from "./providers/CartProvider";
+import ScreenLoader from "./common/ScreenLoader";
 
 const Checkout = () => {
   const [showAddressModal, setShowAddressModal] = useState(false);
@@ -114,7 +114,7 @@ const Checkout = () => {
   }, [restaurantId, user]);
 
   if (!user) {
-    return <NotSignedIn />;
+    return <ScreenLoader />;
   }
 
   const seo = {
@@ -280,12 +280,12 @@ const OrderInfo = ({ refresh, addresses, restaurant, user }) => {
   if (!cart) {
     return null;
   }
-	console.log("key: ", process.env.REACT_APP_FLUTTERWAVE_DEV_PUBLIC_KEY);
   return (
     <Col md={8}>
       <div className="offer-dedicated-body-left">
         {/* <AddDeliveryLocation addresses={addresses} refresh={refresh} /> */}
         <ChooseDeliveryLocation
+          selectedDeliveryLocation={deliveryLocation}
           addresses={addresses}
           setDeliveryLocation={setDeliveryLocation}
         />
@@ -440,7 +440,11 @@ const OrderItem = ({ meal, updateCart, restaurantId }) => {
   );
 };
 
-const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
+const ChooseDeliveryLocation = ({
+  addresses,
+  setDeliveryLocation,
+  selectedDeliveryLocation,
+}) => {
   return (
     <div className="bg-white rounded shadow-sm p-4 mb-4">
       <h4 className="mb-4 text-center">Choose a delivery location</h4>
@@ -468,6 +472,7 @@ const ChooseDeliveryLocation = ({ addresses, setDeliveryLocation }) => {
                   address={address.name}
                   addressData={address}
                   setDeliveryLocation={setDeliveryLocation}
+                  selectedDeliveryLocation={selectedDeliveryLocation}
                 />
               </Col>
             );
