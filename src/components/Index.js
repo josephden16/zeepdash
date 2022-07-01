@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useCuisines, useRestaurants } from "../api/hooks/home";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
@@ -9,8 +10,7 @@ import CardItem from "./common/CardItem";
 import SectionHeading from "./common/SectionHeading";
 import FontAwesome from "./common/FontAwesome";
 import Seo from "./Seo";
-import { collection, getDocs, limit, query, where } from "firebase/firestore";
-import { firestore } from "../firebase";
+import ScreenLoader from "./common/ScreenLoader";
 
 const seo = {
   metaTitle: "Home | ZeepDash",
@@ -19,51 +19,15 @@ const seo = {
 };
 
 const Index = () => {
-  const [restaurants, setRestaurants] = useState(null);
-  const [cuisines, setCuisines] = useState([]);
+  const cuisines = useCuisines();
+  const restaurants = useRestaurants();
 
-  useEffect(() => {
-    const fetchRestaurants = async () => {
-      const collectionName =
-        process.env.NODE_ENV === "production"
-          ? "Restaurants"
-          : "Restaurants_dev";
-      const restaurantRef = collection(firestore, collectionName);
-      const restaurantQuery = query(
-        restaurantRef,
-        where("available", "==", true),
-        limit(8)
-      );
-      try {
-        const snapshot = await getDocs(restaurantQuery);
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setRestaurants(data);
-      } catch {}
-    };
-  
-    const fetchCuisines = async () => {
-      const collectionName = "Cuisines";
-      const ref = collection(firestore, collectionName);
-      try {
-        const snapshot = await getDocs(ref);
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setCuisines(data);
-      } catch {}
-    };
-    fetchCuisines();
-    fetchRestaurants();
-  }, []);
+  if (cuisines.isLoading || restaurants.isLoading) return <ScreenLoader />;
 
   return (
     <>
       <Seo seo={seo} />
-      <TopSearch cuisines={cuisines} />
+      <TopSearch cuisines={cuisines.data} />
       <section className="section pt-5 pb-5 products-section">
         <Container>
           <SectionHeading
@@ -72,7 +36,7 @@ const Index = () => {
           />
           <Row>
             <Col md={12}>
-              <RestaurantsCarousel restaurants={restaurants} />
+              <RestaurantsCarousel restaurants={restaurants.data} />
             </Col>
           </Row>
         </Container>

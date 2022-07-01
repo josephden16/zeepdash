@@ -13,8 +13,7 @@ const TopSearch = ({ cuisines }) => {
           <Col md={8}>
             <div className="homepage-search-title">
               <h1 className="mb-4 font-weight-normal">
-                <span className="font-weight-bold">Find awesome meals</span> in
-                Ibadan.
+                <span className="font-weight-bold">Find awesome meals</span>
               </h1>
               <p
                 style={{ fontSize: "17px" }}

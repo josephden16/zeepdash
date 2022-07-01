@@ -6,8 +6,7 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import "owl.carousel/dist/assets/owl.carousel.css";
 
 const CuisinesCarousel = ({ cuisines }) => {
-  if (!cuisines) return null;
-
+  // if (!cuisines) return null;
   return (
     <div className="top-search">
       <OwlCarousel

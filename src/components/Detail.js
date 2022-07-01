@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { Row, Col, Container, Tab, Nav, Image, Button } from "react-bootstrap";
 import Seo from "./Seo";
 import NotFound from "./NotFound";
-import Loading from "./common/Loading";
 import GalleryCarousel from "./common/GalleryCarousel";
 import { FiNavigation } from "react-icons/fi";
 import { IoFastFood } from "react-icons/io5";
@@ -17,6 +16,7 @@ import {
   RestaurantOpenStatus,
   RestaurantInfoTab,
 } from "./detail";
+import ScreenLoader from "./common/ScreenLoader";
 
 const Detail = () => {
   const [restaurant, setRestaurant] = useState(null);
@@ -87,8 +87,7 @@ const Detail = () => {
     return <NotFound />;
   }
 
-  if (loading && notFound === false)
-    return <Loading text="Fetching restaurant data..." />;
+  if (loading && notFound === false) return <ScreenLoader />;
 
   if (notFound) return <NotFound />;
 
@@ -98,8 +97,7 @@ const Detail = () => {
 
   const seo = {
     metaTitle: `${restaurant.name}` || "",
-    metaDescription:
-      `Welcome to the page of ${restaurant.name}` || "",
+    metaDescription: `Welcome to the page of ${restaurant.name}` || "",
   };
   // share page with the Native Share API
   return (
